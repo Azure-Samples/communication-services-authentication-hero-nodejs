@@ -1,13 +1,18 @@
-## [project-title] Changelog
+## ACS Solutions - Authentication Sample Changelog
 
-<a name="x.y.z"></a>
-# x.y.z (yyyy-mm-dd)
+<a name="0.1.0"></a>
+
+# 0.1.0 (2021-XX-XX)
 
 *Features*
+
 * ...
 
-*Bug Fixes*
+*Changes*
+
 * ...
 
-*Breaking Changes*
+*Fixes*
+
 * ...
+
