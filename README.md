@@ -58,7 +58,7 @@ This ACS Solutions - Authentication sample provides the following features:
 
   > Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here]([Teams interoperability - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity))
 
-<img src="D:\MSRepos\authentication-hero-js\media\acs-authentication-server-sample-sequence-diagram.png" alt="UML Sequence Diagram"/>
+<img src="./media/acs-authentication-server-sample-sequence-diagram.png" alt="UML Sequence Diagram"/>
 
 ## Getting Started
 
