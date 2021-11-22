@@ -56,7 +56,7 @@ This ACS Solutions - Authentication sample provides the following features:
 
 * **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
 
-  > Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here]([Teams interoperability - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity))
+  > Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
 
 <img src="./media/acs-authentication-server-sample-sequence-diagram.png" alt="UML Sequence Diagram"/>
 
@@ -96,8 +96,8 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ## Resources
 
-- [Azure Communication Services User Access Management]([Client and server architecture - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/client-and-server-architecture#user-access-management)) - Dataflows present user access tokens to access Communication Services resources securely.
-- [Teams Interoperability]([Teams interoperability - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop)) - BYOI (Bring Your Own Identity) and Microsoft 365 authenticated interoperability for Teams.
+- [Azure Communication Services User Access Management](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/client-and-server-architecture#user-access-management) - Dataflows present user access tokens to access Communication Services resources securely.
+- [Teams Interoperability](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop) - BYOI (Bring Your Own Identity) and Microsoft 365 authenticated interoperability for Teams.
 - [Azure Active Directory B2C documentation](https://docs.microsoft.com/en-us/azure/active-directory-b2c/) - A business-to-customer identity as a service.
 - [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
 - [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
