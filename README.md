@@ -11,7 +11,7 @@ products:
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
 
-# ACS Solutions - Authentication Sample
+# ACS Solutions - Authentication Server Sample
 
 1. [Overview](#overview)
 2. [Features](#features)
@@ -33,7 +33,7 @@ products:
 
 In order to properly implement Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to perform key actions for the communications lifecycle. These actions include authenticating users since the Azure Communication Services are identity-agnostic.
 
-This is an ACS solution sample to provide a guidance establishing best practices on a simple use case to bring your own identity (**BYOI**) to the Azure Communication Services by storing the mapping between Azure AD and ACS users. The solution guides below:
+This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to bring your own identity (**BYOI**) to the Azure Communication Services by storing the mapping between Azure AD and ACS users. The solution guides below:
 
 - Have a trusted backend service that will create ACS identities and issue access tokens.
 - Have this trusted service authenticate users and maintain a mapping between a Contoso identity and an ACS identity.
@@ -48,12 +48,17 @@ Before contributing to this sample, please read our [contribution guidelines](./
 
 This ACS Solutions - Authentication sample provides the following features:
 
-* Create an ACS user
-* Get a token for an ACS user
-* Refresh a token for an existing ACS user
-* Exchange an M365 token for an ACS token
+* **/getUser** - Return an ACS user id if existing in the database, otherwise, create an ACS user and then store the identity mapping.
 
-(Add workflow graph here...)
+* **/getToken** - Get a token for an ACS user.
+
+* **/refreshToken** - Refresh a token for an existing ACS user.
+
+* **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
+
+  > Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here]([Teams interoperability - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity))
+
+<img src="D:\MSRepos\authentication-hero-js\media\acs-authentication-server-sample-sequence-diagram.png" alt="UML Sequence Diagram"/>
 
 ## Getting Started
 
@@ -91,8 +96,10 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ## Resources
 
-- [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
+- [Azure Communication Services User Access Management]([Client and server architecture - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/client-and-server-architecture#user-access-management)) - Dataflows present user access tokens to access Communication Services resources securely.
+- [Teams Interoperability]([Teams interoperability - An Azure Communication Services concept document | Microsoft Docs](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop)) - BYOI (Bring Your Own Identity) and Microsoft 365 authenticated interoperability for Teams.
 - [Azure Active Directory B2C documentation](https://docs.microsoft.com/en-us/azure/active-directory-b2c/) - A business-to-customer identity as a service.
+- [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
 - [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
 
 ## Known Issues

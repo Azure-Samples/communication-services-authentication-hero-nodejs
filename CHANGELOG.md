@@ -1,4 +1,4 @@
-## ACS Solutions - Authentication Sample Changelog
+## ACS Solutions - Authentication Server Sample Changelog
 
 <a name="0.1.0"></a>
 
