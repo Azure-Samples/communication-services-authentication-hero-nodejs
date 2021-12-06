@@ -1,0 +1,7 @@
+export const appSettings = {
+    remoteResources: {
+        communicationServices: {
+            connectionString: '<yourconnectionstring>'
+        }
+    }
+};
