@@ -3,7 +3,6 @@ page_type: sample
 languages:
 - javascript
 - nodejs
-- csharp
 products:
 - azure
 - azure-communication-services
@@ -12,6 +11,11 @@ products:
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
 
 # ACS Solutions - Authentication Server Sample
+
+<!--[![CI build status](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/workflows/CI/badge.svg?branch=main)](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/actions/workflows/ci.yml?query=branch%3Amain)-->
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/%3C%2F%3E-Node.js-%230074c1.svg)](https://nodejs.org/en/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 1. [Overview](#overview)
 2. [Features](#features)
@@ -23,22 +27,25 @@ products:
    5. [Troubleshooting](#troubleshooting)
    6. [Publish to Azure](#publish-to-azure)
    7. [Building off of the sample](#building-off-of-the-sample)
-4. [Identity Storage Options](#Iidentity-storage-options)
+4. [Guidance](#guidance)
+   1. [Identity Storage Options](#Iidentity-storage-options)
+   2. [Bring Your Own Identity (BYOI)](#bring-your-own-identity-byoi)
 5. [Resources](#resources)
 6. [Known Issues](#known-issues)
-7. [Trademark](#trademark)
-8. [License](#license)
+7. [Contributing](#contributing)
+8. [Trademark](#trademark)
+9. [License](#license)
 
 ## Overview
 
 In order to properly implement Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to perform key actions for the communications lifecycle. These actions include authenticating users since the Azure Communication Services are identity-agnostic.
 
-This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to bring your own identity (**BYOI**) to the Azure Communication Services by storing the mapping between Azure AD and ACS users. The solution guides below:
+This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens . There are two scenarios:
 
-- Have a trusted backend service that will create ACS identities and issue access tokens.
-- Have this trusted service authenticate users and maintain a mapping between a Contoso identity and an ACS identity.
+1. As a developer, you need to enable authentication flow for joining native ACS and Teams Interop calling/chat by mapping ACS Identity to Azure Active Directory identity and using same ACS identity for the user to fetch ACS tokens in every session.
+2. As a developer, you need to enable authentication flow for Custom Teams Endpoint by using Azure Active Directory identity of Teams' user to fetch ACS tokens to join Teams calling/chat.
 
-> An ACS Solutions - Authentication Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
+> :loudspeaker: An ACS Solutions - Authentication Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
 
 Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/samples/calling-hero-sample).
 
@@ -50,15 +57,14 @@ This ACS Solutions - Authentication sample provides the following features:
 
 * **/getUser** - Return an ACS user id if existing in the database, otherwise, create an ACS user and then store the identity mapping.
 
-* **/getToken** - Get a token for an ACS user.
-
-* **/refreshToken** - Refresh a token for an existing ACS user.
+* **/getToken** - Get / refresh a token for an ACS user.
 
 * **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
 
-  > Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
+  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
 
-<img src="./media/acs-authentication-server-sample-sequence-diagram.png" alt="UML Sequence Diagram"/>
+
+(Add a workflow diagram here...)
 
 ## Getting Started
 
@@ -90,21 +96,32 @@ This ACS Solutions - Authentication sample provides the following features:
 
 1. ...
 
-## Identity Storage Options
+## Guidance
+
+### Identity Storage Options
+
+(Add privacy to provide links to data protection of ACS user Id)
 
 (Add a comparison table here...)
 
+### Bring Your Own Identity (BYOI)
+
+(AAD B2C)
+
 ## Resources
 
-- [Azure Communication Services User Access Management](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/client-and-server-architecture#user-access-management) - Dataflows present user access tokens to access Communication Services resources securely.
-- [Teams Interoperability](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop) - BYOI (Bring Your Own Identity) and Microsoft 365 authenticated interoperability for Teams.
-- [Azure Active Directory B2C documentation](https://docs.microsoft.com/en-us/azure/active-directory-b2c/) - A business-to-customer identity as a service.
 - [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
 - [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
 
 ## Known Issues
 
 * ...
+
+## Contributing
+
+Join us by making a contribution. To get you started check out our [making a contribution](<.>) guide.
+
+We look forward to building an amazing open source ACS sample with you!
 
 ## Trademark
 

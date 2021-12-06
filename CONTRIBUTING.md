@@ -22,12 +22,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 Sample apps are built to help showcase the capabilities of Azure Communication Services. 
 This app uses all best practices and follows limitations related to the service.
 As you contribute make sure to follow service guidelines or your work might not be accepted.
-The app is built on top of the existing Azure Communiation Services SDKs, and will not diverge from the capabilities offered by the SDK.
+The app is built on top of the existing Azure Communication Services SDKs, and will not diverge from the capabilities offered by the SDK.
 This means that if the feature desired is not supported on the SDK, please don't try to hack it into the sample. 
-
-The sample is continously updated as new features are added to the underlying SDKs and feel free to contribute any features that are supported.
-In the case of the calling app, two samples are available, one on the `main` branch and another on the `public-preview` branch. 
-If the feature you are looking to add is currently in `public preview`, meaning it is only available on `beta` packages, make sure to contribute to the correct branch.
 
 ## <a name="coc"></a> Code of Conduct
 
@@ -39,6 +35,7 @@ If you find a bug in the source code or a mistake in the documentation, you can 
 [submit a Pull Request](#submit-pr) with a fix.
 
 ## <a name="feature"></a> Want a Feature?
+
 You can *request* a new feature by [submitting an issue](#submit-issue) to the GitHub
 Repository. If you would like to *implement* a new feature, please submit an issue with
 a proposal for your work first, to be sure that we can use it.
@@ -64,12 +61,13 @@ chances of your issue being dealt with quickly:
 * **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be
   causing the problem (line of code or commit)
 
-You can file new issues by providing the above information at the corresponding repository's issues link: https://github.com/[organization-name]/[repository-name]/issues/new].
+You can file new issues by providing the above information at the corresponding repository's issues link: https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/issues/new.
 
 ### <a name="submit-pr"></a> Submitting a Pull Request (PR)
+
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-* Search the repository (https://github.com/[organization-name]/[repository-name]/pulls) for an open or closed PR
+* Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
 
 * Make your changes in a new git fork:
