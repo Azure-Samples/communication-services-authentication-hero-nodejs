@@ -56,6 +56,8 @@ Before contributing to this sample, please read our [contribution guidelines](./
 
 This ACS Solutions - Authentication sample provides the following features:
 
+* **/deleteUser** - Delete the identity mapping information from the user's roaming profile including the ACS identity.
+
 * **/getToken** - Get / refresh a token for an ACS user.
 
 * **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
