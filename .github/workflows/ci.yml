@@ -25,7 +25,5 @@ jobs:
         with:
           node-version: '14.x'
       - run: npm install
-      - run: npm lint
-      - run: npm prettier:check
       - run: npm run build
       # Enable this once the tests are set up (- run: npm test)
