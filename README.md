@@ -17,24 +17,25 @@ products:
 [![Node.js](https://img.shields.io/badge/%3C%2F%3E-Node.js-%230074c1.svg)](https://nodejs.org/en/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Getting Started](#getting-started)
-   1. [Prerequisites](#prerequisites)
-   2. [Code Structure](#code-structure)
-   3. [Before running the sample for the first time](#before-running-the-sample-for-the-first-time)
-   4. [Locally deploying the sample app](#locally-deploying-the-sample-app)
-   5. [Troubleshooting](#troubleshooting)
-   6. [Publish to Azure](#publish-to-azure)
-   7. [Building off of the sample](#building-off-of-the-sample)
-4. [Guidance](#guidance)
-   1. [Identity Storage Options](#Iidentity-storage-options)
-   2. [Bring Your Own Identity (BYOI)](#bring-your-own-identity-byoi)
-5. [Resources](#resources)
-6. [Known Issues](#known-issues)
-7. [Contributing](#contributing)
-8. [Trademark](#trademark)
-9. [License](#license)
+- [ACS Solutions - Authentication Server Sample](#acs-solutions---authentication-server-sample)
+  - [Overview](#overview)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Code Structure](#code-structure)
+    - [Before running the sample for the first time](#before-running-the-sample-for-the-first-time)
+    - [Locally deploying the sample app](#locally-deploying-the-sample-app)
+    - [Troubleshooting](#troubleshooting)
+    - [Publish to Azure](#publish-to-azure)
+    - [Building off of the sample](#building-off-of-the-sample)
+  - [Guidance](#guidance)
+    - [Identity Storage Options](#identity-storage-options)
+    - [Bring Your Own Identity (BYOI)](#bring-your-own-identity-byoi)
+  - [Resources](#resources)
+  - [Known Issues](#known-issues)
+  - [Contributing](#contributing)
+  - [Trademark](#trademark)
+  - [License](#license)
 
 ## Overview
 
@@ -54,6 +55,8 @@ Before contributing to this sample, please read our [contribution guidelines](./
 ## Features
 
 This ACS Solutions - Authentication sample provides the following features:
+
+* **/deleteUser** - Delete the identity mapping information from the user's roaming profile including the ACS identity.
 
 * **/getToken** - Get / refresh a token for an ACS user.
 

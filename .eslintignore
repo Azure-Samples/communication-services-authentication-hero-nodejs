@@ -1,0 +1,7 @@
+node_modules/
+# build artefacts
+build/
+# custom definition files
+src/types/
+
+.eslintrc.js
