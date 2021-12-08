@@ -2,8 +2,8 @@
 name: Request a feature
 about: Suggest a feature or share an idea.
 title: Add [what] to/in [where]
-labels: "status:triage"
-assignees: ""
+labels: 'status:triage'
+assignees: ''
 ---
 
 **What feature are you requesting?**
