@@ -1,9 +1,9 @@
 ---
 name: Report a bug
 about: Report a bug to help us improve.
-title: '[what is the issue?] in [where is the issue?]'
-labels: 'status:triage'
-assignees: ''
+title: "[what is the issue?] in [where is the issue?]"
+labels: "status:triage"
+assignees: ""
 ---
 
 **Describe the bug; what happened?**

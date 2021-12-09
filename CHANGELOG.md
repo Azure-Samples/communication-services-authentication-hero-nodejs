@@ -4,14 +4,14 @@
 
 # 0.1.0 (2021-XX-XX)
 
-_Features_
+**Features**
 
 - ...
 
-_Changes_
+**Changes**
 
 - ...
 
-_Fixes_
+**Fixes**
 
 - ...

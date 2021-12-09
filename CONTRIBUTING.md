@@ -12,11 +12,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-- [Sample App Purpose](#purpose)
-- [Code of Conduct](#coc)
-- [Issues and Bugs](#issue)
-- [Feature Requests](#feature)
-- [Submission Guidelines](#submit)
+  - [Sample App Purpose](#purpose)
+  - [Code of Conduct](#coc)
+  - [Issues and Bugs](#issue)
+  - [Feature Requests](#feature)
+  - [Submission Guidelines](#submit)
 
 ## <a name="purpose"></a>Sample App Purpose
 
@@ -38,8 +38,8 @@ If you find a bug in the source code or a mistake in the documentation, you can 
 
 ## <a name="feature"></a> Want a Feature?
 
-You can _request_ a new feature by [submitting an issue](.github/ISSUE_TEMPLATE/request-a-feature.md) to the GitHub
-Repository. If you would like to _implement_ a new feature, please submit an issue with
+You can *request* a new feature by [submitting an issue](.github/ISSUE_TEMPLATE/request-a-feature.md) to the GitHub
+Repository. If you would like to *implement* a new feature, please submit an issue with
 a proposal for your work first, to be sure that we can use it.
 
 - **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
