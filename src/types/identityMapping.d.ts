@@ -3,7 +3,16 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-export class Constants {
-  // The name of Graph open extension representing some roaming profile information about users
-  static OPEN_EXTENSION_NAME = 'com.contoso.identityMapping';
-}
+/**
+ * The type of the identity mapping
+ */
+export type identityMapping = {
+  /**
+   * The name of the open extension representing some roaming profile information about the user
+   */
+  extensionName: string;
+  /**
+   * Id of the CommunicationUser as returned from the Communication Service.
+   */
+  acsUserIdentity: string;
+};

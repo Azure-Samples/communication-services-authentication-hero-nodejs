@@ -5,7 +5,7 @@
 
 import createError from 'http-errors';
 import express from 'express';
-import logger from 'morgan';
+
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';

@@ -25,16 +25,12 @@
     "@azure/identity": "^2.0.1",
     "@microsoft/microsoft-graph-client": "^2.2.1",
     "express": "~4.16.1",
-    "express-session": "^1.17.1",
-    "morgan": "~1.9.1",
-    "winston": "^3.3.3"
+    "express-session": "^1.17.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/http-errors": "^1.8.1",
-    "@types/morgan": "^1.9.3",
     "@types/node": "^16.11.11",
-    "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "debug": "~2.6.9",
