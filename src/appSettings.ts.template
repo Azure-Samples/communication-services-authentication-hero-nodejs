@@ -1,7 +1,26 @@
+/**---------------------------------------------------------------------------------------------
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License. See License.txt in the project root for license information.
+ *---------------------------------------------------------------------------------------------*/
+
 export const appSettings = {
-    remoteResources: {
-        communicationServices: {
-            connectionString: '<yourconnectionstring>'
+  remoteResources: {
+    communicationServices: {
+      connectionString: '<your_connection_string>'
+    },
+    azureActiveDirectory: {
+      appRegistrations: {
+        // Application (Client) ID from Overview of app registration
+        applicationId: '<your_application_id>',
+        // Directory (Tenant) ID from Overview of app registration
+        tenantId: '<your_tenant_id>',
+        redirectUri: '<your_redirect_uri>',
+        apiPermissions: {
+          communicationServices: {
+            voIP: '<your_voip_scope>'
+          }
         }
+      }
     }
+  }
 };

@@ -9,7 +9,6 @@ import {
   CommunicationIdentityClient,
   CommunicationUserToken
 } from '@azure/communication-identity';
-import { DefaultAzureCredential } from '@azure/identity';
 import { appSettings } from '../appSettings';
 
 export const acsManager = {
@@ -17,9 +16,8 @@ export const acsManager = {
    * Authenticate with Azure AD
    */
   createAuthenticatedClient: (): CommunicationIdentityClient => {
-    const endpoint = appSettings.remoteResources.communicationServices.endpoint;
-    const tokenCredential = new DefaultAzureCredential();
-    const identityClient = new CommunicationIdentityClient(endpoint, tokenCredential);
+    const connectionString = appSettings.remoteResources.communicationServices.connectionString;
+    const identityClient = new CommunicationIdentityClient(connectionString);
 
     return identityClient;
   },

@@ -1,5 +1,4 @@
-# Ignore artifacts:
+*.md
+.github
 build
 node_modules
-.github
-*.md

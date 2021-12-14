@@ -4,8 +4,9 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { Request, Response } from 'express';
-import { acsManager } from '../utils/acsManager';
-import { graphManager } from '../utils/graphManager';
+import { Constants } from '../config/constants';
+import { acsManager } from '../services/acsManager';
+import { graphManager } from '../services/graphManager';
 
 export const acsUserController = {
   /**
@@ -14,11 +15,11 @@ export const acsUserController = {
   createACSUser: async (req: Request, res: Response) => {
     const acsUserId = await acsManager.createACSUserIdentity();
     try {
-      const mappingResponse = await graphManager.addIdentityMapping('accessToken', acsUserId);
+      const mappingResponse = await graphManager.addIdentityMapping(Constants.ACCESS_TOKEN, acsUserId);
       return res.status(200).json(mappingResponse);
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ errorMessage: error });
+      return res.status(500).send({ status: 500, message: error.message });
     }
   },
 
@@ -27,11 +28,11 @@ export const acsUserController = {
    */
   getACSUser: async (req: Request, res: Response) => {
     try {
-      const acsuserId = await graphManager.getACSUserId('accessToken');
+      const acsuserId = await graphManager.getACSUserId(Constants.ACCESS_TOKEN);
       return res.status(200).json({ acsUserId: acsuserId });
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ errorMessage: error });
+      return res.status(500).send({ status: 500, message: error.message });
     }
   },
 
@@ -40,19 +41,19 @@ export const acsUserController = {
    */
   deleteACSUser: async (req: Request, res: Response) => {
     try {
-      const acsuserId = await graphManager.getACSUserId('accessToken');
+      const acsuserId = await graphManager.getACSUserId(Constants.ACCESS_TOKEN);
       // Delete the ACS user identity which revokes all active access tokens
       // and prevents users from issuing access tokens for the identity.
       // It also removes all the persisted content associated with the identity.
       acsManager.deleteACSUserIdentity(acsuserId);
       // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
-      graphManager.deleteIdentityMapping('accessToken');
+      graphManager.deleteIdentityMapping(Constants.ACCESS_TOKEN);
       return res.status(200).json({
         message: `Successfully deleted the ACS user identity ${acsuserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
       });
     } catch (error) {
       console.log(error);
-      return res.status(400).json({ errorMessage: error });
+      return res.status(500).send({ status: 500, message: error.message });
     }
   }
 };

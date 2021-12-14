@@ -3,6 +3,8 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
+// Used to fix the error "PolyFillNotAvailable: Library cannot function without fetch. So, please provide polyfill for it."
+import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { identityMapping } from '../types/identityMapping';
 import { Constants } from '../config/constants';
@@ -33,14 +35,13 @@ export const graphManager = {
    */
   getACSUserId: async (accessToken: string): Promise<string | undefined> => {
     const client = graphManager.createAuthenticatedClient(accessToken);
-    const response = await client.api('/me').expand('extensions').select('id').get();
+    const roamingProfileInfoResponse = await client.api('/me').expand('extensions').select('id').get();
 
-    if (!response.ok) {
+    if (!roamingProfileInfoResponse.extensions.length) {
       throw new Error(GET_ACS_USER_IDENTITY_ERROR);
     }
 
-    const roamingProfileInfoJson = await response.json();
-    const openExtensionsData = roamingProfileInfoJson['extensions'][0];
+    const openExtensionsData = roamingProfileInfoResponse['extensions'][0];
 
     return openExtensionsData && openExtensionsData['acsUserIdentity'];
   },
@@ -52,7 +53,6 @@ export const graphManager = {
    */
   addIdentityMapping: async (accessToken: string, acsUserId: string): Promise<identityMapping> => {
     const client = graphManager.createAuthenticatedClient(accessToken);
-
     const extension = {
       '@odata.type': 'microsoft.graph.openTypeExtension',
       extensionName: Constants.OPEN_EXTENSION_NAME,
@@ -61,13 +61,13 @@ export const graphManager = {
 
     const response = await client.api('/me/extensions').post(extension);
 
-    if (!response.ok) {
+    if (!response.extensionName) {
       throw new Error(ADD_IDENTITY_MAPPING_ERROR);
     }
 
     return {
-      extensionName: response.json().extensionName,
-      acsUserIdentity: response.json().acsUserIdentity
+      extensionName: response.extensionName,
+      acsUserIdentity: response.acsUserIdentity
     };
   },
 
@@ -79,7 +79,7 @@ export const graphManager = {
     const client = graphManager.createAuthenticatedClient(accessToken);
     const response = await client.api(`/me/extensions/${Constants.OPEN_EXTENSION_NAME}`).delete();
 
-    if (response.statusCode !== 204) {
+    if (response.error) {
       throw new Error(DELETE_IDENTITY_MAPPING_ERROR);
     }
   }
