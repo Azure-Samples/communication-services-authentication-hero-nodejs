@@ -1,6 +1,6 @@
 /**---------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
 import { Request, Response } from 'express';
@@ -34,7 +34,9 @@ export const tokenController = {
         expiresOn: expiresOn
       };
       // Store the identity mapping information
-      graphManager.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId);
+      graphManager.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId).catch((error) => {
+        console.log(error.message);
+      });
     }
 
     return res.status(200).json(acsToken);
