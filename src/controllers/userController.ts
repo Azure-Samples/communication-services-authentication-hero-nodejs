@@ -8,7 +8,7 @@ import { Constants } from '../config/constants';
 import { acsManager } from '../services/acsService';
 import { graphManager } from '../services/graphService';
 
-export const acsUserController = {
+export const userController = {
   /**
    * Create a Communication Services identity and then add the roaming identity mapping information to the user resource
    */
