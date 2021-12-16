@@ -55,18 +55,18 @@ export const graphManager = {
     const client = graphManager.createAuthenticatedClient(accessToken);
     const extension = {
       '@odata.type': 'microsoft.graph.openTypeExtension',
-      extensionName: Constants.OPEN_EXTENSION_NAME,
+      extensionsName: Constants.OPEN_EXTENSIONS_NAME,
       acsUserIdentity: acsUserId
     };
 
     const response = await client.api('/me/extensions').post(extension);
 
-    if (!response.extensionName) {
+    if (!response.extensionsName) {
       throw new Error(ADD_IDENTITY_MAPPING_ERROR);
     }
 
     return {
-      extensionName: response.extensionName,
+      extensionsName: response.extensionsName,
       acsUserIdentity: response.acsUserIdentity
     };
   },
@@ -77,7 +77,7 @@ export const graphManager = {
    */
   deleteIdentityMapping: async (accessToken: string): Promise<void> => {
     const client = graphManager.createAuthenticatedClient(accessToken);
-    const response = await client.api(`/me/extensions/${Constants.OPEN_EXTENSION_NAME}`).delete();
+    const response = await client.api(`/me/extensions/${Constants.OPEN_EXTENSIONS_NAME}`).delete();
 
     if (response.error) {
       throw new Error(DELETE_IDENTITY_MAPPING_ERROR);
