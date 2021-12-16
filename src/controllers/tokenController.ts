@@ -5,8 +5,8 @@
 
 import { Request, Response } from 'express';
 import { Constants } from '../config/constants';
-import { acsManager } from '../services/acsManager';
-import { graphManager } from '../services/graphManager';
+import { acsManager } from '../services/acsService';
+import { graphManager } from '../services/graphService';
 
 export const tokenController = {
   /**
