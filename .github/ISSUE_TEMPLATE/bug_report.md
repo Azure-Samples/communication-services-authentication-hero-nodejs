@@ -3,7 +3,7 @@ name: Report a bug
 about: Report a bug to help us improve.
 title: "[BUG]<what is the issue?> in <where is the issue?>"
 labels: bug
-assignees: clarenceli-msft, ikumarapeli-msft, lei-msft, rvenugopal-msft, vaibhavjain-msft
+assignees: clarenceli-msft, ikumarapeli-msft, lei-msft, rvenugopal-msft, vaibhavjain-msft, alcail
 
 ---
 

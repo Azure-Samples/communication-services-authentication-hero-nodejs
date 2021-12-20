@@ -45,10 +45,15 @@ export const acsManager = {
     const identityClient = acsManager.createAuthenticatedClient();
     // Issue an access token with the "voip" and "chat" scope for an identity
     const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(identityResponse, ['voip', 'chat']);
+    const tokenResponse = await identityClient.getToken(
+      identityResponse,
+      appSettings.remoteResources.communicationServices.scopes
+    );
 
-    console.log(`\nThe  access token issued is ${tokenResponse.token}`);
-    console.log(`\nIssued an access token with 'voip' scope that expires at ${tokenResponse.expiresOn}:`);
+    console.log(
+      `\nIssued an access token with ${appSettings.remoteResources.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
+    );
+    console.log(`\n${tokenResponse.token}`);
 
     return tokenResponse;
   },
@@ -59,11 +64,15 @@ export const acsManager = {
   createACSUserIdentityAndToken: async (): Promise<CommunicationUserToken> => {
     const identityClient = acsManager.createAuthenticatedClient();
     // Issue an identity and an access token with the "voip" and "chat" scope for the new identity
-    const identityTokenResponse = await identityClient.createUserAndToken(['voip', 'chat']);
+    const identityTokenResponse = await identityClient.createUserAndToken(
+      appSettings.remoteResources.communicationServices.scopes
+    );
 
     console.log(`\nCreated an identity with ID: ${identityTokenResponse.user.communicationUserId}`);
-    console.log(`\nThe  access token issued is ${identityTokenResponse.token}`);
-    console.log(`\nIssued an access token with 'voip' scope that expires at ${identityTokenResponse.expiresOn}:`);
+    console.log(
+      `\nIssued an access token with ${appSettings.remoteResources.communicationServices.scopes} scope that expires at ${identityTokenResponse.expiresOn}:`
+    );
+    console.log(`\n${identityTokenResponse.token}`);
 
     return identityTokenResponse;
   },

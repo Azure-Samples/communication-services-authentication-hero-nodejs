@@ -15,7 +15,7 @@ export const tokenController = {
    * 1. If the identity mapping information existing in the user's roaming profile,
    *    then issue an access token for an already existing Communication Services identity
    * 2. If not, create a Communication Services identity and issue an access token first,
-   *    then add the identity mapping information to the user resource using Graph open extensions.
+   *    then add the identity mapping information to the user resource using Graph open extension.
    */
   getACSToken: async (req: Request, res: Response) => {
     let acsToken;

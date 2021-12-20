@@ -6,21 +6,8 @@
 export const appSettings = {
   remoteResources: {
     communicationServices: {
-      connectionString: '<your_connection_string>'
-    },
-    azureActiveDirectory: {
-      appRegistrations: {
-        // Application (Client) ID from Overview of app registration
-        applicationId: '<your_application_id>',
-        // Directory (Tenant) ID from Overview of app registration
-        tenantId: '<your_tenant_id>',
-        redirectUri: '<your_redirect_uri>',
-        apiPermissions: {
-          communicationServices: {
-            voIP: '<your_voip_scope>'
-          }
-        }
-      }
+      connectionString: '<your_connection_string>',
+      scopes: 'Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]'
     }
   }
 };
