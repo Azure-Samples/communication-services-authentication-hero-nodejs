@@ -79,7 +79,7 @@ export const graphManager = {
     const graphServiceClient = graphManager.createAuthenticatedClient(accessToken);
     const response = await graphServiceClient.api(`/me/extensions/${Constants.EXTENSION_NAME}`).delete();
 
-    if (response.error) {
+    if (response && response.error) {
       throw new Error(DELETE_IDENTITY_MAPPING_ERROR);
     }
   }
