@@ -3,14 +3,11 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import app from './app';
-
-const port = app.get('port');
-const env = app.get('env');
-
-// Start Express server
-export const server = app.listen(port, () => {
-  // Will be changed when merging
-  console.log(`  ACS authentication server sample is running at http://localhost:${port} in ${env} mode`);
-  console.log('  Press CTRL-C to stop\n');
-});
+export class Constants {
+  // The name of Graph open extension representing some roaming profile information about users
+  static EXTENSION_NAME = 'com.contoso.identityMapping';
+  // The host of authority
+  static AUTHORITY_HOST = 'https://login.microsoftonline.com';
+  // TODO: Will be removed after merging OBO
+  static ACCESS_TOKEN = '';
+}

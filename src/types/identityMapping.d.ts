@@ -3,14 +3,16 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import app from './app';
-
-const port = app.get('port');
-const env = app.get('env');
-
-// Start Express server
-export const server = app.listen(port, () => {
-  // Will be changed when merging
-  console.log(`  ACS authentication server sample is running at http://localhost:${port} in ${env} mode`);
-  console.log('  Press CTRL-C to stop\n');
-});
+/**
+ * The type of the identity mapping
+ */
+export type identityMapping = {
+  /**
+   * The name of the open extension representing some roaming profile information about the user
+   */
+  extensionName: string;
+  /**
+   * Id of the CommunicationUser as returned from the Communication Service.
+   */
+  acsUserIdentity: string;
+};

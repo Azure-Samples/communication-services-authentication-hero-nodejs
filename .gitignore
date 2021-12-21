@@ -10,4 +10,5 @@ build/**/*
 
 # Configuration files
 src/appSettings.ts
+
 /.vs

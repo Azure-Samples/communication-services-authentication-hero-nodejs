@@ -12,18 +12,19 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
- - [Sample App Purpose](#purpose)
- - [Code of Conduct](#coc)
- - [Issues and Bugs](#issue)
- - [Feature Requests](#feature)
- - [Submission Guidelines](#submit)
+  - [Sample App Purpose](#purpose)
+  - [Code of Conduct](#coc)
+  - [Issues and Bugs](#issue)
+  - [Feature Requests](#feature)
+  - [Submission Guidelines](#submit)
 
 ## <a name="purpose"></a>Sample App Purpose
-Sample apps are built to help showcase the capabilities of Azure Communication Services. 
+
+Sample apps are built to help showcase the capabilities of Azure Communication Services.
 This app uses all best practices and follows limitations related to the service.
 As you contribute make sure to follow service guidelines or your work might not be accepted.
 The app is built on top of the existing Azure Communication Services SDKs, and will not diverge from the capabilities offered by the SDK.
-This means that if the feature desired is not supported on the SDK, please don't try to hack it into the sample. 
+This means that if the feature desired is not supported on the SDK, please don't try to hack it into the sample.
 
 ## <a name="coc"></a> Code of Conduct
 
@@ -49,15 +50,15 @@ a proposal for your work first, to be sure that we can use it.
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-* Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
+- Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
 
-- Make your changes in a new git fork:
+* Make your changes in a new git fork:
 
-- Commit your changes using a descriptive commit message
-- Push your fork to GitHub:
-- In GitHub, create a pull request
-- If we suggest changes then:
+* Commit your changes using a descriptive commit message
+* Push your fork to GitHub:
+* In GitHub, create a pull request
+* If we suggest changes then:
 
   - Make the required updates.
   - Rebase your fork and force push to your GitHub repository (this will update your Pull Request):

@@ -1,11 +1,11 @@
 ---
 page_type: sample
 languages:
-- javascript
-- nodejs
+  - javascript
+  - nodejs
 products:
-- azure
-- azure-communication-services
+  - azure
+  - azure-communication-services
 ---
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
@@ -57,14 +57,13 @@ Before contributing to this sample, please read our [contribution guidelines](./
 
 This ACS Solutions - Authentication sample provides the following features:
 
-* **/deleteUser** - Delete the identity mapping information from the user's roaming profile including the ACS identity.
+- **/deleteUser** - Delete the identity mapping information from the user's roaming profile including the ACS identity.
 
-* **/getToken** - Get / refresh a token for an ACS user.
+- **/getToken** - Get / refresh a token for an ACS user.
 
-* **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
+- **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
 
   > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
-
 
 (Add a workflow diagram here...)
 
@@ -117,11 +116,11 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ## Known Issues
 
-* ...
+- ...
 
 ## Contributing
 
-Join us by making a contribution. To get you started check out our [making a contribution](<.>) guide.
+Join us by making a contribution. To get you started check out our [making a contribution](.) guide.
 
 We look forward to building an amazing open source ACS sample with you!
 
@@ -132,4 +131,3 @@ We look forward to building an amazing open source ACS sample with you!
 ## License
 
 [MIT](LICENSE.md)
-
