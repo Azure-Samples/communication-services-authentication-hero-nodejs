@@ -5,8 +5,8 @@
 
 import { Request, Response } from 'express';
 import { Constants } from '../config/constants';
-import { acsManager } from '../services/acsService';
-import { graphManager } from '../services/graphService';
+import { acsService } from '../services/acsService';
+import { graphService } from '../services/graphService';
 
 export const tokenController = {
   /**
@@ -22,11 +22,11 @@ export const tokenController = {
 
     try {
       // User exists
-      const acsUserId = await graphManager.getACSUserId(Constants.ACCESS_TOKEN);
-      acsToken = await acsManager.createACSToken(acsUserId);
+      const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      acsToken = await acsService.createACSToken(acsUserId);
     } catch (error) {
       // User doesn't exist
-      const identityTokenResponse = await acsManager.createACSUserIdentityAndToken();
+      const identityTokenResponse = await acsService.createACSUserIdentityAndToken();
       // retrieve the token, its expiry date and user object from the response
       const { token, expiresOn, user } = identityTokenResponse;
       acsToken = {
@@ -34,7 +34,7 @@ export const tokenController = {
         expiresOn: expiresOn
       };
       // Store the identity mapping information
-      graphManager.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId).catch((error) => {
+      graphService.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId).catch((error) => {
         console.log(error.message);
       });
     }

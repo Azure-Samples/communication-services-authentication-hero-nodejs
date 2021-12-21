@@ -13,7 +13,7 @@ const ADD_IDENTITY_MAPPING_ERROR = 'An error has occured when adding the identit
 const GET_ACS_USER_IDENTITY_ERROR = 'An error has occured when retrieving the ACS user id';
 const DELETE_IDENTITY_MAPPING_ERROR = 'An error has occured when deleting the identity mapping information';
 
-export const graphManager = {
+export const graphService = {
   /**
    * Creating a Graph client instance via options method.
    * @param accessToken - The token issued by the Microsoft identity platform
@@ -34,7 +34,7 @@ export const graphManager = {
    * @param accessToken - The token issued by the Microsoft identity platform
    */
   getACSUserId: async (accessToken: string): Promise<string | undefined> => {
-    const graphServiceClient = graphManager.createAuthenticatedClient(accessToken);
+    const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
     const roamingProfileInfoResponse = await graphServiceClient.api('/me').expand('extensions').select('id').get();
 
     if (!roamingProfileInfoResponse.extensions.length) {
@@ -52,7 +52,7 @@ export const graphManager = {
    * @param acsUserId - The Communication Services identity
    */
   addIdentityMapping: async (accessToken: string, acsUserId: string): Promise<identityMapping> => {
-    const graphServiceClient = graphManager.createAuthenticatedClient(accessToken);
+    const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
     const extension = {
       '@odata.type': 'microsoft.graph.openTypeExtension',
       extensionName: Constants.EXTENSION_NAME,
@@ -76,7 +76,7 @@ export const graphManager = {
    * @param accessToken - The token issued by the Microsoft identity platform
    */
   deleteIdentityMapping: async (accessToken: string): Promise<void> => {
-    const graphServiceClient = graphManager.createAuthenticatedClient(accessToken);
+    const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
     const response = await graphServiceClient.api(`/me/extensions/${Constants.EXTENSION_NAME}`).delete();
 
     if (response && response.error) {
