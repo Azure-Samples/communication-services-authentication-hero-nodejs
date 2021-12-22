@@ -42,10 +42,11 @@ products:
 
 In order to properly implement Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to perform key actions for the communications lifecycle. These actions include authenticating users since the Azure Communication Services are identity-agnostic.
 
-This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens . There are two scenarios:
+This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens. 
 
-1. As a developer, you need to enable authentication flow for joining native ACS and Teams Interop calling/chat by mapping ACS Identity to Azure Active Directory identity and using same ACS identity for the user to fetch ACS tokens in every session.
-2. As a developer, you need to enable authentication flow for Custom Teams Endpoint by using Azure Active Directory identity of Teams' user to fetch ACS tokens to join Teams calling/chat.
+There are two scenarios:
+1. As a developer, you need to enable the authentication flow for joining native ACS and Teams Interop calling/chat by mapping an ACS Identity to an Azure Active Directory identity and using this same ACS identity for the user to fetch an ACS tokens in every session.
+2. As a developer, you need to enable the authentication flow for Custom Teams Endpoint by using an Azure Active Directory identity of Teams' user to fetch an ACS tokens to be able to join Teams calling/chat.
 
 > :loudspeaker: An ACS Solutions - Authentication Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
 
@@ -63,7 +64,7 @@ This ACS Solutions - Authentication sample provides the following features:
 
 - **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
 
-  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
+  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
 
 (Add a workflow diagram here...)
 
