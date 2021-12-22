@@ -50,9 +50,8 @@ a proposal for your work first, to be sure that we can use it.
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-- Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
+* Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
-
 * Make your changes in a new git fork
 * Commit your changes using a descriptive commit message
 * Push your fork to GitHub
