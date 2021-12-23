@@ -5,6 +5,8 @@
 
 import { Request, Response } from 'express';
 import { aadManager } from '../services/aadService';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
 import { appSettings } from '../appSettings';
 
 // Create a client for communication with Azure Active Directory
