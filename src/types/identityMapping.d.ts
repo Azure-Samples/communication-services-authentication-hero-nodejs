@@ -8,10 +8,6 @@
  */
 export type identityMapping = {
   /**
-   * The name of the open extension representing some roaming profile information about the user
-   */
-  extensionName: string;
-  /**
    * Id of the CommunicationUser as returned from the Communication Service.
    */
   acsUserIdentity: string;

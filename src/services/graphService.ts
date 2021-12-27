@@ -65,10 +65,7 @@ export const graphService = {
       throw new Error(ADD_IDENTITY_MAPPING_ERROR);
     }
 
-    return {
-      extensionName: response.extensionName,
-      acsUserIdentity: response.acsUserIdentity
-    };
+    return { acsUserIdentity: response.acsUserIdentity};
   },
 
   /**

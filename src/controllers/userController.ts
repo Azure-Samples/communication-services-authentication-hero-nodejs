@@ -15,8 +15,8 @@ export const userController = {
   createACSUser: async (req: Request, res: Response) => {
     const acsUserId = await acsService.createACSUserIdentity();
     try {
-      const mappingResponse = await graphService.addIdentityMapping(Constants.ACCESS_TOKEN, acsUserId);
-      return res.status(200).json(mappingResponse);
+      const identityMappingResponse = await graphService.addIdentityMapping(Constants.ACCESS_TOKEN, acsUserId);
+      return res.status(200).json(identityMappingResponse);
     } catch (error) {
       console.log(error);
       return res.status(500).send({ status: 500, message: error.message });
@@ -48,15 +48,15 @@ export const userController = {
    */
   deleteACSUser: async (req: Request, res: Response) => {
     try {
-      const acsuserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
       // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
       graphService.deleteIdentityMapping(Constants.ACCESS_TOKEN);
       // Delete the ACS user identity which revokes all active access tokens
       // and prevents users from issuing access tokens for the identity.
       // It also removes all the persisted content associated with the identity.
-      acsService.deleteACSUserIdentity(acsuserId);
+      acsService.deleteACSUserIdentity(acsUserId);
       return res.status(200).json({
-        message: `Successfully deleted the ACS user identity ${acsuserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
+        message: `Successfully deleted the ACS user identity ${acsUserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
       });
     } catch (error) {
       console.log(error);

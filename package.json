@@ -1,5 +1,5 @@
 {
-  "name": "acs-authentication-service-sample",
+  "name": "acs-authentication-server-sample",
   "description": "An ACS solution server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities",
   "version": "1.0.0",
   "main": "build/server.js",
