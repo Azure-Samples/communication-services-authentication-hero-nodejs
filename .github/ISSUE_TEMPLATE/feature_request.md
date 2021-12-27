@@ -8,7 +8,7 @@ assignees: clarenceli-msft, ikumarapeli-msft, lei-msft, rvenugopal-msft, vaibhav
 ---
 
 **Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+A clear and concise description of what the problem is. Ex. I'm facing difficulty when [...]
 
 **What would be the benefit of adding this feature?**
 A clear and concise description of what benefit this feature will bring.
