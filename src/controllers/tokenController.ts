@@ -36,7 +36,8 @@ export const tokenController = {
           const { token, expiresOn, user } = identityTokenResponse;
           // Store the identity mapping information
           graphService.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId);
-
+          // This LoC below should be excuted after AddIdentityMapping excuted successfully
+          // because the acsToken can not be returned if failing to add the identity mapping information to Microsoft Graph
           acsToken = {
             token: token,
             expiresOn: expiresOn
