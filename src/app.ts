@@ -3,12 +3,13 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import createError from 'http-errors';
-import express from 'express';
+import express, { NextFunction } from 'express';
+import { Request, Response } from 'express';
 
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';
+import { errorUtil } from './utils/errorUtil';
 
 // Create Express server
 const app = express();
@@ -22,9 +23,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/', userRouter());
 app.use('/api/', tokenRouter());
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+// Any other route is going to wind up at the app.all() function defined.
+// The all() method encompasses all types of requests, including GET and PATCH, and the asterisk accepts any URL.
+// From there, define a middleware that sends a JSend response.
+/* eslint-disable @typescript-eslint/no-unused-vars */
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  const statusCode = 404;
+  const errorMessage = `The ${req.originalUrl} endpoint is invalid!`;
+  const errorResponse = errorUtil.createErrorResponse(statusCode, errorMessage);
+
+  res.status(statusCode).send(errorResponse);
+});
+
+// The best practice is to manage error handling in one place (Keep controllers cleaner and simpler)
+// As long as having these four arguments, Express will recognize the middleware as an error handling middleware.
+/* eslint-disable @typescript-eslint/no-unused-vars */
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = 500;
+  const errorResponse = errorUtil.createErrorResponse(statusCode, err.message, err.stack);
+
+  res.status(statusCode).send(errorResponse);
 });
 
 export default app;

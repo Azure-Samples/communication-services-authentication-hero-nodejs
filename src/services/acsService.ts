@@ -13,12 +13,19 @@ import {
 // @ts-ignore
 import { appSettings } from '../appSettings';
 
+// Error messages
+const CREATE_ACS_USER_IDENTITY_ERROR = 'An error occured when creating an ACS user id';
+const CREATE_ACS_TOKEN_ERROR = 'An error occured when creating an ACS token';
+const CREATE_ACS_USER_IDENTITY_TOKEN_ERROR =
+  'An error occured when creating an ACS user id and issuing an access token for it in one go';
+const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occured when deleting an ACS user id';
+
 export const acsService = {
   /**
    * Authenticate with Azure AD
    */
   createAuthenticatedClient: (): CommunicationIdentityClient => {
-    const connectionString = appSettings.remoteResources.communicationServices.connectionString;
+    const connectionString = appSettings.communicationServices.connectionString;
     const identityClient = new CommunicationIdentityClient(connectionString);
 
     return identityClient;
@@ -29,12 +36,18 @@ export const acsService = {
    */
   createACSUserIdentity: async (): Promise<string> => {
     const identityClient = acsService.createAuthenticatedClient();
-    // Create an identity
-    const identityResponse = await identityClient.createUser();
 
-    console.log(`\nCreated an identity with ID: ${identityResponse.communicationUserId}`);
+    try {
+      // Create an identity
+      const identityResponse = await identityClient.createUser();
 
-    return identityResponse.communicationUserId;
+      console.log(`\nCreated an identity with ID: ${identityResponse.communicationUserId}`);
+
+      return identityResponse.communicationUserId;
+    } catch (error) {
+      console.log(CREATE_ACS_USER_IDENTITY_ERROR);
+      throw error;
+    }
   },
 
   /**
@@ -43,19 +56,22 @@ export const acsService = {
    */
   createACSToken: async (acsUserId: string): Promise<CommunicationAccessToken> => {
     const identityClient = acsService.createAuthenticatedClient();
-    // Issue an access token with the "voip" and "chat" scope for an identity
-    const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(
-      identityResponse,
-      appSettings.remoteResources.communicationServices.scopes
-    );
 
-    console.log(
-      `\nIssued an access token with ${appSettings.remoteResources.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
-    );
-    console.log(`\n${tokenResponse.token}`);
+    try {
+      // Issue an access token with the "voip" and "chat" scope for an identity
+      const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
+      const tokenResponse = await identityClient.getToken(identityResponse, appSettings.communicationServices.scopes);
 
-    return tokenResponse;
+      console.log(
+        `\nIssued an access token with ${appSettings.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
+      );
+      console.log(`\n${tokenResponse.token}`);
+
+      return tokenResponse;
+    } catch (error) {
+      console.log(CREATE_ACS_TOKEN_ERROR);
+      throw error;
+    }
   },
 
   /**
@@ -63,18 +79,22 @@ export const acsService = {
    */
   createACSUserIdentityAndToken: async (): Promise<CommunicationUserToken> => {
     const identityClient = acsService.createAuthenticatedClient();
-    // Issue an identity and an access token with the "voip" and "chat" scope for the new identity
-    const identityTokenResponse = await identityClient.createUserAndToken(
-      appSettings.remoteResources.communicationServices.scopes
-    );
 
-    console.log(`\nCreated an identity with ID: ${identityTokenResponse.user.communicationUserId}`);
-    console.log(
-      `\nIssued an access token with ${appSettings.remoteResources.communicationServices.scopes} scope that expires at ${identityTokenResponse.expiresOn}:`
-    );
-    console.log(`\n${identityTokenResponse.token}`);
+    try {
+      // Issue an identity and an access token with the "voip" and "chat" scope for the new identity
+      const identityTokenResponse = await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
 
-    return identityTokenResponse;
+      console.log(`\nCreated an identity with ID: ${identityTokenResponse.user.communicationUserId}`);
+      console.log(
+        `\nIssued an access token with ${appSettings.communicationServices.scopes} scope that expires at ${identityTokenResponse.expiresOn}:`
+      );
+      console.log(`\n${identityTokenResponse.token}`);
+
+      return identityTokenResponse;
+    } catch (error) {
+      console.log(CREATE_ACS_USER_IDENTITY_TOKEN_ERROR);
+      throw error;
+    }
   },
 
   /**
@@ -86,9 +106,15 @@ export const acsService = {
   deleteACSUserIdentity: async (acsUserId: string): Promise<void> => {
     const identityClient = acsService.createAuthenticatedClient();
     const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    // Delete an identity
-    await identityClient.deleteUser(identityResponse);
 
-    console.log(`\nDeleted the identity with ID: ${identityResponse.communicationUserId}`);
+    try {
+      // Delete an identity
+      await identityClient.deleteUser(identityResponse);
+
+      console.log(`\nDeleted the identity with ID: ${identityResponse.communicationUserId}`);
+    } catch (error) {
+      console.log(DELETE_ACS_USER_IDENTITY_ERROR);
+      throw error;
+    }
   }
 };

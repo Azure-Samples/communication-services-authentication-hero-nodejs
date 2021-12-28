@@ -4,10 +4,8 @@
  *---------------------------------------------------------------------------------------------*/
 
 export const appSettings = {
-  remoteResources: {
-    communicationServices: {
-      connectionString: '<your_connection_string>',
-      scopes: 'Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]'
-    }
+  communicationServices: {
+    connectionString: '<your_connection_string>',
+    scopes: 'Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]'
   }
 };
