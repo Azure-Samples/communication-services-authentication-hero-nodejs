@@ -5,11 +5,10 @@
 
 import express, { NextFunction } from 'express';
 import { Request, Response } from 'express';
-
+import { errorUtil } from './utils/errorUtil';
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';
-import { errorUtil } from './utils/errorUtil';
 
 // Create Express server
 const app = express();
