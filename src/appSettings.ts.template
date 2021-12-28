@@ -6,6 +6,6 @@
 export const appSettings = {
   communicationServices: {
     connectionString: '<your_connection_string>',
-    scopes: 'Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]'
+    scopes: '<communication_services_token_scopes>' // Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]
   }
 };
