@@ -9,6 +9,10 @@ import { Configuration, ConfidentialClientApplication } from '@azure/msal-node';
 import { appSettings } from '../appSettings';
 import { Constants } from '../config/constants';
 
+// Error messages
+const CREATE_AAD_TOKEN_ERROR = 'An error occured when creating an AAD token during user signing in';
+const CREATE_OBO_TOKEN_ERROR = 'An error occured when creating the OBO token with the previous AAD token';
+
 export const aadService = {
   /**
    * Create a confidential client application that lets users utilize the OBO workflow
@@ -35,20 +39,23 @@ export const aadService = {
       scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
       redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
     };
-
     // Get url to sign user in and consent to scopes needed for application
     const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
 
     // Generate the AAD token
-    const tokenRequest = {
-      code: authCode,
-      scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
-      redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
-    };
+    try {
+      const tokenRequest = {
+        code: authCode,
+        scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
+        redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
+      };
+      const aadTokenResponse = await confidentialClientApplication.acquireTokenByCode(tokenRequest);
 
-    const aadTokenResponse = await confidentialClientApplication.acquireTokenByCode(tokenRequest);
-
-    return aadTokenResponse.accessToken;
+      return aadTokenResponse.accessToken;
+    } catch (error) {
+      console.log(CREATE_AAD_TOKEN_ERROR);
+      throw error;
+    }
   },
 
   /**
@@ -59,13 +66,17 @@ export const aadService = {
     const aadToken = await aadService.createAADToken(confidentialClientApplication);
 
     // Generate the OBO token
-    const oboRequest = {
-      oboAssertion: aadToken,
-      scopes: ['user.read']
-    };
+    try {
+      const oboRequest = {
+        oboAssertion: aadToken,
+        scopes: ['user.read']
+      };
+      const oboTokenResponse = await confidentialClientApplication.acquireTokenOnBehalfOf(oboRequest);
 
-    const oboTokenResponse = await confidentialClientApplication.acquireTokenOnBehalfOf(oboRequest);
-
-    return oboTokenResponse.accessToken;
+      return oboTokenResponse.accessToken;
+    } catch (error) {
+      console.log(CREATE_OBO_TOKEN_ERROR);
+      throw error;
+    }
   }
 };
