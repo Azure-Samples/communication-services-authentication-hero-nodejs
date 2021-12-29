@@ -11,16 +11,11 @@ export const appSettings = {
     },
     azureActiveDirectory: {
       appRegistrations: {
-        applicationId: '<your_client_id>',
+        clientId: '<your_client_id>',
         clientSecret: '<your_client_secret>',
         tenantId: '<your_tenant_id>',
         redirectUri: 'The redirect uri of the application',
-        webAPIScope: 'The scope which the application consents to',
-        apiPermissions: {
-          communicationServices: {
-            voIP: 'voIP'
-          }
-        }
+        webAPIScope: 'The scope which the application consents to'
       }
     }
   }

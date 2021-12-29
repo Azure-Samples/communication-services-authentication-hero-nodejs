@@ -20,7 +20,7 @@ export const aadService = {
   createConfidentialClientApplication: (): ConfidentialClientApplication => {
     const msalConfig: Configuration = {
       auth: {
-        clientId: appSettings.remoteResources.azureActiveDirectory.appRegistrations.applicationId,
+        clientId: appSettings.remoteResources.azureActiveDirectory.appRegistrations.clientId,
         authority: `${Constants.AUTHORITY_HOST}/${appSettings.remoteResources.azureActiveDirectory.appRegistrations.tenantId}`,
         clientSecret: appSettings.remoteResources.azureActiveDirectory.appRegistrations.clientSecret
       }
