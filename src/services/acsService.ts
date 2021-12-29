@@ -58,7 +58,7 @@ export const acsService = {
     const identityClient = acsService.createAuthenticatedClient();
 
     try {
-      // Issue an access token with the "voip" and "chat" scope for an identity
+      // Issue an access token with the given scopes for an identity
       const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
       const tokenResponse = await identityClient.getToken(identityResponse, appSettings.communicationServices.scopes);
 
@@ -81,7 +81,7 @@ export const acsService = {
     const identityClient = acsService.createAuthenticatedClient();
 
     try {
-      // Issue an identity and an access token with the "voip" and "chat" scope for the new identity
+      // Issue an identity and an access token with the given scopes for the new identity
       const identityTokenResponse = await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
 
       console.log(`\nCreated an identity with ID: ${identityTokenResponse.user.communicationUserId}`);
