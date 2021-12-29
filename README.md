@@ -26,6 +26,7 @@ products:
     - [Code Structure](#code-structure)
     - [Before running the sample for the first time](#before-running-the-sample-for-the-first-time)
     - [Locally deploying the sample app](#locally-deploying-the-sample-app)
+    - [Locally testing the api](#locally-testing-the-api)
     - [Troubleshooting](#troubleshooting)
     - [Publish to Azure](#publish-to-azure)
     - [Building off of the sample](#building-off-of-the-sample)
@@ -42,14 +43,19 @@ products:
 
 In order to properly implement Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to perform key actions for the communications lifecycle. These actions include authenticating users since the Azure Communication Services are identity-agnostic.
 
-This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens . There are two scenarios:
+This is an ACS solution server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens. 
 
-1. As a developer, you need to enable authentication flow for joining native ACS and Teams Interop calling/chat by mapping ACS Identity to Azure Active Directory identity and using same ACS identity for the user to fetch ACS tokens in every session.
-2. As a developer, you need to enable authentication flow for Custom Teams Endpoint by using Azure Active Directory identity of Teams' user to fetch ACS tokens to join Teams calling/chat.
+There are two scenarios:
+1. As a developer, you need to enable the authentication flow for joining native ACS and Teams Interop calling/chat by mapping an ACS Identity to an Azure Active Directory identity and using this same ACS identity for the user to fetch an ACS token in every session.
+2. As a developer, you need to enable the authentication flow for Custom Teams Endpoint by using an Azure Active Directory identity of Teams' user to fetch an ACS token to be able to join Teams calling/chat.
 
 > :loudspeaker: An ACS Solutions - Authentication Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
 
 Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/samples/calling-hero-sample).
+
+Before contributing to this sample, please read our [contribution guidelines](./CONTRIBUTING.md).
+
+Since the sample only focuses on the server apis, the client application is not part of the sample. If you want to add the client application to login user using Azure AD, then please follow the MSAL samples [here](https://github.com/AzureAD/microsoft-authentication-library-for-js).
 
 Before contributing to this sample, please read our [contribution guidelines](./CONTRIBUTING.md).
 
@@ -63,7 +69,7 @@ This ACS Solutions - Authentication sample provides the following features:
 
 - **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
 
-  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in your backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, you can require any additional authentication. Learn more information [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
+  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
 
 (Add a workflow diagram here...)
 
@@ -71,7 +77,68 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ### Prerequisites
 
-- ...
+- Register a Client and Web Api application in Azure Active Directory (AAD) as part of [On Behalf Of workflow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow). See instructions below
+- Update the TokenApi applications with information from the app registrations
+
+#### Server App Registration
+
+- go to https://portal.azure.com/
+- open Azure Active Directory service
+- on the Azure Active Directory page:
+  - navigate to and click on 'App Registrations' menu item
+  - click on 'New registration' 
+  - on the 'Register an application' page:
+    - name your application `AuthServer`
+    - select the 'Accounts in this organizational directory only (Microsoft only - Single tenant)' option for who can use or access this application
+    - redirect the URI to 'Web' platform with `http://localhost:44351/` as link
+    - click on 'Register' and it will open your application page once registration is sucessful
+- on your AuthServer application page:
+  - navigate to and click on 'Certificates & Secrets' menu item
+    - on the 'Client secrets' tab, click on 'New client secret' to create a new one
+    - add a description, select an expiration time and click 'Add'
+    - this will be used later on
+  - navigate to and click on 'API permissions' menu item
+    - select 'Grant admin consent' for the Microsoft Graph api call
+  - navigate to and click on 'Expose an API' menu item
+    - click on 'Set' beside 'Application ID URI'
+      - this will automatically set an ID URI for your application
+      - click on 'Save'
+    - now click on 'Add a scope'
+      - your scope should be `access_as_user`
+      - select the 'Admin and users' option for who can consent
+      - fill out the consent display name and description for both admin and user
+      - select the 'Enabled' state
+      - click on 'Add scope'
+
+#### Client App Registration
+
+**Note** - This client app registration will be used to manually generate the AAD Token required to call AAD protected Web Api as there is no client application in the sample.
+- go to https://portal.azure.com/
+- open Azure Active Directory service
+- on the Azure Active Directory page:
+  - navigate to and click on 'App Registrations' menu item
+  - click on 'New registration' 
+  - on the 'Register an application' page:
+    - name your application `AuthClient`
+    - select the 'Accounts in this organizational directory only (Microsoft only - Single tenant)' option for who can use or access this application
+    - redirect the URI to 'Web' platform with `http://localhost:3000/` as link  (Choose SPA in case you add a client application)
+    - click on 'Register' and it will open your application page once registration is sucessful
+- on your AuthClient page:
+  - navigate to and click on 'API permissions' menu item
+    - click on 'Add a permission'
+      - navigate and click on 'My APIs' tab
+      - select your 'AuthServer' application
+      - check 'access_as_user' box for permissions
+  - now navigate to and click on 'Certificates & Secrets' menu item
+    - on the 'Client secrets' tab, click on 'New client secret' to create a new one
+    - add a description, select an expiration time and click 'Add'
+    - this will be used later on to generate the AAD token
+- now go back to your 'AuthServer' app
+  - navigate to and click on 'Expose an API'
+    - click on 'Add client applications
+      - past your 'AuthClient' application ID
+      - check the corresponding authorized scope box
+      - click on 'Add application'
 
 ### Code Structure
 
@@ -84,6 +151,36 @@ This ACS Solutions - Authentication sample provides the following features:
 ### Locally deploying the sample app
 
 1. ...
+
+### Locally testing the api
+
+1. You will need an access token using client app registration to call the api. In order to get the access token, open your browser in private mode and visit the link below
+**Note:** The full scope name of the server api should be used for the scope parameter in the below request (e.g.: "api://1234-5678-abcd-efgh...../access_as_user")
+```
+https://login.microsoftonline.com/<tenantid>.onmicrosoft.com/oauth2/v2.0/authorize?response_type=code&client_id=<client_appid>&redirect_uri=<put url encoded redirect_uri from client app>&scope=<put url encoded server scope>
+```
+2. This will prompt you to perform authentication and consent, and it will return a code in the query string. 
+Use that code in the following request to get an access token, remember to put in the code and client secret.
+
+``` SHELL
+curl -X POST \
+  https://login.microsoftonline.com/<tenantid>.onmicrosoft.com/oauth2/v2.0/token \
+  -H 'Accept: */*' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Host: login.microsoftonline.com' \
+  -H 'accept-encoding: gzip, deflate' \
+  -H 'cache-control: no-cache' \
+  -d 'redirect_uri=<url encoded redirect_uri from client app>&client_id=<appid>&grant_type=authorization_code&code=<put code here>&client_secret=<put secret generated in client app registration>&scope=<url encoded server scope>
+  ```
+3. Once you get the access token, make a GET request to `http://localhost:3000/api/token` with the access token as a Authorization Bearer header. Verify you get a successful status code i.e. 200.
+ 
+``` SHELL
+curl --location --request GET 'http://localhost:3000/api/token' \
+
+--header 'Authorization: Bearer <put access token here>
+```
 
 ### Troubleshooting
 
@@ -113,7 +210,7 @@ This ACS Solutions - Authentication sample provides the following features:
 
 - [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
 - [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
-
+- [On-Behalf-Of workflow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) - Find more about the OBO workflow
 ## Known Issues
 
 - ...
