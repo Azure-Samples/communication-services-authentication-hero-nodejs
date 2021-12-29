@@ -27,7 +27,7 @@ export const aadService = {
     return confidentialClientApplication;
   },
 
-  /** 
+  /**
    * Generate the AAD token (i.e. token A in OBO workflow)
    */
   createAADToken: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
@@ -39,7 +39,7 @@ export const aadService = {
     // Get url to sign user in and consent to scopes needed for application
     const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
 
-    // Generate the AAD token 
+    // Generate the AAD token
     const tokenRequest = {
       code: authCode,
       scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
@@ -47,17 +47,17 @@ export const aadService = {
     };
 
     const aadTokenResponse = await confidentialClientApplication.acquireTokenByCode(tokenRequest);
-    
+
     return aadTokenResponse.accessToken;
-  }, 
+  },
 
   /**
    * Generate the OBO token (i.e. token B in OBO workflow)
    */
-  createOBOToken: async(): Promise<string> => {
+  createOBOToken: async (): Promise<string> => {
     const confidentialClientApplication = aadService.createConfidentialClientApplication();
     const aadToken = await aadService.createAADToken(confidentialClientApplication);
-    
+
     // Generate the OBO token
     const oboRequest = {
       oboAssertion: aadToken,
@@ -65,8 +65,7 @@ export const aadService = {
     };
 
     const oboTokenResponse = await confidentialClientApplication.acquireTokenOnBehalfOf(oboRequest);
-    
+
     return oboTokenResponse.accessToken;
   }
-
 };
