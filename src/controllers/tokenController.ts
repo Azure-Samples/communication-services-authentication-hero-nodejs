@@ -22,7 +22,7 @@ export const tokenController = {
 
     try {
       // User exists
-      const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      const acsUserId = await graphService.getACSUserId();
       acsToken = await acsService.createACSToken(acsUserId);
     } catch (error) {
       // User doesn't exist
@@ -34,7 +34,7 @@ export const tokenController = {
         expiresOn: expiresOn
       };
       // Store the identity mapping information
-      graphService.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId).catch((error) => {
+      graphService.addIdentityMapping(user.communicationUserId).catch((error) => {
         console.log(error.message);
       });
     }
