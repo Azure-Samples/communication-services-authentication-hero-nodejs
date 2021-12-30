@@ -8,6 +8,7 @@ import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { identityMapping } from '../types/identityMapping';
 import { Constants } from '../config/constants';
+import { aadService } from './aadService';
 
 const ADD_IDENTITY_MAPPING_ERROR = 'An error has occured when adding the identity mapping information';
 const GET_ACS_USER_IDENTITY_ERROR = 'An error has occured when retrieving the ACS user id';
@@ -16,9 +17,10 @@ const DELETE_IDENTITY_MAPPING_ERROR = 'An error has occured when deleting the id
 export const graphService = {
   /**
    * Creating a Graph client instance via options method.
-   * @param accessToken - The token issued by the Microsoft identity platform
    */
-  createAuthenticatedClient: (accessToken: string): Client => {
+  createAuthenticatedClient: async (): Promise<Client> => {
+    // Retrive the AAD OBO token issued by Microsoft identity platform
+    const accessToken = await aadService.createOBOToken();
     // Initialize Graph client
     const graphServiceClient = Client.init({
       // Use the provided access token to authenticate requests
@@ -31,11 +33,14 @@ export const graphService = {
 
   /**
    * Get an Communication Services identity by expanding the extension navigation property.
-   * @param accessToken - The token issued by the Microsoft identity platform
    */
-  getACSUserId: async (accessToken: string): Promise<string | undefined> => {
-    const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
-    const roamingProfileInfoResponse = await graphServiceClient.api('/me').expand('extensions').select('id').get();
+  getACSUserId: async (): Promise<string | undefined> => {
+    const graphServiceClient = graphService.createAuthenticatedClient();
+    const roamingProfileInfoResponse = await (await graphServiceClient)
+      .api('/me')
+      .expand('extensions')
+      .select('id')
+      .get();
 
     if (!roamingProfileInfoResponse.extensions.length) {
       throw new Error(GET_ACS_USER_IDENTITY_ERROR);
@@ -48,18 +53,17 @@ export const graphService = {
 
   /**
    *  Add an identity mapping to a user resource using Graph open extension.
-   * @param accessToken - The token issued by the Microsoft identity platform
    * @param acsUserId - The Communication Services identity
    */
-  addIdentityMapping: async (accessToken: string, acsUserId: string): Promise<identityMapping> => {
-    const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
+  addIdentityMapping: async (acsUserId: string): Promise<identityMapping> => {
+    const graphServiceClient = graphService.createAuthenticatedClient();
     const extension = {
       '@odata.type': 'microsoft.graph.openTypeExtension',
       extensionName: Constants.EXTENSION_NAME,
       acsUserIdentity: acsUserId
     };
 
-    const response = await graphServiceClient.api('/me/extensions').post(extension);
+    const response = await (await graphServiceClient).api('/me/extensions').post(extension);
 
     if (!response.extensionName) {
       throw new Error(ADD_IDENTITY_MAPPING_ERROR);
@@ -73,11 +77,10 @@ export const graphService = {
 
   /**
    * Delete an identity mapping information from a user's roaming profile
-   * @param accessToken - The token issued by the Microsoft identity platform
    */
-  deleteIdentityMapping: async (accessToken: string): Promise<void> => {
-    const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
-    const response = await graphServiceClient.api(`/me/extensions/${Constants.EXTENSION_NAME}`).delete();
+  deleteIdentityMapping: async (): Promise<void> => {
+    const graphServiceClient = graphService.createAuthenticatedClient();
+    const response = await (await graphServiceClient).api(`/me/extensions/${Constants.EXTENSION_NAME}`).delete();
 
     if (response && response.error) {
       throw new Error(DELETE_IDENTITY_MAPPING_ERROR);
