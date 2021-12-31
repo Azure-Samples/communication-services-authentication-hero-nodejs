@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Constants } from '../config/constants';
 import { acsService } from '../services/acsService';
 import { graphService } from '../services/graphService';
@@ -40,5 +40,23 @@ export const tokenController = {
     }
 
     return res.status(200).json(acsToken);
+  },
+
+  /**
+   * Eexchange AAD token for an ACS access token of Teams user with the Azure Communication Services Identity SDK.
+   *
+   * 1. Get an AAD user access token for M365 (Teams) user via OBO flow.
+   * 2. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
+   */
+  exchangeAADToken: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // Todo: Get it from OBO flow
+      const aadToken = '';
+      // Exchange the AAD user token for the Teams access token
+      const acsTokenForTeamsUser = acsService.getACSTokenForTeamsUser(aadToken);
+      return res.status(200).json(acsTokenForTeamsUser);
+    } catch (error) {
+      next(error);
+    }
   }
 };

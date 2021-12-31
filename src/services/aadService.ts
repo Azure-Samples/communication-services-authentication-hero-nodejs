@@ -7,7 +7,6 @@ import { Configuration, ConfidentialClientApplication } from '@azure/msal-node';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import { appSettings } from '../appSettings';
-import { Constants } from '../config/constants';
 
 // Error messages
 const CREATE_AAD_TOKEN_ERROR = 'An error occured when creating an AAD token during user signing in';
@@ -20,9 +19,9 @@ export const aadService = {
   createConfidentialClientApplication: (): ConfidentialClientApplication => {
     const msalConfig: Configuration = {
       auth: {
-        clientId: appSettings.remoteResources.azureActiveDirectory.appRegistrations.clientId,
-        authority: `${Constants.AUTHORITY_HOST}/${appSettings.remoteResources.azureActiveDirectory.appRegistrations.tenantId}`,
-        clientSecret: appSettings.remoteResources.azureActiveDirectory.appRegistrations.clientSecret
+        clientId: appSettings.azureActiveDirectory.clientId,
+        authority: `${appSettings.azureActiveDirectory.instance}/${appSettings.azureActiveDirectory.tenantId}`,
+        clientSecret: appSettings.azureActiveDirectory.clientSecret
       }
     };
 
@@ -36,8 +35,8 @@ export const aadService = {
    */
   createAADToken: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
     const authCodeUrlParameters = {
-      scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
-      redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
+      scopes: [appSettings.azureActiveDirectory.webAPI],
+      redirectUri: appSettings.azureActiveDirectory.redirectUri
     };
     // Get url to sign user in and consent to scopes needed for application
     const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
@@ -46,8 +45,8 @@ export const aadService = {
     try {
       const tokenRequest = {
         code: authCode,
-        scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
-        redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
+        scopes: [appSettings.azureActiveDirectory.webAPI],
+        redirectUri: appSettings.azureActiveDirectory.redirectUri
       };
       const aadTokenResponse = await confidentialClientApplication.acquireTokenByCode(tokenRequest);
 

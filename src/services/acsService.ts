@@ -13,12 +13,15 @@ import {
 // @ts-ignore
 import { appSettings } from '../appSettings';
 
+// Error messages
+const EXCHANGE_AAD_TOKEN_ERROR = 'An error occured when exchanging an AAD token';
+
 export const acsService = {
   /**
    * Authenticate with Azure AD
    */
   createAuthenticatedClient: (): CommunicationIdentityClient => {
-    const connectionString = appSettings.remoteResources.communicationServices.connectionString;
+    const connectionString = appSettings.communicationServices.connectionString;
     const identityClient = new CommunicationIdentityClient(connectionString);
 
     return identityClient;
@@ -45,17 +48,37 @@ export const acsService = {
     const identityClient = acsService.createAuthenticatedClient();
     // Issue an access token with the "voip" and "chat" scope for an identity
     const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(
-      identityResponse,
-      appSettings.remoteResources.communicationServices.scopes
-    );
+    const tokenResponse = await identityClient.getToken(identityResponse, appSettings.communicationServices.scopes);
 
     console.log(
-      `\nIssued an access token with ${appSettings.remoteResources.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
+      `\nIssued an access token with ${appSettings.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
     );
     console.log(`\n${tokenResponse.token}`);
 
     return tokenResponse;
+  },
+
+  /**
+   * Exchange an AAD access token of a Teams user for a new Communication Services AccessToken with a matching expiration time.
+   * @param aadToken - the Azure AD token of the Teams user
+   */
+  getACSTokenForTeamsUser: async (aadToken: string): Promise<CommunicationAccessToken> => {
+    const identityClient = acsService.createAuthenticatedClient();
+
+    try {
+      // Issue an access token for the Teams user that can be used with the Azure Communication Services SDKs.
+      // Notice: the function name will be renamed to exchangeTeamsUserAadToken
+      // Know more, please read this https://github.com/Azure/azure-sdk-for-js/pull/18306
+      const tokenResponse = await identityClient.getTokenForTeamsUser(aadToken);
+
+      console.log(`\nThe  access token issued is ${tokenResponse.token}`);
+      console.log(`\nIssued an access token with 'voip' scope that expires at ${tokenResponse.expiresOn}:`);
+
+      return tokenResponse;
+    } catch (error) {
+      console.log(EXCHANGE_AAD_TOKEN_ERROR);
+      throw error;
+    }
   },
 
   /**
@@ -64,13 +87,11 @@ export const acsService = {
   createACSUserIdentityAndToken: async (): Promise<CommunicationUserToken> => {
     const identityClient = acsService.createAuthenticatedClient();
     // Issue an identity and an access token with the "voip" and "chat" scope for the new identity
-    const identityTokenResponse = await identityClient.createUserAndToken(
-      appSettings.remoteResources.communicationServices.scopes
-    );
+    const identityTokenResponse = await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
 
     console.log(`\nCreated an identity with ID: ${identityTokenResponse.user.communicationUserId}`);
     console.log(
-      `\nIssued an access token with ${appSettings.remoteResources.communicationServices.scopes} scope that expires at ${identityTokenResponse.expiresOn}:`
+      `\nIssued an access token with ${appSettings.communicationServices.scopes} scope that expires at ${identityTokenResponse.expiresOn}:`
     );
     console.log(`\n${identityTokenResponse.token}`);
 
