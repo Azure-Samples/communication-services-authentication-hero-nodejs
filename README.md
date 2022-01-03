@@ -49,9 +49,9 @@ This is an ACS solution server sample to provide a guidance establishing best pr
 
 > :loudspeaker: An ACS Solutions - Authentication Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
 
-Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/samples/calling-hero-sample).
+![ACS Authentication Server Sample Overview Flow](docs/images/ACS-Authentication-Server-Sample_Overview-Flow.png)
 
-Before contributing to this sample, please read our [contribution guidelines](./CONTRIBUTING.md).
+Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/samples/calling-hero-sample).
 
 ## Features
 
@@ -120,7 +120,7 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ## Contributing
 
-Join us by making a contribution. To get you started check out our [making a contribution](.) guide.
+Join us by making a contribution. To get you started check out our [making a contribution](CONTRIBUTING.md) guide.
 
 We look forward to building an amazing open source ACS sample with you!
 
@@ -131,3 +131,4 @@ We look forward to building an amazing open source ACS sample with you!
 ## License
 
 [MIT](LICENSE.md)
+
