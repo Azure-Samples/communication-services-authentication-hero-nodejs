@@ -10,12 +10,14 @@ import { appSettings } from '../appSettings';
 import { Constants } from '../config/constants';
 
 // Error messages
-const CREATE_AAD_TOKEN_ERROR = 'An error occured when creating an AAD token during user signing in';
-const CREATE_OBO_TOKEN_ERROR = 'An error occured when creating the OBO token with the previous AAD token';
+const CREATE_AAD_TOKEN_VIA_ACG_ERROR =
+  'An error occured when issu an Azure AD token to call a Web API through Authorization Code Grant flow';
+const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =
+  'An error occured when exchanging the incoming access token for another access token to call downstream APIs through On-Behalf-Of flow';
 
 export const aadService = {
   /**
-   * Create a confidential client application that lets users utilize the OBO workflow
+   * Create a client for communication with Azure Active Directory
    */
   createConfidentialClientApplication: (): ConfidentialClientApplication => {
     const msalConfig: Configuration = {
@@ -32,50 +34,62 @@ export const aadService = {
   },
 
   /**
-   * Generate the AAD token (i.e. token A in OBO workflow)
+   * Secured Web API to allow users to authenticate and obtain an access token to call Nodejs web APIs, and then
+   * exchange the access token for another access token to call downstream APIs
+   *
+   * Step 1: Issue an Azure AD token to call Web APIs through Authorization Code Grant flow
+   *
+   *         1. The first sub-step (getAuthCodeUrl) is to sent a URL by the application that can be used to generate an authorization code.
+   *            This URL can be opened in a browser of choice, where the user can input their credentials,
+   *            and will be redirected back to the redirectUri (registered during the app registration) with an authorization code.
+   *            The authorization code can now be redeemed for a token with the second step.
+   *
+   *         2. The second sub-step (acquireTokenByCode) is to exchange the authorization code received as a part of the above step for an access token.
    */
-  createAADToken: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
+  createAADTokenViaACG: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
     const authCodeUrlParameters = {
       scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
       redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
     };
-    // Get url to sign user in and consent to scopes needed for application
+    // Generate an authorization code
     const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
 
-    // Generate the AAD token
+    // Eexchange the authorization code for an access token
     try {
-      const tokenRequest = {
+      const aadTokenRequest = {
         code: authCode,
         scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
         redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
       };
-      const aadTokenResponse = await confidentialClientApplication.acquireTokenByCode(tokenRequest);
+      const aadTokenResponseViaACG = await confidentialClientApplication.acquireTokenByCode(aadTokenRequest);
 
-      return aadTokenResponse.accessToken;
+      return aadTokenResponseViaACG.accessToken;
     } catch (error) {
-      console.log(CREATE_AAD_TOKEN_ERROR);
+      console.log(CREATE_AAD_TOKEN_VIA_ACG_ERROR);
       throw error;
     }
   },
 
   /**
-   * Generate the OBO token (i.e. token B in OBO workflow)
+   * Secured Web API to allow users to authenticate and obtain an access token to call Nodejs web APIs, and then
+   * exchange the access token for another access token to call downstream APIs
+   *
+   * Step 2: Exchange an incoming access token for another access token to call downstream APIs through On-Behalf-Of flow
    */
-  createOBOToken: async (): Promise<string> => {
+  exchangeAADTokenViaOBO: async (aadToken: string): Promise<string> => {
     const confidentialClientApplication = aadService.createConfidentialClientApplication();
-    const aadToken = await aadService.createAADToken(confidentialClientApplication);
 
-    // Generate the OBO token
+    // Exchange the incoming access token for another access token
     try {
       const oboRequest = {
         oboAssertion: aadToken,
         scopes: ['user.read']
       };
-      const oboTokenResponse = await confidentialClientApplication.acquireTokenOnBehalfOf(oboRequest);
+      const aadTokenResponseViaOBO = await confidentialClientApplication.acquireTokenOnBehalfOf(oboRequest);
 
-      return oboTokenResponse.accessToken;
+      return aadTokenResponseViaOBO.accessToken;
     } catch (error) {
-      console.log(CREATE_OBO_TOKEN_ERROR);
+      console.log(EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR);
       throw error;
     }
   }
