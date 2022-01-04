@@ -34,7 +34,7 @@ export const aadService = {
   },
 
   /**
-   * Secured Web API to allow users to authenticate and obtain an access token to call Nodejs web APIs, and then
+   * Secured Web API which allows users to authenticate and obtain an access token to call Nodejs web APIs, and then
    * exchange the access token for another access token to call downstream APIs
    *
    * Step 1: Issue an Azure AD token to call Web APIs through Authorization Code Grant flow
@@ -71,7 +71,7 @@ export const aadService = {
   },
 
   /**
-   * Secured Web API to allow users to authenticate and obtain an access token to call Nodejs web APIs, and then
+   * Secured Web API which allows users to authenticate and obtain an access token to call Nodejs web APIs, and then
    * exchange the access token for another access token to call downstream APIs
    *
    * Step 2: Exchange an incoming access token for another access token to call downstream APIs through On-Behalf-Of flow
