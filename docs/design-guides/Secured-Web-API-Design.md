@@ -7,14 +7,14 @@
 - [The Way How to Secure](#the-way-how-to-secure)
   - [Authorization Code Grant Flow (ACG Flow)](#authorization-code-grant-flow-acg-flow)
   - [On-Behalf-Of Flow (OBO Flow)](#on-behalf-of-flow-obo-flow)
-  - [Gaining Consent for Middle-tier](#gaining-consent-for-middle-tier)
+  - [Gain Consent for Middle-tier](#gain-consent-for-middle-tier)
 - [Community Help and Support](#community-help-and-support)
 - [Contributing](#contributing)
 - [More Information](#more-information)
 
 ## Scenario
 
-In this ACS Authentication Server sample, we would protect the custom Web API using the Microsoft Identity Platform. The Web API, supporting authenticated users with personal Microsoft accounts as well as work and school accounts, will be protected using Azure Active Directory OAuth Bearer Authorization. Further on the API will also call a downstream API (Microsoft Graph) on-behalf of the signed-in user to provide additional value to its apps.
+In this ACS Authentication Server sample, we would protect custom Web APIs using the Microsoft Identity Platform. The Web API, supporting authenticated users with personal Microsoft accounts as well as work and school accounts, will be protected using Azure Active Directory OAuth Bearer Authorization. Further on the API will also call a downstream API (Microsoft Graph) on-behalf of the signed-in user to provide additional value to its apps.
 
 ## Overview
 
@@ -88,7 +88,7 @@ The steps that follow constitute the OBO flow and are explained with the help of
 4. Token B is set by the Web API in the authorization header of the request to the downstream Microsoft Graph API.
 5. Data from the secured resource is returned by the downstream Microsoft Graph API to the Web API then to the SPA.
 
-### Gaining Consent for Middle-tier
+### Gain Consent for Middle-tier
 
 [Add consent grain info here...]
 
