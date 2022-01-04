@@ -6,12 +6,13 @@
 // Used to fix the error "PolyFillNotAvailable: Library cannot function without fetch. So, please provide polyfill for it."
 import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
-import { identityMapping } from '../types/identityMapping';
+import { IdentityMapping } from '../types/identityMapping';
 import { Constants } from '../config/constants';
 
-const ADD_IDENTITY_MAPPING_ERROR = 'An error has occured when adding the identity mapping information';
-const GET_ACS_USER_IDENTITY_ERROR = 'An error has occured when retrieving the ACS user id';
-const DELETE_IDENTITY_MAPPING_ERROR = 'An error has occured when deleting the identity mapping information';
+// Error messages
+const ADD_IDENTITY_MAPPING_ERROR = 'An error occured when adding the identity mapping information';
+const DELETE_IDENTITY_MAPPING_ERROR = 'An error occured when deleting the identity mapping information';
+const IDENTITY_MAPPING_NOT_FOUND_ERROR = 'No identity mapping information stored in Microsoft Graph';
 
 export const graphService = {
   /**
@@ -37,8 +38,10 @@ export const graphService = {
     const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
     const roamingProfileInfoResponse = await graphServiceClient.api('/me').expand('extensions').select('id').get();
 
+    // No identity mapping information stored in Microsoft Graph
     if (!roamingProfileInfoResponse.extensions.length) {
-      throw new Error(GET_ACS_USER_IDENTITY_ERROR);
+      console.log(IDENTITY_MAPPING_NOT_FOUND_ERROR);
+      throw new IdentityMappingNotFoundError(IDENTITY_MAPPING_NOT_FOUND_ERROR);
     }
 
     const openExtensionsData = roamingProfileInfoResponse['extensions'][0];
@@ -51,7 +54,7 @@ export const graphService = {
    * @param accessToken - The token issued by the Microsoft identity platform
    * @param acsUserId - The Communication Services identity
    */
-  addIdentityMapping: async (accessToken: string, acsUserId: string): Promise<identityMapping> => {
+  addIdentityMapping: async (accessToken: string, acsUserId: string): Promise<IdentityMapping> => {
     const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
     const extension = {
       '@odata.type': 'microsoft.graph.openTypeExtension',
@@ -61,14 +64,13 @@ export const graphService = {
 
     const response = await graphServiceClient.api('/me/extensions').post(extension);
 
+    // Fail to add an Communication Services identity mapping information to Microsoft Graph.
     if (!response.extensionName) {
+      console.log(ADD_IDENTITY_MAPPING_ERROR);
       throw new Error(ADD_IDENTITY_MAPPING_ERROR);
     }
 
-    return {
-      extensionName: response.extensionName,
-      acsUserIdentity: response.acsUserIdentity
-    };
+    return { acsUserIdentity: response.acsUserIdentity };
   },
 
   /**
@@ -79,7 +81,9 @@ export const graphService = {
     const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
     const response = await graphServiceClient.api(`/me/extensions/${Constants.EXTENSION_NAME}`).delete();
 
+    // Fail to remove an Communication Services identity mapping information from Microsoft Graph.
     if (response && response.error) {
+      console.log(DELETE_IDENTITY_MAPPING_ERROR);
       throw new Error(DELETE_IDENTITY_MAPPING_ERROR);
     }
   }

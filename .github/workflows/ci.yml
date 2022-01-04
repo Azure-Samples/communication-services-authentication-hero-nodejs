@@ -19,13 +19,18 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
+
       - run: npm install
+
       - run: npm run prettier:check
+
       - run: npm run lint
+      
       - run: npm run build-tsc
       # Enable this once the tests are set up (- run: npm test)

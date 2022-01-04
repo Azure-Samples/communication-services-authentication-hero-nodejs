@@ -20,9 +20,9 @@ export const aadService = {
   createConfidentialClientApplication: (): ConfidentialClientApplication => {
     const msalConfig: Configuration = {
       auth: {
-        clientId: appSettings.remoteResources.azureActiveDirectory.appRegistrations.clientId,
-        authority: `${Constants.AUTHORITY_HOST}/${appSettings.remoteResources.azureActiveDirectory.appRegistrations.tenantId}`,
-        clientSecret: appSettings.remoteResources.azureActiveDirectory.appRegistrations.clientSecret
+        clientId: appSettings.azureActiveDirectory.appRegistrations.clientId,
+        authority: `${Constants.AUTHORITY_HOST}/${appSettings.azureActiveDirectory.appRegistrations.tenantId}`,
+        clientSecret: appSettings.azureActiveDirectory.appRegistrations.clientSecret
       }
     };
 
@@ -36,8 +36,8 @@ export const aadService = {
    */
   createAADToken: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
     const authCodeUrlParameters = {
-      scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
-      redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
+      scopes: [appSettings.azureActiveDirectory.appRegistrations.webAPIScope],
+      redirectUri: appSettings.azureActiveDirectory.appRegistrations.redirectUri
     };
     // Get url to sign user in and consent to scopes needed for application
     const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
@@ -46,8 +46,8 @@ export const aadService = {
     try {
       const tokenRequest = {
         code: authCode,
-        scopes: [appSettings.remoteResources.azureActiveDirectory.appRegistrations.webAPIScope],
-        redirectUri: appSettings.remoteResources.azureActiveDirectory.appRegistrations.redirectUri
+        scopes: [appSettings.azureActiveDirectory.appRegistrations.webAPIScope],
+        redirectUri: appSettings.azureActiveDirectory.appRegistrations.redirectUri
       };
       const aadTokenResponse = await confidentialClientApplication.acquireTokenByCode(tokenRequest);
 
