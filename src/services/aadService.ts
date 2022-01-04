@@ -11,7 +11,7 @@ import { Constants } from '../config/constants';
 
 // Error messages
 const CREATE_AAD_TOKEN_VIA_ACG_ERROR =
-  'An error occured when issu an Azure AD token to call a Web API through Authorization Code Grant flow';
+  'An error occured when issuing an Azure AD token to call a Web API through Authorization Code Grant flow';
 const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =
   'An error occured when exchanging the incoming access token for another access token to call downstream APIs through On-Behalf-Of flow';
 
