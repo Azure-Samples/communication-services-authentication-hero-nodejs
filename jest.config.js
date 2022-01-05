@@ -20,8 +20,13 @@ module.exports = {
   // collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
-  // ??? collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', "!**/node_modules/**", '!src/mocks/**/*', '!**/coverage/**', '!**/index.ts'] --> requires Jest to be invoked with --coverage
+  collectCoverageFrom: [
+    '**/*.{js,jsx,ts,tsx}',
+    '!**/node_modules/**',
+    '!src/mocks/**/*',
+    '!**/coverage/**',
+    '!**/index.ts'
+  ],
 
   // The directory where Jest should output its coverage files
   // coverageDirectory: undefined,

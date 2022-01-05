@@ -16,6 +16,7 @@
     "build-tsc": "tsc",
     "build": "npm run prettier && npm run lint:fix && npm run build-tsc ",
     "test": "jest",
+    "test:coverage": "npm run test -- --coverage",
     "serve": "node build/server.js",
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon --watch src/** -e ts,js --exec npm run start"

@@ -12,3 +12,8 @@ build/**/*
 src/appSettings.ts
 
 /.vs
+
+# Code coverage results
+*.coverage
+*.coveragexml
+coverage/
