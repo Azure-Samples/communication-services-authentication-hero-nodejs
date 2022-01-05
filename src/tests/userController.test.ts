@@ -31,7 +31,7 @@ let createAuthenticatedClientSpy: jest.SpyInstance;
 let addIdentityMappingSpy: jest.SpyInstance;
 
 describe('userController.createACSUser', () => {
-  test('should not call graphService when ACS identity creation fails', async () => {
+  test('should return an error when ACS identity creation fails', async () => {
     const res = mockResponse();
     const req = mockRequest();
     createAuthenticatedClientSpy = jest
