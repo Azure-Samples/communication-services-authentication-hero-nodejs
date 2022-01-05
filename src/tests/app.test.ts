@@ -10,36 +10,64 @@ import request from 'supertest';
 import { Response } from 'express';
 import { userController } from '../controllers/userController';
 import app from '../app';
-// import { CommunicationUserToken } from '@azure/communication-identity';
-// import { ResponseMode } from '@azure/msal-node';
 
 interface mockResponse {
   // @ts-ignore
   [key: string]: any;
 }
 
-// Setup mocks
-// const mockUserToken: CommunicationUserToken = {
-//   user: { communicationUserId: 'mock-token-user' },
-//   token: 'mock-token-value',
-//   expiresOn: new Date(0)
-// };
-
-const mockACSUser = { acsUserId: 'mock-user-id' };
-const mockUserResponse: mockResponse = { json: mockACSUser };
+const mockACSUser = 'mock-user-id';
+const mockGetResponse: mockResponse = { acsUserId: mockACSUser };
+const mockPostResponse: mockResponse = { acsUserIdentity: mockACSUser };
+const mockDeleteResponse: mockResponse = { message: `Successfully deleted the ACS user identity ${mockACSUser}` };
 
 let getACSUserSpy: jest.SpyInstance;
+let createACSUserSpy: jest.SpyInstance;
+let deleteACSUserSpy: jest.SpyInstance;
 
-beforeAll(() => {
-  getACSUserSpy = jest
-    .spyOn(userController, 'getACSUser')
-    .mockImplementation(async () => mockUserResponse as Response<any, Record<string, any>>);
-});
+// beforeAll(() => {
+// });
 
 describe('app router tests', () => {
-  test('/api/user should return an ACS user with GET', async () => {
-    const getResponse = await request(app).get('/api/user');
-    expect(getResponse.text).toEqual(JSON.stringify(mockACSUser));
-    getACSUserSpy.mockClear();
+  test('/api/user should return an ACS identity with GET request', async () => {
+    getACSUserSpy = jest
+      .spyOn(userController, 'getACSUser')
+      .mockImplementation(async () => {
+        const parse = { json: mockGetResponse };
+        return parse as Response<any, Record<string, any>>;
+      });
+
+    const getResponse = await request(app).get('/api/user/');
+
+    expect(getACSUserSpy).toHaveBeenCalled();
+    expect(getResponse.text).toEqual(JSON.stringify(mockGetResponse));
+  });
+
+  test('/api/user should create an ACS identity with POST request', async () => {
+    createACSUserSpy = jest
+      .spyOn(userController, 'createACSUser')
+      .mockImplementation(async () => {
+        const parse = { json: mockPostResponse };
+        return parse as Response<any, Record<string, any>>;
+      });
+
+    const getResponse = await request(app).post('/api/user');
+
+    expect(createACSUserSpy).toHaveBeenCalled();
+    expect(getResponse.text).toEqual(JSON.stringify(mockPostResponse));
+  });
+
+  test('/api/user should create an ACS identity with POST request', async () => {
+    deleteACSUserSpy = jest
+      .spyOn(userController, 'deleteACSUser')
+      .mockImplementation(async () => {
+        const parse = { json: mockDeleteResponse };
+        return parse as Response<any, Record<string, any>>;
+      });
+
+    const getResponse = await request(app).delete('/api/user');
+
+    expect(deleteACSUserSpy).toHaveBeenCalled();
+    expect(getResponse.text).toEqual(JSON.stringify(mockDeleteResponse));
   });
 });
