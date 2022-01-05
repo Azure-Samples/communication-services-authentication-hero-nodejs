@@ -4,19 +4,17 @@
  *---------------------------------------------------------------------------------------------*/
 
 export const appSettings = {
-  remoteResources: {
-    communicationServices: {
-      connectionString: '<your_connection_string>',
-      scopes: 'Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]'
-    },
-    azureActiveDirectory: {
-      appRegistrations: {
-        clientId: '<your_client_id>',
-        clientSecret: '<your_client_secret>',
-        tenantId: '<your_tenant_id>',
-        redirectUri: 'The redirect uri of the application',
-        webAPIScope: 'The scope which the application consents to'
-      }
+  communicationServices: {
+    connectionString: '<your_connection_string>',
+    scopes: '<communication_services_token_scopes>' // Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]
+  },
+  azureActiveDirectory: {
+    appRegistrations: {
+      clientId: '<your_client_id>',
+      clientSecret: '<your_client_secret>',
+      tenantId: '<your_tenant_id>',
+      redirectUri: '<application_redirect_uri>',
+      webAPIScope: '<web_api_scope>' // The scope which the application consents to
     }
   }
 };

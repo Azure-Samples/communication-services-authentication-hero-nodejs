@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Constants } from '../config/constants';
 import { acsService } from '../services/acsService';
 import { graphService } from '../services/graphService';
@@ -12,27 +12,26 @@ export const userController = {
   /**
    * Create a Communication Services identity and then add the roaming identity mapping information to the user resource
    */
-  createACSUser: async (req: Request, res: Response) => {
+  createACSUser: async (req: Request, res: Response, next: NextFunction) => {
     const acsUserId = await acsService.createACSUserIdentity();
+
     try {
-      const mappingResponse = await graphService.addIdentityMapping(Constants.ACCESS_TOKEN, acsUserId);
-      return res.status(200).json(mappingResponse);
+      const identityMappingResponse = await graphService.addIdentityMapping(Constants.ACCESS_TOKEN, acsUserId);
+      return res.status(200).json(identityMappingResponse);
     } catch (error) {
-      console.log(error);
-      return res.status(500).send({ status: 500, message: error.message });
+      next(error);
     }
   },
 
   /**
    * Get a Communication Services identity through Graph open extensions
    */
-  getACSUser: async (req: Request, res: Response) => {
+  getACSUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const acsuserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
       return res.status(200).json({ acsUserId: acsuserId });
     } catch (error) {
-      console.log(error);
-      return res.status(500).send({ status: 500, message: error.message });
+      next(error);
     }
   },
 
@@ -46,21 +45,21 @@ export const userController = {
    * Step 2: Delete the ACS user identity
    *
    */
-  deleteACSUser: async (req: Request, res: Response) => {
+  deleteACSUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const acsuserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
       // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
       graphService.deleteIdentityMapping(Constants.ACCESS_TOKEN);
       // Delete the ACS user identity which revokes all active access tokens
       // and prevents users from issuing access tokens for the identity.
       // It also removes all the persisted content associated with the identity.
-      acsService.deleteACSUserIdentity(acsuserId);
+      acsService.deleteACSUserIdentity(acsUserId);
+
       return res.status(200).json({
-        message: `Successfully deleted the ACS user identity ${acsuserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
+        message: `Successfully deleted the ACS user identity ${acsUserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
       });
     } catch (error) {
-      console.log(error);
-      return res.status(500).send({ status: 500, message: error.message });
+      next(error);
     }
   }
 };
