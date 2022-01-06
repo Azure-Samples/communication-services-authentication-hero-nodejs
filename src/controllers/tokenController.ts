@@ -29,7 +29,7 @@ export const tokenController = {
     if (authHeader) {
       aadToken = authHeader.split(' ')[1];
     } else {
-      res.sendStatus(401);
+      return res.sendStatus(401);
     }
 
     try {
@@ -39,6 +39,8 @@ export const tokenController = {
       // User exists
       const acsUserId = await graphService.getACSUserId(aadOboToken);
       acsToken = await acsService.createACSToken(acsUserId);
+
+      return res.status(200).json(acsToken);
     } catch (error) {
       if (error && error instanceof IdentityMappingNotFoundError) {
         // User doesn't exist
@@ -54,6 +56,8 @@ export const tokenController = {
             token: token,
             expiresOn: expiresOn
           };
+
+          return res.status(200).json(acsToken);
         } catch (error) {
           next(error);
         }
@@ -61,7 +65,5 @@ export const tokenController = {
         next(error);
       }
     }
-
-    return res.status(200).json(acsToken);
   }
 };
