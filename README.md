@@ -153,24 +153,40 @@ This ACS Solutions - Authentication sample provides the following features:
 1. ...
 
 ### Locally testing the api
+**TIPS:** If you are facing issues running curl commands in #2 and #3, then try importing(File -> import -> raw text, paste the curl command and continue) the curl command in [Postman](https://www.postman.com/downloads/) and running it there. 
+
 Since the sample does not have a client application, you need to generate Client AAD Token manually to make calls to AAD protected backend Web Apis in the sample. You will need an access token using client app registration to call an api. In order to get the access token manually, please follow below steps. If you are integrating a client application, then please ignore these steps as you could test directly via user signing through client application.
-**Note:** The <client app id> is the application id of the client app registration referred in below requests. You can get the <tenantid> from the app registration overview page as well. The full scope name of the server api should be used for the scope parameter in the below request (e.g.: "api://1234-5678-abcd-efgh...../access_as_user").
-**TIPS:** If you are facing issues running curl commands, then try importing the curl command in [Postman](https://www.postman.com/downloads/) and running it there. 
+
+**Note:** The <client app id> is the application id of the client app registration referred in below requests. The client app in below requests refers the client app registration generally. You can get the <tenantid> from the app registration overview page as well. The full scope name of the server api should be used for the scope parameter in the below request (e.g.: "api://1234-5678-abcd-efgh...../access_as_user").
 
 1. Open your browser in private mode and visit the link below 
 ```
 https://login.microsoftonline.com/<tenantid>/oauth2/v2.0/authorize?response_type=code&client_id=<client appid>&redirect_uri=<redirect_uri from client app>&scope=<server api scope>
 ```
-2. This will prompt you to perform authentication and consent, and it will return a code and session_state in the query string. 
-Use that code in the following request to get an access token, remember to put in the client secret.
+2. This will prompt you to perform authentication and consent, and it will return a code(which is short lived for 10 minutes) and session_state in the query string. 
+Use that code and session_state in the following request to get an access token.
 
 ``` SHELL
-curl -X POST https://login.microsoftonline.com/<tenantid>/oauth2/v2.0/token -H 'Accept: */*' -H 'Cache-Control: no-cache' -H 'Connection: keep-alive' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: login.microsoftonline.com' -H 'accept-encoding: gzip, deflate' -H 'cache-control: no-cache' -d 'redirect_uri=<redirect_uri from client app>&client_id=<client appid>&grant_type=authorization_code&code=<code>&session_state=<session_state>&client_secret=<secret gererated in client app>&scope=<server api scope>'
+curl --location --request POST 'https://login.microsoftonline.com/<tenantid>/oauth2/v2.0/token' \
+--header 'Accept: */*' \
+--header 'Cache-Control: no-cache' \
+--header 'Connection: keep-alive' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--header 'Host: login.microsoftonline.com' \
+--header 'accept-encoding: gzip, deflate' \
+--header 'cache-control: no-cache' \
+--data-urlencode 'redirect_uri=<redirect_uri from client app>' \
+--data-urlencode 'client_id=<client appid>' \
+--data-urlencode 'grant_type=authorization_code' \
+--data-urlencode 'code=<code>' \
+--data-urlencode 'session_state=<session_state>' \
+--data-urlencode 'client_secret=<secret gererated in client app>' \
+--data-urlencode 'scope=<server api scope>'
 ```
-3. Once you get the access token, make a GET request to `http://localhost:3000/api/token` with the access token as a Authorization Bearer header. Verify you get a successful status code i.e. 200.
+3. Once you get the access_token in the response, make a GET request to `http://localhost:3000/api/token` with the access token as a Authorization Bearer header. Verify you get a successful status code i.e. 200.
  
 ``` SHELL
-curl --location --request GET 'http://localhost:3000/api/token' --header 'Authorization: Bearer <access token>'
+curl --location --request GET 'http://localhost:3000/api/token' --header 'Authorization: Bearer <access_token>'
 ```
 
 ### Troubleshooting
