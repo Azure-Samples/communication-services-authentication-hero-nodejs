@@ -8,6 +8,7 @@ import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { IdentityMapping } from '../types/identityMapping';
 import { Constants } from '../config/constants';
+import { IdentityMappingNotFoundError } from '../errors/identityMappingNotFoundError';
 
 // Error messages
 const ADD_IDENTITY_MAPPING_ERROR = 'An error occured when adding the identity mapping information';

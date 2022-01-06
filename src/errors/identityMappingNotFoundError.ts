@@ -3,8 +3,7 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-class IdentityMappingNotFoundError extends Error {
+export class IdentityMappingNotFoundError extends Error {
   constructor(msg: string) {
     super(msg);
 
