@@ -10,8 +10,6 @@ import { appSettings } from '../appSettings';
 import { Constants } from '../config/constants';
 
 // Error messages
-const CREATE_AAD_TOKEN_VIA_ACG_ERROR =
-  'An error occured when issuing an Azure AD token to call a Web API through Authorization Code Grant flow';
 const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =
   'An error occured when exchanging the incoming access token for another access token to call downstream APIs through On-Behalf-Of flow';
 
@@ -46,29 +44,6 @@ export const aadService = {
    *
    *         2. The second sub-step (acquireTokenByCode) is to exchange the authorization code received as a part of the above step for an access token.
    */
-  createAADTokenViaACG: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
-    const authCodeUrlParameters = {
-      scopes: [appSettings.azureActiveDirectory.appRegistrations.webAPIScope],
-      redirectUri: appSettings.azureActiveDirectory.appRegistrations.redirectUri
-    };
-    // Generate an authorization code
-    const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
-
-    // Eexchange the authorization code for an access token
-    try {
-      const aadTokenRequest = {
-        code: authCode,
-        scopes: [appSettings.azureActiveDirectory.appRegistrations.webAPIScope],
-        redirectUri: appSettings.azureActiveDirectory.appRegistrations.redirectUri
-      };
-      const aadTokenResponseViaACG = await confidentialClientApplication.acquireTokenByCode(aadTokenRequest);
-
-      return aadTokenResponseViaACG.accessToken;
-    } catch (error) {
-      console.log(CREATE_AAD_TOKEN_VIA_ACG_ERROR);
-      throw error;
-    }
-  },
 
   /**
    * Secured Web API which allows users to authenticate and obtain an access token to call Nodejs web APIs, and then
