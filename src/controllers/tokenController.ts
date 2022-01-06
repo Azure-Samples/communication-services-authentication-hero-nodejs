@@ -40,7 +40,7 @@ export const tokenController = {
       const acsUserId = await graphService.getACSUserId(aadOboToken);
       acsToken = await acsService.createACSToken(acsUserId);
     } catch (error) {
-      if (error instanceof IdentityMappingNotFoundError) {
+      if (error && error instanceof IdentityMappingNotFoundError) {
         // User doesn't exist
         try {
           const identityTokenResponse = await acsService.createACSUserIdentityAndToken();
