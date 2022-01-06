@@ -32,14 +32,10 @@ export const tokenController = {
       res.sendStatus(401);
     }
 
-    // Retrieve the AAD token via OBO flow
     try {
+      // Retrieve the AAD token via OBO flow
       aadOboToken = await aadService.exchangeAADTokenViaOBO(aadToken);
-    } catch (error) {
-      next(error);
-    }
 
-    try {
       // User exists
       const acsUserId = await graphService.getACSUserId(aadOboToken);
       acsToken = await acsService.createACSToken(acsUserId);
