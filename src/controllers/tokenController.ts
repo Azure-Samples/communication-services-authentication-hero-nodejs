@@ -4,9 +4,10 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import { Constants } from '../config/constants';
 import { acsService } from '../services/acsService';
+import { aadService } from '../services/aadService';
 import { graphService } from '../services/graphService';
+import { IdentityMappingNotFoundError } from '../errors/identityMappingNotFoundError';
 
 export const tokenController = {
   /**
@@ -21,11 +22,22 @@ export const tokenController = {
    * If having issues when using ACS services, return an error message as well.
    */
   getACSToken: async (req: Request, res: Response, next: NextFunction) => {
-    let acsToken;
+    let aadToken, aadOboToken, acsToken;
+
+    // Extract the aadToken from the authorization header
+    const authHeader = req.headers.authorization;
+    if (authHeader) {
+      aadToken = authHeader.split(' ')[1];
+    } else {
+      res.sendStatus(401);
+    }
 
     try {
+      // Retrieve the AAD token via OBO flow
+      aadOboToken = await aadService.exchangeAADTokenViaOBO(aadToken);
+
       // User exists
-      const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      const acsUserId = await graphService.getACSUserId(aadOboToken);
       acsToken = await acsService.createACSToken(acsUserId);
     } catch (error) {
       if (error instanceof IdentityMappingNotFoundError) {
@@ -35,7 +47,7 @@ export const tokenController = {
           // retrieve the token, its expiry date and user object from the response
           const { token, expiresOn, user } = identityTokenResponse;
           // Store the identity mapping information
-          graphService.addIdentityMapping(Constants.ACCESS_TOKEN, user.communicationUserId);
+          graphService.addIdentityMapping(aadOboToken, user.communicationUserId);
           // This LoC below should be excuted after AddIdentityMapping excuted successfully
           // because the acsToken can not be returned if failing to add the identity mapping information to Microsoft Graph
           acsToken = {
