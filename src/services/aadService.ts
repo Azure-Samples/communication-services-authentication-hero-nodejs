@@ -7,7 +7,6 @@ import { Configuration, ConfidentialClientApplication } from '@azure/msal-node';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import { appSettings } from '../appSettings';
-import { Constants } from '../config/constants';
 
 // Error messages
 const CREATE_AAD_TOKEN_VIA_ACG_ERROR =
@@ -22,9 +21,9 @@ export const aadService = {
   createConfidentialClientApplication: (): ConfidentialClientApplication => {
     const msalConfig: Configuration = {
       auth: {
-        clientId: appSettings.azureActiveDirectory.appRegistrations.clientId,
-        authority: `${Constants.AUTHORITY_HOST}/${appSettings.azureActiveDirectory.appRegistrations.tenantId}`,
-        clientSecret: appSettings.azureActiveDirectory.appRegistrations.clientSecret
+        clientId: appSettings.azureActiveDirectory.clientId,
+        authority: `${appSettings.azureActiveDirectory.instance}/${appSettings.azureActiveDirectory.tenantId}`,
+        clientSecret: appSettings.azureActiveDirectory.clientSecret
       }
     };
 
@@ -48,8 +47,8 @@ export const aadService = {
    */
   createAADTokenViaACG: async (confidentialClientApplication: ConfidentialClientApplication): Promise<string> => {
     const authCodeUrlParameters = {
-      scopes: [appSettings.azureActiveDirectory.appRegistrations.webAPIScope],
-      redirectUri: appSettings.azureActiveDirectory.appRegistrations.redirectUri
+      scopes: [appSettings.azureActiveDirectory.scopes],
+      redirectUri: appSettings.azureActiveDirectory.redirectUri
     };
     // Generate an authorization code
     const authCode = await confidentialClientApplication.getAuthCodeUrl(authCodeUrlParameters);
@@ -58,8 +57,8 @@ export const aadService = {
     try {
       const aadTokenRequest = {
         code: authCode,
-        scopes: [appSettings.azureActiveDirectory.appRegistrations.webAPIScope],
-        redirectUri: appSettings.azureActiveDirectory.appRegistrations.redirectUri
+        scopes: [appSettings.azureActiveDirectory.scopes],
+        redirectUri: appSettings.azureActiveDirectory.redirectUri
       };
       const aadTokenResponseViaACG = await confidentialClientApplication.acquireTokenByCode(aadTokenRequest);
 
