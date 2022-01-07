@@ -49,11 +49,11 @@ export const userController = {
     try {
       const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
       // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
-      graphService.deleteIdentityMapping(Constants.ACCESS_TOKEN);
+      await graphService.deleteIdentityMapping(Constants.ACCESS_TOKEN);
       // Delete the ACS user identity which revokes all active access tokens
       // and prevents users from issuing access tokens for the identity.
       // It also removes all the persisted content associated with the identity.
-      acsService.deleteACSUserIdentity(acsUserId);
+      await acsService.deleteACSUserIdentity(acsUserId);
 
       return res.status(200).json({
         message: `Successfully deleted the ACS user identity ${acsUserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
