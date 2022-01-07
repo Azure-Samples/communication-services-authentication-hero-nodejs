@@ -60,7 +60,6 @@ export const graphService = {
 
       return identityMappingExtensionsData['acsUserIdentity'];
     } catch (error) {
-      console.log(error);
       // Fail to retrieve an Communication Services identity mapping information from Microsoft Graph.
       const errorMessage = `${RETRIEVE_IDENTITY_MAPPING_ERROR}: ${error.message}`;
       console.log(errorMessage);
