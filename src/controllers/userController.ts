@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import { Constants } from '../config/constants';
+import { utils } from '../utils/utils';
 import { acsService } from '../services/acsService';
 import { graphService } from '../services/graphService';
 
@@ -16,10 +16,13 @@ export const userController = {
     const acsUserId = await acsService.createACSUserIdentity();
 
     try {
-      const identityMappingResponse = await graphService.addIdentityMapping(Constants.ACCESS_TOKEN, acsUserId);
+      // Get aad token via the request
+      const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
+      console.log(JSON.stringify(aadTokenViaRequest));
+      const identityMappingResponse = await graphService.addIdentityMapping(aadTokenViaRequest, acsUserId);
       return res.status(200).json(identityMappingResponse);
     } catch (error) {
-      next(error);
+      return next(error);
     }
   },
 
@@ -28,10 +31,13 @@ export const userController = {
    */
   getACSUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const acsuserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      // Get aad token via the request
+      const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
+      console.log(aadTokenViaRequest);
+      const acsuserId = await graphService.getACSUserId(aadTokenViaRequest);
       return res.status(200).json({ acsUserId: acsuserId });
     } catch (error) {
-      next(error);
+      return next(error);
     }
   },
 
@@ -47,19 +53,21 @@ export const userController = {
    */
   deleteACSUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const acsUserId = await graphService.getACSUserId(Constants.ACCESS_TOKEN);
+      // Get aad token via the request
+      const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
+      const acsUserId = await graphService.getACSUserId(aadTokenViaRequest);
       // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
-      graphService.deleteIdentityMapping(Constants.ACCESS_TOKEN);
+      await graphService.deleteIdentityMapping(aadTokenViaRequest);
       // Delete the ACS user identity which revokes all active access tokens
       // and prevents users from issuing access tokens for the identity.
       // It also removes all the persisted content associated with the identity.
-      acsService.deleteACSUserIdentity(acsUserId);
+      await acsService.deleteACSUserIdentity(acsUserId);
 
       return res.status(200).json({
         message: `Successfully deleted the ACS user identity ${acsUserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
       });
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 };
