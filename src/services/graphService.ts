@@ -13,6 +13,8 @@ const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occured when retrieving the id
 const ADD_IDENTITY_MAPPING_ERROR = 'An error occured when adding the identity mapping information';
 const DELETE_IDENTITY_MAPPING_ERROR = 'An error occured when deleting the identity mapping information';
 
+const GRAPH_EXTENSIONS_ENDPOINT = '/me/extensions';
+
 // Get the identity mapping extension from Graph exthensions
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getIdentityMappingExtension = (roamingProfileInfoResponse: any) => {
@@ -81,7 +83,7 @@ export const graphService = {
     };
 
     try {
-      const response = await graphServiceClient.api('/me/extensions').post(extension);
+      const response = await graphServiceClient.api(GRAPH_EXTENSIONS_ENDPOINT).post(extension);
       return { acsUserIdentity: response.acsUserIdentity };
     } catch (error) {
       // Fail to add an Communication Services identity mapping information to Microsoft Graph.
@@ -99,7 +101,7 @@ export const graphService = {
     const graphServiceClient = graphService.createAuthenticatedClient(accessToken);
 
     try {
-      await graphServiceClient.api(`/me/extensions/${Constants.EXTENSION_NAME}`).delete();
+      await graphServiceClient.api(`${GRAPH_EXTENSIONS_ENDPOINT}/${Constants.EXTENSION_NAME}`).delete();
     } catch (error) {
       // Fail to remove an Communication Services identity mapping information from Microsoft Graph.
       const errorMessage = `${DELETE_IDENTITY_MAPPING_ERROR}: ${error.message}`;
