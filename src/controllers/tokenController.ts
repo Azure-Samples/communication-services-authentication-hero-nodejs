@@ -53,7 +53,5 @@ export const tokenController = {
     } catch (error) {
       return next(error);
     }
-
-    return res.status(200).json(acsToken);
   }
 };
