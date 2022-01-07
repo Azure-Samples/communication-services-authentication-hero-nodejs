@@ -9,6 +9,7 @@ import { ErrorResponse } from '../types/errorResponse';
 const GET_AUTHORIZATION_CODE_ERROR = 'Fail to get the authorization code from the request header';
 
 export const utils = {
+  // Get an AAD token passed through request header
   /* eslint-disable @typescript-eslint/no-explicit-any */
   getAADTokenViaRequest: (req: Request): any => {
     // Extract the aadToken exhcanged by OBO from the authorization header
@@ -21,6 +22,7 @@ export const utils = {
     }
   },
 
+  // Create an error response
   createErrorResponse: (code: number, message: string, stack_trace?: string): ErrorResponse => {
     return {
       code: code,

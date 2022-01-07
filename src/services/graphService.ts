@@ -13,6 +13,7 @@ const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occured when retrieving the id
 const ADD_IDENTITY_MAPPING_ERROR = 'An error occured when adding the identity mapping information';
 const DELETE_IDENTITY_MAPPING_ERROR = 'An error occured when deleting the identity mapping information';
 
+// Get the identity mapping extension from Graph exthensions
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getIdentityMappingExtension = (roamingProfileInfoResponse: any) => {
   for (const extensionObject of roamingProfileInfoResponse.extensions) {

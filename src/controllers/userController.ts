@@ -7,6 +7,7 @@ import { NextFunction, Request, Response } from 'express';
 import { utils } from '../utils/utils';
 import { acsService } from '../services/acsService';
 import { graphService } from '../services/graphService';
+import { aadService } from '../services/aadService';
 
 export const userController = {
   /**
@@ -18,8 +19,9 @@ export const userController = {
     try {
       // Get aad token via the request
       const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
-      console.log(JSON.stringify(aadTokenViaRequest));
-      const identityMappingResponse = await graphService.addIdentityMapping(aadTokenViaRequest, acsUserId);
+      // Retrieve the AAD token via OBO flow
+      const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
+      const identityMappingResponse = await graphService.addIdentityMapping(aadTokenExchangedViaOBO, acsUserId);
       return res.status(200).json(identityMappingResponse);
     } catch (error) {
       return next(error);
@@ -33,8 +35,9 @@ export const userController = {
     try {
       // Get aad token via the request
       const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
-      console.log(aadTokenViaRequest);
-      const acsuserId = await graphService.getACSUserId(aadTokenViaRequest);
+      // Retrieve the AAD token via OBO flow
+      const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
+      const acsuserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
       return res.status(200).json({ acsUserId: acsuserId });
     } catch (error) {
       return next(error);
@@ -53,11 +56,13 @@ export const userController = {
    */
   deleteACSUser: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // Get aad token via the request
+      /// Get aad token via the request
       const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
-      const acsUserId = await graphService.getACSUserId(aadTokenViaRequest);
+      // Retrieve the AAD token via OBO flow
+      const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
+      const acsUserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
       // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
-      await graphService.deleteIdentityMapping(aadTokenViaRequest);
+      await graphService.deleteIdentityMapping(aadTokenExchangedViaOBO);
       // Delete the ACS user identity which revokes all active access tokens
       // and prevents users from issuing access tokens for the identity.
       // It also removes all the persisted content associated with the identity.

@@ -44,7 +44,7 @@ export const aadService = {
     try {
       const oboRequest = {
         oboAssertion: aadToken, // The access token that was sent to the middle-tier API. This token must have an audience of the app making this OBO request.
-        scopes: ['user.read', 'user.readwrite'] // Array of scopes the application is requesting access to.
+        scopes: ['user.read'] // Array of scopes the application is requesting access to.
       };
       const aadTokenResponseViaOBO = await confidentialClientApplication.acquireTokenOnBehalfOf(oboRequest);
 
