@@ -7,7 +7,6 @@
 - [The Way How to Secure](#the-way-how-to-secure)
   - [Authorization Code Grant Flow (ACG Flow)](#authorization-code-grant-flow-acg-flow)
   - [On-Behalf-Of Flow (OBO Flow)](#on-behalf-of-flow-obo-flow)
-  - [Gain Consent for Middle-tier](#gain-consent-for-middle-tier)
 - [Community Help and Support](#community-help-and-support)
 - [Contributing](#contributing)
 - [More Information](#more-information)
@@ -26,16 +25,16 @@ This sample demonstrates how to allow users to authenticate and obtain an access
 
 As displayed in the ACS Authentication Server flow diagram below, the secured Web API contains two parts:
 
-1. Authenticate users to call a **Web API** through **Authorization Code Grant flow** (Applications side)
-2. Make authenticated requests by a Web API to call a **downstream API** through **On-Behalf-Of flow** (Web API side)
+1. Authenticate users to call a **Web API** through **Authorization Code Grant flow** (Client side)
+2. Make authenticated requests by a Web API to call a **downstream API** through **On-Behalf-Of flow** (Server side)
 
-**The Single Page Application (Step 1&2):**
+**Client Side (Step 1&2):**
 
 1. Signs-in users using the [Microsoft Authentication Library for JavaScript (MSAL.js)](https://github.com/AzureAD/microsoft-authentication-library-for-js).
 2. Acquires an access token for the Web API using the Authorization Code Grant flow.
 3. Calls the Nodejs Web API by using the access token as a bearer token in the Authorization header of the Http request.
 
-**The Web API (Step 3&4):**
+**Server Side (Step 3&4):**
 
 1. Once the user is authorized, acquires another access token on behalf of the signed-in user using the On-Behalf-Of flow.
 2. The Web API then uses this new Access token to call downstream APIs (Microsoft Graph here).
@@ -47,6 +46,8 @@ As displayed in the ACS Authentication Server flow diagram below, the secured We
 In order to gain access to protected resources, such as web APIs, the application needs to obtain an authentication code from the Microsoft identity platform `authorize` endpoint (`https://login.microsoftonline.com/common/oauth2/v2.0/authorize`), and redeems it for an access token using the Microsoft identity platform `token` endpoint (`https://login.microsoftonline.com/common/oauth2/v2.0/token`) and a refresh token using cross-site web requests. The access token expires every 24 hours, and the application must request another code using the refresh token.
 
 >The OAuth 2.0 authorization code grant can be used in apps that are installed on a device to gain access to protected resources, such as web APIs. Know more, please visit [Microsoft identity platform and OAuth 2.0 authorization code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+
+:information_source: It is worth mentioning that the Authorization Code Grant Flow (ACG Flow) is implemented at **client side** which is excluded from this ACS Authentication Server Sample. Therefore, users need to either integrate the ACG flow into their client applications or manually generate the access token via the ACG flow following our [Run Authentication Server Sample](../contribution-guides/3. run-authentication-sample.md) guide.
 
 The steps that follow constitute the ACG flow and are explained with the help of the following diagram.
 
@@ -78,6 +79,8 @@ Therefore, after authenticating on an application using the OAuth 2.0 authorizat
 
 > The OAuth 2.0 On-Behalf-Of flow (OBO) serves the use case where an application invokes a service/web API, which in turn needs to call another service/web API. The idea is to propagate the delegated user identity and permissions through the request chain. For the middle-tier service to make authenticated requests to the downstream service, it needs to secure an access token from the Microsoft identity platform, on behalf of the user. Know more, please visit [Microsoft identity platform and OAuth 2.0 On-Behalf-Of flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow)
 
+:information_source: It is worth mentioning that the On-Behalf-Of Flow (OBO Flow) is already integrated into this ACS Authentication Server sample. Users only to need to follow our documentations in **contribution guides** folder to make it work.
+
 The steps that follow constitute the OBO flow and are explained with the help of the following diagram.
 
 ![OBO Sequence](../images/ACS-Authentication-Server-Sample_OBO-Sequence.png)
@@ -87,10 +90,6 @@ The steps that follow constitute the OBO flow and are explained with the help of
 3. The Microsoft identity platform token issuance endpoint validates the Web API's credentials along with token A and issues the access token for the downstream Microsoft Graph API (token B) to the Web API.
 4. Token B is set by the Web API in the authorization header of the request to the downstream Microsoft Graph API.
 5. Data from the secured resource is returned by the downstream Microsoft Graph API to the Web API then to the SPA.
-
-### Gain Consent for Middle-tier
-
-[Add consent grain info here...]
 
 ## Community Help and Support
 
