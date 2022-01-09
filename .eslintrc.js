@@ -35,5 +35,13 @@ module.exports = {
       }
     ],
     '@typescript-eslint/no-unused-vars': 'warn'
-  }
+  },
+  overrides: [
+    {
+      files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx', '**/mocks/*'],
+      env: {
+        jest: true
+      }
+    }
+  ]
 };

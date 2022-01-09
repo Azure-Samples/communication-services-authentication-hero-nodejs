@@ -12,7 +12,7 @@ export const tokenRouter = () => {
 
   // Token routes
   // 1. Get an ACS token or refresh an ACS token
-  router.get('/token', tokenController.getACSToken);
+  router.get('/token', async (req, res, next) => tokenController.getACSToken(req, res, next));
 
   return router;
 };

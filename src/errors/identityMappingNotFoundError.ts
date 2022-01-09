@@ -3,12 +3,11 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-/**
- * The type of the identity mapping
- */
-export type IdentityMapping = {
-  /**
-   * Id of the CommunicationUser as returned from the Communication Service.
-   */
-  acsUserIdentity: string;
-};
+export class IdentityMappingNotFoundError extends Error {
+  constructor(msg: string) {
+    super(msg);
+
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, IdentityMappingNotFoundError.prototype);
+  }
+}
