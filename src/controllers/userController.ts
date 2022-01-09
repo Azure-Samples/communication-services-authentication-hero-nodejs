@@ -14,9 +14,9 @@ export const userController = {
    * Create a Communication Services identity and then add the roaming identity mapping information to the user resource
    */
   createACSUser: async (req: Request, res: Response, next: NextFunction) => {
-    const acsUserId = await acsService.createACSUserIdentity();
-
     try {
+      // Create a Communication Services identity.
+      const acsUserId = await acsService.createACSUserIdentity();
       // Get aad token via the request
       const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
       // Retrieve the AAD token via OBO flow
@@ -38,7 +38,9 @@ export const userController = {
       // Retrieve the AAD token via OBO flow
       const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
       const acsuserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
-      return res.status(200).json({ acsUserId: acsuserId });
+      return acsuserId === undefined
+        ? res.status(200).json({ message: 'There is no identity mapping information stored in Microsoft Graph' })
+        : res.status(200).json({ acsUserIdentity: acsuserId });
     } catch (error) {
       return next(error);
     }
