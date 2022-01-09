@@ -107,12 +107,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 For more information, visit the following links:
 
+- To learn more about the scenario, visit:
+  - [Scenario: Web app that calls web APIs](https://docs.microsoft.com/azure/active-directory/develop/scenario-web-app-call-api-overview)
 - To lean more about **application registration**, visit:
-
   - [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
   - [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
   - [Quickstart: Configure an application to expose web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-expose-web-apis)
-- To learn more about **Microsoft identity platform**: visit:
+- To learn more about **[Microsoft identity platform](http://aka.ms/aaddevv2))**: visit:
   - [Microsoft identity platform - Supported Authentication Flows Scenarios](https://docs.microsoft.com/azure/active-directory/develop/msal-authentication-flows)
   - [Microsoft identity platform - Application Types](https://docs.microsoft.com/azure/active-directory/develop/v2-app-types)
   - [Microsoft identity platform - OAuth 2.0 Authorization Code flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow)
@@ -120,3 +121,5 @@ For more information, visit the following links:
   - [Microsoft identity platform - OAuth 2.0 On-Behalf-Of flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow)
   - [MSAL Node Standalone Sample: On-Behalf-Of Flow](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/samples/msal-node-samples/on-behalf-of/README.md)
   - [Microsoft Authentication Library for JavaScript (MSAL.js) Samples](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/samples)
+  - [Microsoft identity platform code samples](https://docs.microsoft.com/en-us/azure/active-directory/develop/sample-v2-code)
+
