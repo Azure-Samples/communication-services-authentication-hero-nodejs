@@ -79,7 +79,7 @@ export const acsService = {
    */
   createACSUserIdentityAndToken: async (): Promise<CommunicationUserToken> => {
     const identityClient = acsService.createAuthenticatedClient();
-    
+
     try {
       // Issue an identity and an access token with the given scopes for the new identity
       const identityTokenResponse = await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
