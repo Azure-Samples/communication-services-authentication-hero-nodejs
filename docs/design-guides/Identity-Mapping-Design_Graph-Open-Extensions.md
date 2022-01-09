@@ -30,22 +30,141 @@ This sample demonstrates how to utilize Microsoft Graph open extensions as the s
 
 ## The Way How to Manage
 
-As displayed in the ACS Authentication Server - Identity Mapping sequence diagram below, the identity mapping part consists of two endpoints:
-
- 	1. **/user**
-      	1. ***GET*** /user - Get the Azure Communication Services identity by given Azure AD ID through Graph open extensions. If there is no related identity mapping stored previously, it will return an error message.
-      	2. ***POST*** /user - Create a Communication Services identity (`createUser()`) and then add the roaming identity mapping information to the user resource through Graph open extensions. It will return an error message when failing to store the identity mapping information.
-      	3. ***DELETE*** /user - Remove the identity mapping from the user's roaming profile information using Graph open extensions.
-           	1. If successful, delete the ACS user identity (`deleteUser()`) to revoke all active access tokens and prevent users from issuing access tokens for the identity. It also removes all the persisted content associated with the identity.
-           	2. If not, it will return an error message.
- 	2. **/token**
-      	1. ***GET*** /token - Get (**create**/**refresh**) the Azure Communication Services token
-           	1. If the identity mapping information existing in the user's roaming profile, then issue an access token for an already existing Communication Services identity.
-           	2. If not, create a Communication Services identity and token (`createUserAndToken()`) first, then add the identity mapping information to the user resource using Graph open extensions.
-                	1. If successful, return the Azure Communication Services token to users.
-                	2. If not, it will return an error message.
+As displayed in the ACS Authentication Server - Identity Mapping sequence diagram below, the identity mapping part consists of two endpoints - `/api/user` and `/api/token`
 
 ![ACS Authentication Server - Identity Mapping Sequence Diagram](../images/ACS-Authentication-Server-Sample_Identity-Mapping-Sequence.png)
+
+### `/api/user` Endpoint
+
+The `/api/user` endpoint consists of three operations:
+
+1. **GET** - Retrieve the Azure Communication Services identity from Microsoft Graph.
+2. **POST** - Add an identity mapping information in Microsoft Graph
+3. **DELETE** - Delete an identity mapping information from Microsoft Graph as well as the Azure Communication Services reource.
+
+#### ***GET*** /user
+
+This endpoint is to get the Azure Communication Services identity by given Azure AD ID through Graph open extensions. If there is no related identity mapping stored previously, it will return an error message.
+
+1. Get an Azure AD token exchanged via OBO flow.
+
+2. Use the AAD token to retrieve the identity mapping information from Microsoft Graph by calling `/me?$select=id&$expand=extensions`.
+
+   1. If there is an existing identity mapping information, then return
+
+      ```json
+      
+      ```
+
+   2. If not, then return an error message
+
+      ```json
+      
+      ```
+
+#### ***POST*** /user
+
+This endpoint is to create a Communication Services identity and then add the roaming identity mapping information to the user resource through Graph open extensions. It will return an error message when failing to store the identity mapping information.
+
+1. Get an Azure AD token exchanged via OBO flow.
+
+2. Create a Communication Services identity using `createUser`.
+
+   1. if successful, then use the AAD token to add the identity mapping information to the user resource through Graph open extensions by calling `/me/extensions`.
+
+      1. If successful to store, then return
+
+         ```json
+         
+         ```
+
+      2. If failing to store, then return an error message
+
+         ```json
+         
+         ```
+
+   2. If not, then return an error message
+
+      ```json
+      
+      ```
+
+#### ***DELETE*** /user
+
+This endpoint is to remove the identity mapping from the user's roaming profile information using Graph open extensions.
+
+1. Get an Azure AD token exchanged via OBO flow.
+
+2. Retrieve the Communication Services identity from Microsoft Graph.
+
+   1. If successful to retrieve, delete the identity mapping information related to the retrieved identity from Microsoft Graph by calling `/me/extensions/<extensionName>`
+
+      1. If successful to remove, delete the ACS user identity from Communication Services resource using `deleteUser` which revokes all active access tokens and prevents users from issuing access tokens for the identity. Also it will remove all the persisted content associated with the identity.
+
+         1. If successful, then return
+
+            ```json
+            
+            ```
+
+         2. If not, then return an error message
+
+            ```json
+            
+            ```
+
+      2. If not, then return an error message
+
+         ```json
+         
+         ```
+
+   2. If not, then return an error message
+
+      ```json
+      
+      ```
+
+### `/api/token` Endpoint
+
+The `/api/user` endpoint only consists of one operation - `GET` used to get and refresh Communication Services tokens
+
+#### ***GET*** /token
+
+When calling the endpoint, the first step is to check if there is an existing identity mapping information stored in Microsoft Graph. If not, a new Communication Services identity will be created and stored by this endpoint. Detailed process shows as follow:
+
+1. Get an Azure AD token exchanged via OBO flow.
+
+2. Retrieve the Communication Services identity from Microsoft Graph.
+
+   1. If the identity mapping information exists, create a Communication Services token using `getToken`.
+
+      ```json
+      
+      ```
+
+   2. If no identity mapping information exists, create a Communication Services identity and token `createUserAndToken` first.
+
+      1. If failing to create an ACS identity and token, then return an error message.
+
+         ```json
+         
+         ```
+
+      2. If not, then add the identity mapping information to the user resource using Graph open extensions.
+
+         1. If successful to add, return the Azure Communication Services token to users.
+
+            ```json
+            
+            ```
+
+         2. If not, then return an error message.
+
+            ```json
+            
+            ```
 
 ## Contributing
 
