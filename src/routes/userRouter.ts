@@ -12,11 +12,11 @@ export const userRouter = () => {
 
   // Token routes
   // 1. Get an ACS user
-  router.get('/user', userController.getACSUser);
+  router.get('/user', async (req, res, next) => userController.getACSUser(req, res, next));
   // 2. Create an ACS user
-  router.post('/user', userController.createACSUser);
+  router.post('/user', async (req, res, next) => userController.createACSUser(req, res, next));
   // 3. Delete an ACS user
-  router.delete('/user', userController.deleteACSUser);
+  router.delete('/user', async (req, res, next) => userController.deleteACSUser(req, res, next));
 
   return router;
 };
