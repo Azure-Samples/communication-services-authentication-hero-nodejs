@@ -108,7 +108,7 @@ describe('Get ACS User :', () => {
     getACSUserIdSpy.mockClear();
   });
 
-  test('when all succeed, it should return a response with status 200 and acsUserIdentity object.', async () => {
+  test('when an identity mapping information is stored in Graph and all succeeds, it should return a response with status 200 and acsUserIdentity object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest

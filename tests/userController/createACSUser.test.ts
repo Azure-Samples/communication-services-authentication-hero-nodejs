@@ -122,7 +122,7 @@ describe('create ACS user: ', () => {
     addIdentityMappingSpy.mockClear();
   });
 
-  test('when all succeed, it should return response with status 200 and identity mapping object.', async () => {
+  test('when all succeeds, it should return response with status 200 and identity mapping object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     createACSUserIdentitySpy = jest

@@ -148,7 +148,7 @@ describe('Delete ACS User: ', () => {
     deleteACSUserIdentitySpy.mockClear();
   });
 
-  test('when all succeed, itshould return a response with status 200.', async () => {
+  test('when all succeeds, itshould return a response with status 200.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
