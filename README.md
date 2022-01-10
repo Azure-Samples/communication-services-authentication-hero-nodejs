@@ -26,7 +26,6 @@ products:
   - [Guidance](#guidance)
     - [Identity Storage Options](#identity-storage-options)
     - [Bring Your Own Identity (BYOI)](#bring-your-own-identity-byoi)
-  - [Resources](#resources)
   - [Known Issues](#known-issues)
   - [Contributing](#contributing)
   - [Trademark](#trademark)
@@ -64,14 +63,18 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ## Code Structure
 
-(Add after closing features...)
+(Add after code freezing.)
 
 ## Getting Started
 
 If you're wondering where to get started, here are a few scenarios to help you get going:
 
 * "How does the ACS Authentication Server sample work?"
-  * Take a look at our conceptual documentation on [ACS Authentication Server Sample Architecture Design](), [Secured Web API Architecture Design](), [Identity Mapping Architecture Design](), and [AAD Token Exchange Architecture Design]().
+  * Take a look at our conceptual documentation on 
+    - [ACS Authentication Server Sample Architecture Design]().
+    - [Secured Web API Architecture Design]().
+    - [Identity Mapping Architecture Design]().
+    - [AAD Token Exchange Architecture Design]().
 * "I want to see what this ACS Authentication Server sample can do by running!"
   * Check out our [Run Authentication Sample](docs/contribution-guides/3. run-authentication-sample.md) guide.
 * "I want to submit a fix or a feature for this project"
@@ -94,11 +97,6 @@ If you're wondering where to get started, here are a few scenarios to help you g
 
 (AAD B2C)
 
-## Resources
-
-- [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
-- [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
-- [On-Behalf-Of workflow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) - Find more about the OBO workflow
 ## Known Issues
 
 - ...
