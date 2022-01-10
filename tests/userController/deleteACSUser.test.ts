@@ -97,9 +97,7 @@ describe('Delete ACS User: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => mockAcsUserId);
+    getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(false)));
@@ -123,9 +121,7 @@ describe('Delete ACS User: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => mockAcsUserId);
+    getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')
       .mockImplementation(async () => new Promise((resolve, reject) => resolve(true)));
@@ -154,9 +150,7 @@ describe('Delete ACS User: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => mockAcsUserId);
+    getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')
       .mockImplementation(async () => new Promise((resolve, reject) => resolve(true)));

@@ -103,7 +103,9 @@ describe('Get ACS User :', () => {
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: 'There is no identity mapping information stored in Microsoft Graph' });
+    expect(res.json).toHaveBeenCalledWith({
+      message: 'There is no identity mapping information stored in Microsoft Graph'
+    });
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
   });
@@ -114,9 +116,7 @@ describe('Get ACS User :', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => mockAcsUserId);
+    getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
 
     await userController.getACSUser(req, res, () => {});
 

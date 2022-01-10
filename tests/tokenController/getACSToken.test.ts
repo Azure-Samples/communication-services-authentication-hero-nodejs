@@ -43,7 +43,7 @@ const mockToken: CommunicationAccessToken = {
   expiresOn: new Date()
 };
 const mockCommunicationUserToken: CommunicationUserToken = {
-  user: {communicationUserId: mockAcsUserId },
+  user: { communicationUserId: mockAcsUserId },
   token: mockToken.token,
   expiresOn: mockToken.expiresOn
 };
@@ -117,9 +117,9 @@ describe('Get ACS Token: ', () => {
       .spyOn(acsService, 'createACSUserIdentityAndToken')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-      await tokenController.getACSToken(req, res, () => {
-        return res.status(500);
-      });
+    await tokenController.getACSToken(req, res, () => {
+      return res.status(500);
+    });
 
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
@@ -199,9 +199,7 @@ describe('Get ACS Token: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => mockAcsUserId);
+    getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     createACSTokenSpy = jest
       .spyOn(acsService, 'createACSToken')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
@@ -225,12 +223,8 @@ describe('Get ACS Token: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => mockAcsUserId);
-    createACSTokenSpy = jest
-      .spyOn(acsService, 'createACSToken')
-      .mockImplementation(async () => mockToken);
+    getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
+    createACSTokenSpy = jest.spyOn(acsService, 'createACSToken').mockImplementation(async () => mockToken);
 
     await tokenController.getACSToken(req, res, () => {
       return res.status(500);

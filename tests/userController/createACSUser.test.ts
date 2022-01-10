@@ -131,7 +131,9 @@ describe('create ACS user: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    addIdentityMappingSpy = jest.spyOn(graphService, 'addIdentityMapping').mockImplementation(async () => mockIdentityMapping);
+    addIdentityMappingSpy = jest
+      .spyOn(graphService, 'addIdentityMapping')
+      .mockImplementation(async () => mockIdentityMapping);
 
     await userController.createACSUser(req, res, () => {});
 
