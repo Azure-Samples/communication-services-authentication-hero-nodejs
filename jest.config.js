@@ -23,13 +23,13 @@ module.exports = {
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
     '!**/node_modules/**',
-    '!src/mocks/**/*',
+    '!**/mocks/**/*',
     '!**/coverage/**',
     '!**/index.ts'
   ],
 
   // The directory where Jest should output its coverage files
-  // coverageDirectory: undefined,
+  coverageDirectory: './tests/coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -111,10 +111,10 @@ module.exports = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: './tests',
+  rootDir: '.',
 
   // A list of paths to directories that Jest should use to search for files in
-  // roots: ['src'],
+  roots: ['./tests'],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
