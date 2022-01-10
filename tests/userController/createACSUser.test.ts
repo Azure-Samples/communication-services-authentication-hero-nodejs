@@ -8,7 +8,7 @@
 
 import { Request, Response } from 'express';
 import { userController } from '../../src/controllers/userController';
-import { acsService }from '../../src/services/acsService';
+import { acsService } from '../../src/services/acsService';
 import { aadService } from '../../src/services/aadService';
 import { graphService } from '../../src/services/graphService';
 
@@ -36,24 +36,19 @@ const mockResponse = (): Response => {
 const mockAcsUserId = 'mock-acs-user-id';
 const mockAadToken = 'mock-aad-token';
 const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
+const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
 
-let getACSUserIdSpy: jest.SpyInstance;
+let createACSUserIdentitySpy: jest.SpyInstance;
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
+let addIdentityMappingSpy: jest.SpyInstance;
 
 describe('create ACS user: ', () => {
-  const mockIdentityMapping: IdentityMapping = {
-    acsUserIdentity: 'mock-identity-mapping'
-  };
-
-  let createACSUserIdentitySpy: jest.SpyInstance;
-  let addIdentityMappingSpy: jest.SpyInstance;
-
-  test('when ACS identity fails to be created, it should return an error', async () => {
-    const req = mockRequest();
+  test('when ACS identity fails to be created, it should return an error.', async () => {
+    const req = mockRequest(mockAuthorization);
     const res = mockResponse();
-    createACSUserIdentitySpy= jest
+    createACSUserIdentitySpy = jest
       .spyOn(acsService, 'createACSUserIdentity')
-      .mockImplementation(async () => undefined);
+      .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
     await userController.createACSUser(req, res, () => {
       return res.status(500);
@@ -64,7 +59,7 @@ describe('create ACS user: ', () => {
     createACSUserIdentitySpy.mockClear();
   });
 
-  test('when request has no authorization header, it should return an error', async () => {
+  test('when request has no authorization header, it should return an error.', async () => {
     const req = mockRequest();
     const res = mockResponse();
     createACSUserIdentitySpy = jest
@@ -80,7 +75,7 @@ describe('create ACS user: ', () => {
     createACSUserIdentitySpy.mockClear();
   });
 
-  test('when AAD token via OBO flow fails to be retrieved, it should return an error', async () => {
+  test('when AAD token via OBO flow fails to be retrieved, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     createACSUserIdentitySpy = jest
@@ -88,7 +83,7 @@ describe('create ACS user: ', () => {
       .mockImplementation(async () => mockAcsUserId);
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => undefined);
+      .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
     await userController.createACSUser(req, res, () => {
       return res.status(500);
@@ -101,7 +96,7 @@ describe('create ACS user: ', () => {
     exchangeAADTokenViaOBOSpy.mockClear();
   });
 
-  test('when Graph identity mapping fails to be added, it should return an error', async () => {
+  test('when Graph identity mapping fails to be added, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     createACSUserIdentitySpy = jest
@@ -110,7 +105,9 @@ describe('create ACS user: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    addIdentityMappingSpy = jest.spyOn(graphService, 'addIdentityMapping').mockImplementation(async () => new Promise((resolve, reject) => reject(null)));
+    addIdentityMappingSpy = jest
+      .spyOn(graphService, 'addIdentityMapping')
+      .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
     await userController.createACSUser(req, res, () => {
       return res.status(500);
@@ -125,7 +122,7 @@ describe('create ACS user: ', () => {
     addIdentityMappingSpy.mockClear();
   });
 
-  test('should call graphService and return response with status 200 and identity mapping object when call to acsService.createACSUserIdentity succeeds', async () => {
+  test('when all succeed, it should return response with status 200 and identity mapping object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     createACSUserIdentitySpy = jest
@@ -134,9 +131,7 @@ describe('create ACS user: ', () => {
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
-    addIdentityMappingSpy = jest.spyOn(graphService, 'addIdentityMapping').mockImplementation(async () => {
-      return mockIdentityMapping;
-    });
+    addIdentityMappingSpy = jest.spyOn(graphService, 'addIdentityMapping').mockImplementation(async () => mockIdentityMapping);
 
     await userController.createACSUser(req, res, () => {});
 
