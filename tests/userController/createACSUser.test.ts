@@ -6,37 +6,18 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../node_modules/@types/jest/index.d.ts" />
 
-import { Request, Response } from 'express';
+import {
+  mockAcsUserId,
+  mockAadToken,
+  mockAuthorization,
+  mockIdentityMapping,
+  mockResponse,
+  mockRequest
+} from '../utils/mockData';
 import { userController } from '../../src/controllers/userController';
 import { acsService } from '../../src/services/acsService';
 import { aadService } from '../../src/services/aadService';
 import { graphService } from '../../src/services/graphService';
-
-const mockRequest = (authorization?: string): Request => {
-  const req = {
-    headers: {}
-  };
-
-  if (authorization) {
-    req.headers = {
-      authorization: authorization
-    };
-  }
-
-  return req as Request;
-};
-
-const mockResponse = (): Response => {
-  const res: any = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
-  return res as Response;
-};
-
-const mockAcsUserId = 'mock-acs-user-id';
-const mockAadToken = 'mock-aad-token';
-const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
-const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
 
 let createACSUserIdentitySpy: jest.SpyInstance;
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;

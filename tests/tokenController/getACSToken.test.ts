@@ -7,37 +7,19 @@
 /// <reference path="../../node_modules/@types/jest/index.d.ts" />
 
 import { CommunicationAccessToken, CommunicationUserToken } from '@azure/communication-identity';
-import { Request, Response } from 'express';
+import {
+  mockAcsUserId,
+  mockAadToken,
+  mockAuthorization,
+  mockIdentityMapping,
+  mockResponse,
+  mockRequest
+} from '../utils/mockData';
 import { tokenController } from '../../src/controllers/tokenController';
 import { acsService } from '../../src/services/acsService';
 import { aadService } from '../../src/services/aadService';
 import { graphService } from '../../src/services/graphService';
 
-const mockRequest = (authorization?: string): Request => {
-  const req = {
-    headers: {}
-  };
-
-  if (authorization) {
-    req.headers = {
-      authorization: authorization
-    };
-  }
-
-  return req as Request;
-};
-
-const mockResponse = (): Response => {
-  const res: any = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.sendStatus = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
-  return res as Response;
-};
-
-const mockAcsUserId = 'mock-acs-user-id';
-const mockAadToken = 'mock-aad-token';
-const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
 const mockToken: CommunicationAccessToken = {
   token: 'mock-access-token',
   expiresOn: new Date()
@@ -47,7 +29,6 @@ const mockCommunicationUserToken: CommunicationUserToken = {
   token: mockToken.token,
   expiresOn: mockToken.expiresOn
 };
-const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
 
 let getACSUserIdSpy: jest.SpyInstance;
 let createACSTokenSpy: jest.SpyInstance;

@@ -6,35 +6,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../node_modules/@types/jest/index.d.ts" />
 
-import { Request, Response } from 'express';
+import { mockAcsUserId, mockAadToken, mockAuthorization, mockResponse, mockRequest } from '../utils/mockData';
 import { userController } from '../../src/controllers/userController';
 import { aadService } from '../../src/services/aadService';
 import { graphService } from '../../src/services/graphService';
-
-const mockRequest = (authorization?: string): Request => {
-  const req = {
-    headers: {}
-  };
-
-  if (authorization) {
-    req.headers = {
-      authorization: authorization
-    };
-  }
-
-  return req as Request;
-};
-
-const mockResponse = (): Response => {
-  const res: any = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.json = jest.fn().mockReturnValue(res);
-  return res as Response;
-};
-
-const mockAcsUserId = 'mock-acs-user-id';
-const mockAadToken = 'mock-aad-token';
-const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
 
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let getACSUserIdSpy: jest.SpyInstance;
