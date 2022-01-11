@@ -5,7 +5,7 @@
 
 import express, { NextFunction } from 'express';
 import { Request, Response } from 'express';
-import { errorUtil } from './utils/errorUtil';
+import { utils } from './utils/utils';
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';
@@ -29,7 +29,7 @@ app.use('/api/', tokenRouter());
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const statusCode = 404;
   const errorMessage = `The ${req.originalUrl} endpoint is invalid!`;
-  const errorResponse = errorUtil.createErrorResponse(statusCode, errorMessage);
+  const errorResponse = utils.createErrorResponse(statusCode, errorMessage);
 
   res.status(statusCode).send(errorResponse);
 });
@@ -39,7 +39,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const statusCode = 500;
-  const errorResponse = errorUtil.createErrorResponse(statusCode, err.message, err.stack);
+  const errorResponse = utils.createErrorResponse(statusCode, err.message, err.stack);
 
   res.status(statusCode).send(errorResponse);
 });
