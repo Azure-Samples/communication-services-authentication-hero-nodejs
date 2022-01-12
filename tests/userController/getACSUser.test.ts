@@ -7,9 +7,9 @@
 /// <reference path="../../node_modules/@types/jest/index.d.ts" />
 
 import { mockAcsUserId, mockAadToken, mockAuthorization, mockResponse, mockRequest } from '../utils/mockData';
-import { userController } from '../../src/controllers/userController';
-import { aadService } from '../../src/services/aadService';
-import { graphService } from '../../src/services/graphService';
+import { getACSUser } from '../../src/controllers/userController';
+import * as aadService from '../../src/services/aadService';
+import * as graphService from '../../src/services/graphService';
 
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let getACSUserIdSpy: jest.SpyInstance;
@@ -19,7 +19,7 @@ describe('Get ACS User :', () => {
     const req = mockRequest();
     const res = mockResponse();
 
-    await userController.getACSUser(req, res, () => {
+    await getACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -33,7 +33,7 @@ describe('Get ACS User :', () => {
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.getACSUser(req, res, () => {
+    await getACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -52,7 +52,7 @@ describe('Get ACS User :', () => {
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.getACSUser(req, res, () => {
+    await getACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -73,7 +73,7 @@ describe('Get ACS User :', () => {
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => resolve(undefined)));
 
-    await userController.getACSUser(req, res, () => {});
+    await getACSUser(req, res, () => {});
 
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('Get ACS User :', () => {
       .mockImplementation(async () => mockAadToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
 
-    await userController.getACSUser(req, res, () => {});
+    await getACSUser(req, res, () => {});
 
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();

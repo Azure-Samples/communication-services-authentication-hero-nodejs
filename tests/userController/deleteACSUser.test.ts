@@ -7,10 +7,10 @@
 /// <reference path="../../node_modules/@types/jest/index.d.ts" />
 
 import { mockAcsUserId, mockAadToken, mockAuthorization, mockResponse, mockRequest } from '../utils/mockData';
-import { userController } from '../../src/controllers/userController';
-import { acsService } from '../../src/services/acsService';
-import { aadService } from '../../src/services/aadService';
-import { graphService } from '../../src/services/graphService';
+import { deleteACSUser } from '../../src/controllers/userController';
+import * as acsService from '../../src/services/acsService';
+import * as aadService from '../../src/services/aadService';
+import * as graphService from '../../src/services/graphService';
 
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let getACSUserIdSpy: jest.SpyInstance;
@@ -22,7 +22,7 @@ describe('Delete ACS User: ', () => {
     const req = mockRequest();
     const res = mockResponse();
 
-    await userController.deleteACSUser(req, res, () => {
+    await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -36,7 +36,7 @@ describe('Delete ACS User: ', () => {
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.deleteACSUser(req, res, () => {
+    await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -55,7 +55,7 @@ describe('Delete ACS User: ', () => {
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.deleteACSUser(req, res, () => {
+    await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -77,7 +77,7 @@ describe('Delete ACS User: ', () => {
       .spyOn(graphService, 'deleteIdentityMapping')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(false)));
 
-    await userController.deleteACSUser(req, res, () => {
+    await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -104,7 +104,7 @@ describe('Delete ACS User: ', () => {
       .spyOn(acsService, 'deleteACSUserIdentity')
       .mockImplementation(async () => new Promise((resolve, reject) => reject()));
 
-    await userController.deleteACSUser(req, res, () => {
+    await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -133,7 +133,7 @@ describe('Delete ACS User: ', () => {
       .spyOn(acsService, 'deleteACSUserIdentity')
       .mockImplementation(async () => new Promise((resolve, reject) => resolve()));
 
-    await userController.deleteACSUser(req, res, () => {
+    await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 

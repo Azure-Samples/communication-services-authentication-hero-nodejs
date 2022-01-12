@@ -14,10 +14,10 @@ import {
   mockResponse,
   mockRequest
 } from '../utils/mockData';
-import { userController } from '../../src/controllers/userController';
-import { acsService } from '../../src/services/acsService';
-import { aadService } from '../../src/services/aadService';
-import { graphService } from '../../src/services/graphService';
+import { createACSUser } from '../../src/controllers/userController';
+import * as acsService from '../../src/services/acsService';
+import * as aadService from '../../src/services/aadService';
+import * as graphService from '../../src/services/graphService';
 
 let createACSUserIdentitySpy: jest.SpyInstance;
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
@@ -31,7 +31,7 @@ describe('create ACS user: ', () => {
       .spyOn(acsService, 'createACSUserIdentity')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.createACSUser(req, res, () => {
+    await createACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -47,7 +47,7 @@ describe('create ACS user: ', () => {
       .spyOn(acsService, 'createACSUserIdentity')
       .mockImplementation(async () => mockAcsUserId);
 
-    await userController.createACSUser(req, res, () => {
+    await createACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -66,7 +66,7 @@ describe('create ACS user: ', () => {
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.createACSUser(req, res, () => {
+    await createACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -90,7 +90,7 @@ describe('create ACS user: ', () => {
       .spyOn(graphService, 'addIdentityMapping')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await userController.createACSUser(req, res, () => {
+    await createACSUser(req, res, () => {
       return res.status(500);
     });
 
@@ -116,7 +116,7 @@ describe('create ACS user: ', () => {
       .spyOn(graphService, 'addIdentityMapping')
       .mockImplementation(async () => mockIdentityMapping);
 
-    await userController.createACSUser(req, res, () => {});
+    await createACSUser(req, res, () => {});
 
     expect(createACSUserIdentitySpy).toHaveBeenCalled();
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();

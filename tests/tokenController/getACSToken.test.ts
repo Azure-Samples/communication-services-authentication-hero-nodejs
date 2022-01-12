@@ -15,10 +15,10 @@ import {
   mockResponse,
   mockRequest
 } from '../utils/mockData';
-import { tokenController } from '../../src/controllers/tokenController';
-import { acsService } from '../../src/services/acsService';
-import { aadService } from '../../src/services/aadService';
-import { graphService } from '../../src/services/graphService';
+import { getACSToken } from '../../src/controllers/tokenController';
+import * as acsService from '../../src/services/acsService';
+import * as aadService from '../../src/services/aadService';
+import * as graphService from '../../src/services/graphService';
 
 const mockToken: CommunicationAccessToken = {
   token: 'mock-access-token',
@@ -41,7 +41,7 @@ describe('Get ACS Token: ', () => {
     const req = mockRequest();
     const res = mockResponse();
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -55,7 +55,7 @@ describe('Get ACS Token: ', () => {
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -74,7 +74,7 @@ describe('Get ACS Token: ', () => {
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -98,7 +98,7 @@ describe('Get ACS Token: ', () => {
       .spyOn(acsService, 'createACSUserIdentityAndToken')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -127,7 +127,7 @@ describe('Get ACS Token: ', () => {
       .spyOn(graphService, 'addIdentityMapping')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -158,7 +158,7 @@ describe('Get ACS Token: ', () => {
       .spyOn(graphService, 'addIdentityMapping')
       .mockImplementation(async () => mockIdentityMapping);
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -185,7 +185,7 @@ describe('Get ACS Token: ', () => {
       .spyOn(acsService, 'createACSToken')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
@@ -207,7 +207,7 @@ describe('Get ACS Token: ', () => {
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     createACSTokenSpy = jest.spyOn(acsService, 'createACSToken').mockImplementation(async () => mockToken);
 
-    await tokenController.getACSToken(req, res, () => {
+    await getACSToken(req, res, () => {
       return res.status(500);
     });
 
