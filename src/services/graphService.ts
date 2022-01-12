@@ -6,7 +6,9 @@
 // Used to fix the error "PolyFillNotAvailable: Library cannot function without fetch. So, please provide polyfill for it."
 import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
-import { Constants } from '../config/constants';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore
+import { appSettings } from '../appSettings';
 
 // Error messages
 const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occured when retrieving the identity mapping information';
@@ -19,7 +21,7 @@ const GRAPH_EXTENSIONS_ENDPOINT = '/me/extensions';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getIdentityMappingExtension = (roamingProfileInfoResponse: any) => {
   for (const extensionObject of roamingProfileInfoResponse.extensions) {
-    if (extensionObject.extensionName === Constants.EXTENSION_NAME) {
+    if (extensionObject.extensionName === appSettings.graph.extensionName) {
       return extensionObject;
     }
   }
@@ -73,7 +75,7 @@ export const addIdentityMapping = async (accessToken: string, acsUserId: string)
   const graphServiceClient = createAuthenticatedClient(accessToken);
   const extension = {
     '@odata.type': 'microsoft.graph.openTypeExtension',
-    extensionName: Constants.EXTENSION_NAME,
+    extensionName: appSettings.graph.extensionName,
     acsUserIdentity: acsUserId
   };
   try {
@@ -94,7 +96,7 @@ export const addIdentityMapping = async (accessToken: string, acsUserId: string)
 export const deleteIdentityMapping = async (accessToken: string): Promise<any> => {
   const graphServiceClient = createAuthenticatedClient(accessToken);
   try {
-    await graphServiceClient.api(`${GRAPH_EXTENSIONS_ENDPOINT}/${Constants.EXTENSION_NAME}`).delete();
+    await graphServiceClient.api(`${GRAPH_EXTENSIONS_ENDPOINT}/${appSettings.graph.extensionName}`).delete();
   } catch (error) {
     // Fail to remove an Communication Services identity mapping information from Microsoft Graph.
     const errorMessage = `${DELETE_IDENTITY_MAPPING_ERROR}: ${error.message}`;
