@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 import express from 'express';
-import { userController } from '../controllers/userController';
+import * as userController from '../controllers/userController';
 
 export const userRouter = () => {
   // Initialize router
