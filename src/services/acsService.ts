@@ -54,7 +54,10 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
   try {
     // Issue an access token with the given scopes for an identity
     const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(communicationUserIdentifierObject, appSettings.communicationServices.scopes);
+    const tokenResponse = await identityClient.getToken(
+      communicationUserIdentifierObject,
+      appSettings.communicationServices.scopes
+    );
     console.log(
       `\nIssued an access token with ${appSettings.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
     );
