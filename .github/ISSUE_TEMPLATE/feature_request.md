@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Suggest a feature or share an idea.
-title: [FEATURE] Add <what> to/in <where>
+title: "[FEATURE] Add <what> to/in <where>"
 labels: enhancement
-assignees: clarenceli-msft, ikumarapeli-msft, lei-msft, rvenugopal-msft, vaibhavjain-msft, alcail
+assignees: alcail, clarenceli-msft, ikumarapeli-msft, lei-msft, rvenugopal-msft, vaibhavjain-msft
 
 ---
 
