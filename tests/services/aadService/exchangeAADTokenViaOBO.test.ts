@@ -10,7 +10,10 @@ import { Configuration, ConfidentialClientApplication, OnBehalfOfRequest } from 
 import { mockAadToken } from '../../utils/mockData';
 import * as aadService from '../../../src/services/aadService';
 
-const mockConfidentialClientApplication = (msalConfig?: Configuration, isOboResolved?: boolean): ConfidentialClientApplication => {
+const mockConfidentialClientApplication = (
+  msalConfig?: Configuration,
+  isOboResolved?: boolean
+): ConfidentialClientApplication => {
   const clientApp: any = {};
   clientApp.constructor = jest.fn().mockReturnValue(clientApp);
   clientApp.acquireTokenOnBehalfOf = (oboRequest: OnBehalfOfRequest) => {
@@ -19,7 +22,7 @@ const mockConfidentialClientApplication = (msalConfig?: Configuration, isOboReso
     }
     return new Promise((resolve, reject) => resolve({ accessToken: mockAadToken }));
   };
-  return !msalConfig ? undefined : clientApp as ConfidentialClientApplication;
+  return !msalConfig ? undefined : (clientApp as ConfidentialClientApplication);
 };
 
 const mockMsalConfig: Configuration = {
