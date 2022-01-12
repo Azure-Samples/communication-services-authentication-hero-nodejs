@@ -11,7 +11,6 @@ const GET_AUTHORIZATION_CODE_ERROR = 'Fail to get the authorization code from th
 // Get an AAD token passed through request header
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const getAADTokenViaRequest = (req: Request): any => {
-  // Extract the aadToken exhcanged by OBO from the authorization header
   const authHeader = req.headers.authorization;
   if (authHeader) {
     return authHeader.split(' ')[1];

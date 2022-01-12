@@ -12,7 +12,7 @@ import * as utils from '../utils/utils';
 /**
  * Get or refresh a Communication Services access token
  *
- * 1. If the identity mapping information existing in the user's roaming profile,
+ * 1. If the identity mapping information exists in Microsoft Graph,
  *    then issue an access token for an already existing Communication Services identity
  * 2. If not, create a Communication Services identity and then
  *    2.1 If successfully adding the identity mapping information, then issue an access token.
