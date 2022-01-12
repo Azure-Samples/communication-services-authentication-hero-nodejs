@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 import express from 'express';
-import { tokenController } from '../controllers/tokenController';
+import * as tokenController from '../controllers/tokenController';
 
 export const tokenRouter = () => {
   // Initialize router
