@@ -21,7 +21,7 @@ const CREATE_ACS_USER_IDENTITY_TOKEN_ERROR =
 const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occured when deleting an ACS user id';
 
 /**
- * Authenticate with Azure AD
+ * Instantiate the identity client using the connection string.
  */
 const createAuthenticatedClient = (): CommunicationIdentityClient => {
   const connectionString = appSettings.communicationServices.connectionString;
