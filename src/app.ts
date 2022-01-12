@@ -5,7 +5,7 @@
 
 import express, { NextFunction } from 'express';
 import { Request, Response } from 'express';
-import { utils } from './utils/utils';
+import * as utils from './utils/utils';
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';
