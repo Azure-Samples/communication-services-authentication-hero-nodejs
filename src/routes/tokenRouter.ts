@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 import express from 'express';
-import { tokenController } from '../controllers/tokenController';
+import * as tokenController from '../controllers/tokenController';
 
 export const tokenRouter = () => {
   // Initialize router
@@ -12,7 +12,7 @@ export const tokenRouter = () => {
 
   // Token routes
   // 1. Get an ACS token or refresh an ACS token
-  router.get('/token', async (req, res, next) => tokenController.getACSToken(req, res, next));
+  router.get('/token', tokenController.getACSToken);
 
   return router;
 };

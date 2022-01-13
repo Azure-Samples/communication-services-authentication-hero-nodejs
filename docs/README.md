@@ -1,5 +1,9 @@
 # Docs
 
+## Architecture Design Guides
+
+- [Secured Web API Design](design-guides/SecuredWebApi-Design_On-Behalf-Of-Flow.md) - How to protect Web API using the **Authentication Code Grant flow** (Client side excluded from the project) and secure an access token from the Microsoft identity platform using the **On-Behalf-Of flow** (Server side) to make authenticated requests to the downstream services.
+
 ## Contribution Guides
 
 Looking to make a contribution to this repo? Check out our guide for a walk-through on how to make your first contribution:
