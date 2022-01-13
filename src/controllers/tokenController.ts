@@ -4,8 +4,8 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import * as acsService from '../services/acsService';
 import * as aadService from '../services/aadService';
+import * as acsService from '../services/acsService';
 import * as graphService from '../services/graphService';
 import * as utils from '../utils/utils';
 
@@ -27,8 +27,10 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
     const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
     const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
+
     // Retrieve ACS Identity from Microsoft Graph
     const acsUserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
+
     if (acsUserId === undefined) {
       console.log('There is no identity mapping information stored in Graph. Creating ACS identity now...');
       // User does not exist

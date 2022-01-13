@@ -40,8 +40,9 @@ export const createACSUserIdentity = async (): Promise<string> => {
     console.log(`\nCreated an identity with ID: ${identityResponse.communicationUserId}`);
     return identityResponse.communicationUserId;
   } catch (error) {
-    console.log(CREATE_ACS_USER_IDENTITY_ERROR);
-    throw error;
+    const errorMessage = `${CREATE_ACS_USER_IDENTITY_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -61,8 +62,9 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
     console.log(`\n${tokenResponse.token}`);
     return tokenResponse;
   } catch (error) {
-    console.log(CREATE_ACS_TOKEN_ERROR);
-    throw error;
+    const errorMessage = `${CREATE_ACS_TOKEN_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -81,8 +83,9 @@ export const createACSUserIdentityAndToken = async (): Promise<CommunicationUser
     console.log(`\n${identityTokenResponse.token}`);
     return identityTokenResponse;
   } catch (error) {
-    console.log(CREATE_ACS_USER_IDENTITY_TOKEN_ERROR);
-    throw error;
+    const errorMessage = `${CREATE_ACS_USER_IDENTITY_TOKEN_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -100,7 +103,8 @@ export const deleteACSUserIdentity = async (acsUserId: string): Promise<void> =>
     await identityClient.deleteUser(identityResponse);
     console.log(`\nDeleted the identity with ID: ${identityResponse.communicationUserId}`);
   } catch (error) {
-    console.log(DELETE_ACS_USER_IDENTITY_ERROR);
-    throw error;
+    const errorMessage = `${DELETE_ACS_USER_IDENTITY_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
