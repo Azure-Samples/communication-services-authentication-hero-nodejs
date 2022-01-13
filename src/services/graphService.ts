@@ -31,7 +31,7 @@ const getIdentityMappingExtension = (roamingProfileInfoResponse: any) => {
  * Creating a Graph client instance via options method.
  * @param accessToken - The token issued by the Microsoft identity platform
  */
-const createAuthenticatedClient = (accessToken: string): Client => {
+export const createAuthenticatedClient = (accessToken: string): Client => {
   // Initialize Graph client
   const graphServiceClient = Client.init({
     // Use the provided access token to authenticate requests
