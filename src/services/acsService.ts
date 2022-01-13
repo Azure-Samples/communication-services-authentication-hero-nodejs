@@ -40,8 +40,9 @@ export const createACSUserIdentity = async (): Promise<string> => {
 
     return identityResponse.communicationUserId;
   } catch (error) {
-    console.log(CREATE_ACS_USER_IDENTITY_ERROR);
-    throw error;
+    const errorMessage = `${CREATE_ACS_USER_IDENTITY_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -53,13 +54,17 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an access token with the given scopes for an identity
-    const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(identityResponse, appSettings.communicationServices.scopes);
+    const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
+    const tokenResponse = await identityClient.getToken(
+      communicationUserIdentifierObject,
+      appSettings.communicationServices.scopes
+    );
 
     return tokenResponse;
   } catch (error) {
-    console.log(CREATE_ACS_TOKEN_ERROR);
-    throw error;
+    const errorMessage = `${CREATE_ACS_TOKEN_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -74,8 +79,9 @@ export const createACSUserIdentityAndToken = async (): Promise<CommunicationUser
 
     return identityTokenResponse;
   } catch (error) {
-    console.log(CREATE_ACS_USER_IDENTITY_TOKEN_ERROR);
-    throw error;
+    const errorMessage = `${CREATE_ACS_USER_IDENTITY_TOKEN_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 
@@ -87,12 +93,14 @@ export const createACSUserIdentityAndToken = async (): Promise<CommunicationUser
  */
 export const deleteACSUserIdentity = async (acsUserId: string): Promise<void> => {
   const identityClient = createAuthenticatedClient();
-  const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
+  const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
+
   try {
     // Delete an identity
-    await identityClient.deleteUser(identityResponse);
+    await identityClient.deleteUser(communicationUserIdentifierObject);
   } catch (error) {
-    console.log(DELETE_ACS_USER_IDENTITY_ERROR);
-    throw error;
+    const errorMessage = `${DELETE_ACS_USER_IDENTITY_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   }
 };
