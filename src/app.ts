@@ -12,6 +12,8 @@ import { userRouter } from './routes/userRouter';
 
 // Create Express server
 const app = express();
+// Get the environment mode
+const env = app.get('env');
 
 // Express configuration
 app.set('port', process.env.PORT || 3000);
@@ -39,7 +41,8 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const statusCode = 500;
-  const errorResponse = utils.createErrorResponse(statusCode, err.message, err.stack);
+  // In development mode, print stacktrace, otherwise, no stacktrace will be leaked to users
+  const errorResponse = utils.createErrorResponse(statusCode, err.message, env === 'development' ? err.stack : undefined);
 
   res.status(statusCode).send(errorResponse);
 });
