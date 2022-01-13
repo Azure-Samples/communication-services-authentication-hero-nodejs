@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Api routes
-app.use('/api/', userRouter());
-app.use('/api/', tokenRouter());
+app.use('/api/user', userRouter());
+app.use('/api/token', tokenRouter());
 
 // Any other route is going to wind up at the app.all() function defined.
 // The all() method encompasses all types of requests, including GET and PATCH, and the asterisk accepts any URL.

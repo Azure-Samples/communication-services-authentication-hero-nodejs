@@ -82,7 +82,7 @@ export const deleteACSUser = async (req: Request, res: Response, next: NextFunct
     // It also removes all the persisted content associated with the identity.
     await deleteACSUserIdentity(acsUserId);
 
-    return res.status(204);
+    return res.status(204).json();
   } catch (error) {
     return next(error);
   }

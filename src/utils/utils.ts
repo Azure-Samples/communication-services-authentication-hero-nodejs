@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { ErrorResponse } from '../types/errorResponse';
 
 const GET_AUTHORIZATION_CODE_ERROR = 'Fail to get the authorization code from the request header';
@@ -23,10 +23,11 @@ export const createErrorResponse = (code: number, message: string, stack_trace?:
 };
 
 // A middleware function used to check if get the authorization code from the request header successfully
-export const authorizate = (req: Request, res: Response) => {
+export const validateAuthorizedHeader = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.split(' ')[1]) {
     return res.status(401).json(createErrorResponse(401, GET_AUTHORIZATION_CODE_ERROR));
   }
+  next();
 };
