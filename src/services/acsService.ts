@@ -53,8 +53,11 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an access token with the given scopes for an identity
-    const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(identityResponse, appSettings.communicationServices.scopes);
+    const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
+    const tokenResponse = await identityClient.getToken(
+      communicationUserIdentifierObject,
+      appSettings.communicationServices.scopes
+    );
     console.log(
       `\nIssued an access token with ${appSettings.communicationServices.scopes} scope that expires at ${tokenResponse.expiresOn}:`
     );
@@ -94,11 +97,11 @@ export const createACSUserIdentityAndToken = async (): Promise<CommunicationUser
  */
 export const deleteACSUserIdentity = async (acsUserId: string): Promise<void> => {
   const identityClient = createAuthenticatedClient();
-  const identityResponse: CommunicationUserIdentifier = { communicationUserId: acsUserId };
+  const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
   try {
     // Delete an identity
-    await identityClient.deleteUser(identityResponse);
-    console.log(`\nDeleted the identity with ID: ${identityResponse.communicationUserId}`);
+    await identityClient.deleteUser(communicationUserIdentifierObject);
+    console.log(`\nDeleted the identity with ID: ${communicationUserIdentifierObject.communicationUserId}`);
   } catch (error) {
     console.log(DELETE_ACS_USER_IDENTITY_ERROR);
     throw error;
