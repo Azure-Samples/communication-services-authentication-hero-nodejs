@@ -42,7 +42,11 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const statusCode = 500;
   // In development mode, print stacktrace, otherwise, no stacktrace will be leaked to users
-  const errorResponse = utils.createErrorResponse(statusCode, err.message, env === 'development' ? err.stack : undefined);
+  const errorResponse = utils.createErrorResponse(
+    statusCode,
+    err.message,
+    env === 'development' ? err.stack : undefined
+  );
 
   res.status(statusCode).send(errorResponse);
 });
