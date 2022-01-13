@@ -4,10 +4,10 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import * as aadService from '../services/aadService';
-import * as acsService from '../services/acsService';
-import * as graphService from '../services/graphService';
-import * as utils from '../utils/utils';
+import { getAADTokenViaRequest } from '../utils/utils';
+import { addIdentityMapping, getACSUserId } from '../services/graphService';
+import { createACSToken, createACSUserIdentityAndToken } from '../services/acsService';
+import { exchangeAADTokenViaOBO } from '../services/aadService';
 
 /**
  * Get or refresh a Communication Services access token
@@ -24,21 +24,21 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
   let acsToken;
   try {
     // Get aad token via the request
-    const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
-    const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
+    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
 
     // Retrieve ACS Identity from Microsoft Graph
-    const acsUserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
+    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
 
     if (acsUserId === undefined) {
       console.log('There is no identity mapping information stored in Graph. Creating ACS identity now...');
       // User does not exist
-      const identityTokenResponse = await acsService.createACSUserIdentityAndToken();
+      const identityTokenResponse = await createACSUserIdentityAndToken();
       // retrieve the token, its expiry date and user object from the response
       const { token, expiresOn, user } = identityTokenResponse;
       // Store the identity mapping information
-      await graphService.addIdentityMapping(aadTokenExchangedViaOBO, user.communicationUserId);
+      await addIdentityMapping(aadTokenExchangedViaOBO, user.communicationUserId);
       // This LoC below should be excuted after AddIdentityMapping excuted successfully
       // because the acsToken can not be returned if failing to add the identity mapping information to Microsoft Graph
       acsToken = {
@@ -47,7 +47,7 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
       };
     } else {
       // User exists
-      acsToken = await acsService.createACSToken(acsUserId);
+      acsToken = await createACSToken(acsUserId);
     }
   } catch (error) {
     return next(error);
