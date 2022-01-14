@@ -36,7 +36,7 @@ const mockMsalConfig: Configuration = {
 let createConfidentialClientApplicationSpy: jest.SpyInstance;
 
 describe('Exchange AAD Token Via OBO: ', () => {
-  test('when Confidential Client Application fails to create, it should throw an error.', async () => {
+  test('when Confidential Client Application fails to be created, it should throw an error.', async () => {
     createConfidentialClientApplicationSpy = jest
       .spyOn(aadService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication());
@@ -50,6 +50,7 @@ describe('Exchange AAD Token Via OBO: ', () => {
 
     expect(createConfidentialClientApplicationSpy).toHaveBeenCalled();
     expect(mockError).toBeTruthy();
+    createConfidentialClientApplicationSpy.mockClear();
   });
 
   test('when OBO token failed to be acquired, it should throw an error.', async () => {
@@ -67,6 +68,7 @@ describe('Exchange AAD Token Via OBO: ', () => {
 
     expect(createConfidentialClientApplicationSpy).toHaveBeenCalled();
     expect(mockError).toBeTruthy();
+    createConfidentialClientApplicationSpy.mockClear();
   });
 
   test('when all succeeds, it should return mock token.', async () => {
@@ -85,5 +87,6 @@ describe('Exchange AAD Token Via OBO: ', () => {
     expect(createConfidentialClientApplicationSpy).toHaveBeenCalled();
     expect(mockError).toBeFalsy();
     expect(token).toBe(mockAadToken);
+    createConfidentialClientApplicationSpy.mockClear();
   });
 });

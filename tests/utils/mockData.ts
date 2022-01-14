@@ -28,6 +28,6 @@ export const mockResponse = (): Response => {
 };
 
 export const mockAcsUserId = 'mock-acs-user-id';
-export const mockAadToken = process.env.MOCK_AAD_TOKEN ?? '';
+export const mockAadToken = 'mock-aad-token';
 export const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
 export const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
