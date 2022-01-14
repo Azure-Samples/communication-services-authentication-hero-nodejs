@@ -42,7 +42,7 @@ describe('Get ACS User :', () => {
     exchangeAADTokenViaOBOSpy.mockClear();
   });
 
-  test('when ACS user ID fails to be retrieved, it should return an error.', async () => {
+  test('when ACS user ID fails to be retrieved from Graph, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -63,7 +63,7 @@ describe('Get ACS User :', () => {
     getACSUserIdSpy.mockClear();
   });
 
-  test('when there is no identity mapping information stored in Graph, it should return an error.', async () => {
+  test('when no ACS user ID is stored in Graph, it should return a 404 error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -73,19 +73,18 @@ describe('Get ACS User :', () => {
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => resolve(undefined)));
 
-    await getACSUser(req, res, () => {});
+    await getACSUser(req, res, () => {
+      return res.status(500);
+    });
 
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({
-      message: 'There is no identity mapping information stored in Microsoft Graph'
-    });
+    expect(res.status).toHaveBeenCalledWith(404);
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
   });
 
-  test('when an identity mapping information is stored in Graph and all succeeds, it should return a response with status 200 and acsUserIdentity object.', async () => {
+  test('when an ACS user ID is stored in Graph and all succeeds, it should return a response with status 200 and acsUserIdentity object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
