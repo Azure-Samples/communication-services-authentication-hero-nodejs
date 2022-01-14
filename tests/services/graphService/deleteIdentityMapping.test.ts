@@ -11,26 +11,30 @@ import * as graphService from '../../../src/services/graphService';
 import { mockAccessToken, mockAcsUserId } from '../../utils/mockData';
 
 let callPath = '';
-const mockGraphClient = (isCreateClientResolved?: boolean, isApiResolved?: boolean, graphResponse?: any): Client => {
+const mockGraphClient = (
+  isCreateClientResolved?: boolean,
+  isApiResolved?: boolean,
+  isDeleteresolved?: boolean
+): Client => {
   const clientApp: any = {};
   clientApp.api = () => {
     callPath += 'graphClient.api';
     if (!isApiResolved) {
       return undefined;
     }
-    return mockGraphRequest(graphResponse);
+    return mockGraphRequest(isDeleteresolved);
   };
   return !isCreateClientResolved ? undefined : (clientApp as Client);
 };
 
-const mockGraphRequest = (graphResponse?: any): GraphRequest => {
+const mockGraphRequest = (isDeleteresolved?: boolean): GraphRequest => {
   const requestApp: any = {};
-  requestApp.post = () => {
-    callPath += '.post';
-    if (!graphResponse) {
+  requestApp.delete = () => {
+    callPath += '.delete';
+    if (!isDeleteresolved) {
       return new Promise((resolve, reject) => reject(undefined));
     }
-    return new Promise((resolve, reject) => resolve(graphResponse));
+    return new Promise((resolve, reject) => resolve(undefined));
   };
   return requestApp as GraphRequest;
 };
@@ -41,7 +45,7 @@ const mockGraphResponse = {
 
 let createAuthenticatedClientSpy: jest.SpyInstance;
 
-describe('Graph Service - Add Identity Mapping: ', () => {
+describe('Graph Service - Delete Identity Mapping: ', () => {
   afterEach(() => {
     createAuthenticatedClientSpy.mockClear();
     callPath = '';
@@ -55,7 +59,7 @@ describe('Graph Service - Add Identity Mapping: ', () => {
 
     let mockError: any = undefined;
     try {
-      await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      await graphService.deleteIdentityMapping(mockAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -75,7 +79,7 @@ describe('Graph Service - Add Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      acsUserIdentity = await graphService.deleteIdentityMapping(mockAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -85,44 +89,45 @@ describe('Graph Service - Add Identity Mapping: ', () => {
     expect(mockError).toBeTruthy();
   });
 
-  test('when Graph request fails, it should call Graph API.post and throw an error.', async () => {
+  test('when Graph request fails, it should call Graph API.delete and throw an error.', async () => {
     const isCreateClientResolved = true;
     const isApiResolved = true;
+    const isDeleteResolved = false;
     createAuthenticatedClientSpy = jest
       .spyOn(graphService, 'createAuthenticatedClient')
-      .mockImplementation(() => mockGraphClient(isCreateClientResolved, isApiResolved));
+      .mockImplementation(() => mockGraphClient(isCreateClientResolved, isApiResolved, isDeleteResolved));
 
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      acsUserIdentity = await graphService.deleteIdentityMapping(mockAccessToken.token);
     } catch {
       mockError = 'error';
     }
 
     expect(createAuthenticatedClientSpy).toHaveBeenCalled();
-    expect(callPath).toBe('graphClient.api.post');
+    expect(callPath).toBe('graphClient.api.delete');
     expect(mockError).toBeTruthy();
   });
 
-  test('when Graph request succeeds, it should an ACS user identity object.', async () => {
+  test('when Graph request succeeds, it should call Graph API.delete and not trhow an error.', async () => {
     const isCreateClientResolved = true;
     const isApiResolved = true;
+    const isDeleteResolved = true;
     createAuthenticatedClientSpy = jest
       .spyOn(graphService, 'createAuthenticatedClient')
-      .mockImplementation(() => mockGraphClient(isCreateClientResolved, isApiResolved, mockGraphResponse));
+      .mockImplementation(() => mockGraphClient(isCreateClientResolved, isApiResolved, isDeleteResolved));
 
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      acsUserIdentity = await graphService.deleteIdentityMapping(mockAccessToken.token);
     } catch {
       mockError = 'error';
     }
 
     expect(createAuthenticatedClientSpy).toHaveBeenCalled();
-    expect(callPath).toBe('graphClient.api.post');
-    expect(acsUserIdentity.acsUserIdentity).toBe(mockAcsUserId);
+    expect(callPath).toBe('graphClient.api.delete');
     expect(mockError).toBeFalsy();
   });
 });
