@@ -4,77 +4,86 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import { utils } from '../utils/utils';
-import { acsService } from '../services/acsService';
-import { graphService } from '../services/graphService';
-import { aadService } from '../services/aadService';
+import { createErrorResponse, getAADTokenViaRequest } from '../utils/utils';
+import { exchangeAADTokenViaOBO } from '../services/aadService';
+import { createACSUserIdentity, deleteACSUserIdentity } from '../services/acsService';
+import { addIdentityMapping, deleteIdentityMapping, getACSUserId } from '../services/graphService';
 
-export const userController = {
-  /**
-   * Create a Communication Services identity and then add the roaming identity mapping information to the user resource
-   */
-  createACSUser: async (req: Request, res: Response, next: NextFunction) => {
-    try {
+const NO_IDENTITY_MAPPING_INFO_ERROR = 'There is no identity mapping information stored in Microsoft Graph';
+
+/**
+ * Create a Communication Services identity and then add the roaming identity mapping information to the user resource
+ */
+export const createACSUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Get aad token via the request
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    // Retrieve the AAD token via OBO flow
+    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    // Get an ACS user id from Microsoft Graph
+    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+
+    if (acsUserId === undefined) {
       // Create a Communication Services identity.
-      const acsUserId = await acsService.createACSUserIdentity();
-      // Get aad token via the request
-      const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
-      // Retrieve the AAD token via OBO flow
-      const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
-      const identityMappingResponse = await graphService.addIdentityMapping(aadTokenExchangedViaOBO, acsUserId);
-      return res.status(200).json(identityMappingResponse);
-    } catch (error) {
-      return next(error);
+      const acsUserId = await createACSUserIdentity();
+      const identityMappingResponse = await addIdentityMapping(aadTokenExchangedViaOBO, acsUserId);
+      return res.status(201).json(identityMappingResponse);
     }
-  },
 
-  /**
-   * Get a Communication Services identity through Graph open extensions
-   */
-  getACSUser: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      // Get aad token via the request
-      const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
-      // Retrieve the AAD token via OBO flow
-      const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
-      const acsuserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
-      return acsuserId === undefined
-        ? res.status(200).json({ message: 'There is no identity mapping information stored in Microsoft Graph' })
-        : res.status(200).json({ acsUserIdentity: acsuserId });
-    } catch (error) {
-      return next(error);
-    }
-  },
+    return res.status(200).json({ acsUserIdentity: acsUserId });
+  } catch (error) {
+    return next(error);
+  }
+};
 
-  /**
-   * Delete a Communication Services identity and then remove an identity mapping from the user's roaming profile information
-   *
-   * The strategy of deleting users applied here can avoid creating an ACS token using the ACS identity already deleted which
-   * will cause the error (Provided identity doesn't exist)
-   *
-   * Step 1: Delete the identity mapping information from Microsoft Graph
-   * Step 2: Delete the ACS user identity
-   *
-   */
-  deleteACSUser: async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      /// Get aad token via the request
-      const aadTokenViaRequest = utils.getAADTokenViaRequest(req);
-      // Retrieve the AAD token via OBO flow
-      const aadTokenExchangedViaOBO = await aadService.exchangeAADTokenViaOBO(aadTokenViaRequest);
-      const acsUserId = await graphService.getACSUserId(aadTokenExchangedViaOBO);
-      // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
-      await graphService.deleteIdentityMapping(aadTokenExchangedViaOBO);
-      // Delete the ACS user identity which revokes all active access tokens
-      // and prevents users from issuing access tokens for the identity.
-      // It also removes all the persisted content associated with the identity.
-      await acsService.deleteACSUserIdentity(acsUserId);
+/**
+ * Get a Communication Services identity through Graph open extensions
+ */
+export const getACSUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Get aad token via the request
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    // Retrieve the AAD token via OBO flow
+    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    // Get an ACS user id from Microsoft Graph
+    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
 
-      return res.status(200).json({
-        message: `Successfully deleted the ACS user identity ${acsUserId} which revokes all active access tokens and removes all the persisted content, and the identity mapping`
-      });
-    } catch (error) {
-      return next(error);
-    }
+    return acsUserId === undefined
+      ? res.status(404).json(createErrorResponse(404, NO_IDENTITY_MAPPING_INFO_ERROR))
+      : res.status(200).json({ acsUserIdentity: acsUserId });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+/**
+ * Delete a Communication Services identity and then remove an identity mapping from the user's roaming profile information
+ *
+ * The strategy of deleting users applied here can avoid creating an ACS token using the ACS identity already deleted which
+ * will cause the error (Provided identity doesn't exist)
+ *
+ * Step 1: Delete the identity mapping information from Microsoft Graph
+ * Step 2: Delete the ACS user identity
+ *
+ */
+export const deleteACSUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Get aad token via the request
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    // Retrieve the AAD token via OBO flow
+    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    // Get an ACS user id from Microsoft Graph
+    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+
+    // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
+    await deleteIdentityMapping(aadTokenExchangedViaOBO);
+    // Delete the ACS user identity which revokes all active access tokens
+    // and prevents users from issuing access tokens for the identity.
+    // It also removes all the persisted content associated with the identity.
+    await deleteACSUserIdentity(acsUserId);
+
+    return res.status(204).json();
+  } catch (error) {
+    return next(error);
   }
 };
