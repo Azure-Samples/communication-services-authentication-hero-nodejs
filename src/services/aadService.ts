@@ -14,6 +14,8 @@ const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =
 
 /**
  * Create a client for communication with Azure Active Directory
+ *
+ * @private
  */
 export const createConfidentialClientApplication = (): ConfidentialClientApplication => {
   const msalConfig: Configuration = {
