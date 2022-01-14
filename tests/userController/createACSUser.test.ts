@@ -25,8 +25,8 @@ let createACSUserIdentitySpy: jest.SpyInstance;
 let addIdentityMappingSpy: jest.SpyInstance;
 
 describe('User Controller - Create ACS User: ', () => {
-  test('when ACS identity fails to be created, it should return an error.', async () => {
-    const req = mockRequest(mockAuthorization);
+  test('when request has no authorization header, it should return an error.', async () => {
+    const req = mockRequest();
     const res = mockResponse();
 
     await createACSUser(req, res, () => {
