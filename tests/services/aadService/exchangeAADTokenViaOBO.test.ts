@@ -35,7 +35,7 @@ const mockMsalConfig: Configuration = {
 
 let createConfidentialClientApplicationSpy: jest.SpyInstance;
 
-describe('Exchange AAD Token Via OBO: ', () => {
+describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
   test('when Confidential Client Application fails to be created, it should throw an error.', async () => {
     createConfidentialClientApplicationSpy = jest
       .spyOn(aadService, 'createConfidentialClientApplication')

@@ -27,7 +27,7 @@ const mockCommunicationIdentityClient = (
 
 let createAuthenticatedClientSpy: jest.SpyInstance;
 
-describe('Create ACS User Identity And Token: ', () => {
+describe('ACS Service - Create ACS User Identity And Token: ', () => {
   test('when Authenticated Client fails to be created, it should throw an error.', async () => {
     createAuthenticatedClientSpy = jest
       .spyOn(acsService, 'createAuthenticatedClient')

@@ -82,7 +82,7 @@ const mockGraphResponseWithAppExtension = {
 
 let createAuthenticatedClientSpy: jest.SpyInstance;
 
-describe('Add Identity Mapping: ', () => {
+describe('Graph Service - Add Identity Mapping: ', () => {
   afterEach(() => {
     createAuthenticatedClientSpy.mockClear();
     callPath = '';

@@ -82,7 +82,7 @@ const mockGraphResponseWithAppExtension = {
 
 let createAuthenticatedClientSpy: jest.SpyInstance;
 
-describe('Get ACS User Id: ', () => {
+describe('Graph Service - Get ACS User Id: ', () => {
   afterEach(() => {
     createAuthenticatedClientSpy.mockClear();
     callPath = '';
