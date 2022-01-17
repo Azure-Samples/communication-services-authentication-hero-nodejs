@@ -35,7 +35,7 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
     if (acsUserId === undefined) {
       console.log('There is no identity mapping information stored in Graph. Creating ACS identity now...');
       // User does not exist
-      const acsIdentityTokenObject = await createACSUserIdentityAndToken();
+      acsIdentityTokenObject = await createACSUserIdentityAndToken();
       // Store the identity mapping information
       await addIdentityMapping(aadTokenExchangedViaOBO, acsIdentityTokenObject.user.communicationUserId);
     } else {
