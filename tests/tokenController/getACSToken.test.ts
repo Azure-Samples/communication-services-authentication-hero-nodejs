@@ -189,7 +189,7 @@ describe('Token Controller - Get ACS Token: ', () => {
     createACSTokenSpy.mockClear();
   });
 
-  test('when an ACS user ID is stored in Graph and all succeeds, it should return a response with status 200 and an ACS token object.', async () => {
+  test('when an ACS user ID is stored in Graph and all succeeds, it should return a response with status 201 and an ACS token object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -205,7 +205,7 @@ describe('Token Controller - Get ACS Token: ', () => {
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(createACSTokenSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(mockCommunicationUserToken);
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
