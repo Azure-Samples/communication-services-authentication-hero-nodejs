@@ -45,7 +45,7 @@ describe('Delete ACS User: ', () => {
     exchangeAADTokenViaOBOSpy.mockClear();
   });
 
-  test('when ACS user ID fails to be retrieved, it should return an error.', async () => {
+  test('when ACS user ID fails to be retrieved from Graph, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -119,7 +119,7 @@ describe('Delete ACS User: ', () => {
     deleteACSUserIdentitySpy.mockClear();
   });
 
-  test('when all succeeds, itshould return a response with status 200.', async () => {
+  test('when all succeeds, itshould return a response with status 204.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -141,7 +141,7 @@ describe('Delete ACS User: ', () => {
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(deleteIdentityMappingSpy).toHaveBeenCalled();
     expect(deleteACSUserIdentitySpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(204);
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
     deleteIdentityMappingSpy.mockClear();

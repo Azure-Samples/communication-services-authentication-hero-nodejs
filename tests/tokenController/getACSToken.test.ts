@@ -64,7 +64,7 @@ describe('Get ACS Token: ', () => {
     exchangeAADTokenViaOBOSpy.mockClear();
   });
 
-  test('when ACS user ID fails to be retrieved, it should return an error.', async () => {
+  test('when ACS user ID fails to be retrieved from Graph, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -85,7 +85,7 @@ describe('Get ACS Token: ', () => {
     getACSUserIdSpy.mockClear();
   });
 
-  test('when there is no identity mapping information stored in Graph and ACS user fails to be created, it should return an error.', async () => {
+  test('when no ACS user ID is stored in Graph and ACS identity an token fail to be created, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -111,7 +111,7 @@ describe('Get ACS Token: ', () => {
     createACSUserIdentityAndTokenSpy.mockClear();
   });
 
-  test('when there is no identity mapping information stored in Graph and Graph identity mapping fails to be added, it should return an error.', async () => {
+  test('when no ACS user ID is stored in Graph and Graph identity mapping fails to be added, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -142,7 +142,7 @@ describe('Get ACS Token: ', () => {
     addIdentityMappingSpy.mockClear();
   });
 
-  test('when there is no identity mapping information stored in Graph and ACS user is created and mapped, it should return a response with status 200 and an ACS token object.', async () => {
+  test('when no ACS user ID is stored in Graph and ACS user is successfully created and mapped, it should return a response with status 200 and an ACS token object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -174,7 +174,7 @@ describe('Get ACS Token: ', () => {
     addIdentityMappingSpy.mockClear();
   });
 
-  test('when an identity mapping information is stored in Graph and ACS token fails to be created, it should return an error.', async () => {
+  test('when an ACS user ID is stored in Graph and ACS token fails to be created, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -198,7 +198,7 @@ describe('Get ACS Token: ', () => {
     createACSTokenSpy.mockClear();
   });
 
-  test('when an identity mapping information is stored in Graph and all succeeds, it should return an error.', async () => {
+  test('when an ACS user ID is stored in Graph and all succeeds, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
