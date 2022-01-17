@@ -33,4 +33,7 @@ jobs:
       - run: npm run lint
       
       - run: npm run build-tsc
-      # Enable this once the tests are set up (- run: npm test)
+      # Tests
+      - name: Test Packages
+        if: ${{ success() }}
+        run: rush test:coverage
