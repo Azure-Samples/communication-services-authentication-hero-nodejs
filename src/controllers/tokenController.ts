@@ -21,8 +21,9 @@ import { exchangeAADTokenViaOBO } from '../services/aadService';
  * If having issues when using ACS services, return an error message as well.
  */
 export const getACSToken = async (req: Request, res: Response, next: NextFunction) => {
+  let acsIdentityTokenObject;
+
   try {
-    let acsIdentityTokenObject;
     // Get aad token via the request
     const aadTokenViaRequest = getAADTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
@@ -37,9 +38,6 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
       const acsIdentityTokenObject = await createACSUserIdentityAndToken();
       // Store the identity mapping information
       await addIdentityMapping(aadTokenExchangedViaOBO, acsIdentityTokenObject.user.communicationUserId);
-      // This LoC below should be excuted after AddIdentityMapping excuted successfully
-      // because the acsToken can not be returned if failing to add the identity mapping information to Microsoft Graph
-      return res.status(201).json(acsIdentityTokenObject);
     } else {
       // User exists
       const acsToken = await createACSToken(acsUserId);
@@ -47,9 +45,10 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
         ...acsToken,
         user: { communicationUserId: acsUserId }
       };
-      return res.status(200).json(acsIdentityTokenObject);
     }
   } catch (error) {
     return next(error);
   }
+
+  return res.status(201).json(acsIdentityTokenObject);
 };
