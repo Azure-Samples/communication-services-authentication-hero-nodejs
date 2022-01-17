@@ -27,7 +27,7 @@ let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let createACSUserIdentityAndTokenSpy: jest.SpyInstance;
 let addIdentityMappingSpy: jest.SpyInstance;
 
-describe('Get ACS Token: ', () => {
+describe('Token Controller - Get ACS Token: ', () => {
   test('when request has no authorization header, it should return an error.', async () => {
     const req = mockRequest();
     const res = mockResponse();
