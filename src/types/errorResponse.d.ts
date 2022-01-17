@@ -4,15 +4,21 @@
  *---------------------------------------------------------------------------------------------*/
 
 /**
- * The type of the identity mapping
+ * The type of the error response
  */
-export type identityMapping = {
+export type ErrorResponse = {
   /**
-   * The name of the open extension representing some roaming profile information about the user
+   * The error status code
    */
-  extensionName: string;
+  code: number;
+
   /**
-   * Id of the CommunicationUser as returned from the Communication Service.
+   * A message that describes the current error.
    */
-  acsUserIdentity: string;
+  message: string;
+
+  /**
+   * A string representation of the immediate frames on the call stack.
+   */
+  stack_trace?: string;
 };

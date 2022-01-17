@@ -3,15 +3,17 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import createError from 'http-errors';
-import express from 'express';
-
+import express, { NextFunction } from 'express';
+import { Request, Response } from 'express';
+import * as utils from './utils/utils';
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';
 
 // Create Express server
 const app = express();
+// Get the environment mode
+const env = app.get('env');
 
 // Express configuration
 app.set('port', process.env.PORT || 3000);
@@ -19,12 +21,34 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Api routes
-app.use('/api/', userRouter());
-app.use('/api/', tokenRouter());
+app.use('/api/user', userRouter());
+app.use('/api/token', tokenRouter());
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+// Any other route is going to wind up at the app.all() function defined.
+// The all() method encompasses all types of requests, including GET and PATCH, and the asterisk accepts any URL.
+// From there, define a middleware that sends a JSend response.
+/* eslint-disable @typescript-eslint/no-unused-vars */
+app.all('*', (req: Request, res: Response, next: NextFunction) => {
+  const statusCode = 404;
+  const errorMessage = `The ${req.originalUrl} endpoint is invalid!`;
+  const errorResponse = utils.createErrorResponse(statusCode, errorMessage);
+
+  res.status(statusCode).send(errorResponse);
+});
+
+// The best practice is to manage error handling in one place (Keep controllers cleaner and simpler)
+// As long as having these four arguments, Express will recognize the middleware as an error handling middleware.
+/* eslint-disable @typescript-eslint/no-unused-vars */
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = 500;
+  // In development mode, print stacktrace, otherwise, no stacktrace will be leaked to users
+  const errorResponse = utils.createErrorResponse(
+    statusCode,
+    err.message,
+    env === 'development' ? err.stack : undefined
+  );
+
+  res.status(statusCode).send(errorResponse);
 });
 
 export default app;
