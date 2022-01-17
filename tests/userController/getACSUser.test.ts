@@ -14,7 +14,7 @@ import * as graphService from '../../src/services/graphService';
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let getACSUserIdSpy: jest.SpyInstance;
 
-describe('Get ACS User :', () => {
+describe('User Controller - Get ACS User :', () => {
   test('when request has no authorization header, it should return an error.', async () => {
     const req = mockRequest();
     const res = mockResponse();
