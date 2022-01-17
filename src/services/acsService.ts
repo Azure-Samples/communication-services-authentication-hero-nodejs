@@ -22,8 +22,10 @@ const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occured when deleting an ACS us
 
 /**
  * Instantiate the identity client using the connection string.
+ *
+ * @private
  */
-const createAuthenticatedClient = (): CommunicationIdentityClient => {
+export const createAuthenticatedClient = (): CommunicationIdentityClient => {
   const connectionString = appSettings.communicationServices.connectionString;
   const identityClient = new CommunicationIdentityClient(connectionString);
   return identityClient;

@@ -6,29 +6,20 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../node_modules/@types/jest/index.d.ts" />
 
-import { CommunicationAccessToken, CommunicationUserToken } from '@azure/communication-identity';
 import {
-  mockAcsUserId,
   mockAadToken,
+  mockAccessToken,
+  mockAcsUserId,
   mockAuthorization,
+  mockCommunicationUserToken,
   mockIdentityMapping,
-  mockResponse,
-  mockRequest
+  mockRequest,
+  mockResponse
 } from '../utils/mockData';
 import { getACSToken } from '../../src/controllers/tokenController';
 import * as acsService from '../../src/services/acsService';
 import * as aadService from '../../src/services/aadService';
 import * as graphService from '../../src/services/graphService';
-
-const mockToken: CommunicationAccessToken = {
-  token: 'mock-access-token',
-  expiresOn: new Date()
-};
-const mockCommunicationUserToken: CommunicationUserToken = {
-  user: { communicationUserId: mockAcsUserId },
-  token: mockToken.token,
-  expiresOn: mockToken.expiresOn
-};
 
 let getACSUserIdSpy: jest.SpyInstance;
 let createACSTokenSpy: jest.SpyInstance;
@@ -36,7 +27,7 @@ let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let createACSUserIdentityAndTokenSpy: jest.SpyInstance;
 let addIdentityMappingSpy: jest.SpyInstance;
 
-describe('Get ACS Token: ', () => {
+describe('Token Controller - Get ACS Token: ', () => {
   test('when request has no authorization header, it should return an error.', async () => {
     const req = mockRequest();
     const res = mockResponse();
@@ -142,7 +133,7 @@ describe('Get ACS Token: ', () => {
     addIdentityMappingSpy.mockClear();
   });
 
-  test('when no ACS user ID is stored in Graph and ACS user is successfully created and mapped, it should return a response with status 200 and an ACS token object.', async () => {
+  test('when no ACS user ID is stored in Graph and ACS user is successfully created and mapped, it should return a response with status 201 and an ACS token object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -166,8 +157,8 @@ describe('Get ACS Token: ', () => {
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(createACSUserIdentityAndTokenSpy).toHaveBeenCalled();
     expect(addIdentityMappingSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(mockToken);
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockCommunicationUserToken);
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
     createACSUserIdentityAndTokenSpy.mockClear();
@@ -198,14 +189,14 @@ describe('Get ACS Token: ', () => {
     createACSTokenSpy.mockClear();
   });
 
-  test('when an ACS user ID is stored in Graph and all succeeds, it should return an error.', async () => {
+  test('when an ACS user ID is stored in Graph and all succeeds, it should return a response with status 201 and an ACS token object.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
-    createACSTokenSpy = jest.spyOn(acsService, 'createACSToken').mockImplementation(async () => mockToken);
+    createACSTokenSpy = jest.spyOn(acsService, 'createACSToken').mockImplementation(async () => mockAccessToken);
 
     await getACSToken(req, res, () => {
       return res.status(500);
@@ -214,8 +205,8 @@ describe('Get ACS Token: ', () => {
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(createACSTokenSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith(mockToken);
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockCommunicationUserToken);
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
     createACSTokenSpy.mockClear();
