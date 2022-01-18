@@ -54,20 +54,19 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
 };
 
 /**
-   * Eexchange AAD token for an ACS access token of Teams user with the Azure Communication Services Identity SDK.
-   *
-   * 1. Get an AAD user access token for M365 (Teams) user via OBO flow.
-   * 2. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
-   */
+ * Eexchange AAD token for an ACS access token of Teams user using the Azure Communication Services Identity SDK.
+ *
+ * 1. Get an AAD user access token passed through request header
+ * 2. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
+ */
 export const exchangeAADToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Todo: Get it from OBO flow
-    const aadToken = '';
+    // Get an AAD token passed through request header
+    const aadToken = getAADTokenViaRequest(req);
     // Exchange the AAD user token for the Teams access token
     const acsTokenForTeamsUser = await getACSTokenForTeamsUser(aadToken);
-    return res.status(200).json(acsTokenForTeamsUser);
+    return res.status(201).json(acsTokenForTeamsUser);
   } catch (error) {
     next(error);
   }
-
-}
+};

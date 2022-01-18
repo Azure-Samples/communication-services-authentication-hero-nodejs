@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 import express from 'express';
-import { getACSToken } from '../controllers/tokenController';
+import { exchangeAADToken, getACSToken } from '../controllers/tokenController';
 import { validateAuthorizedHeader } from '../utils/utils';
 
 export const tokenRouter = () => {
@@ -15,7 +15,7 @@ export const tokenRouter = () => {
   // 1. Get an ACS token or refresh an ACS token
   router.get('/', validateAuthorizedHeader, getACSToken);
   // 2. Get an ACS token for a Teams user
-  router.get('/tokenForTeams', validateAuthorizedHeader, exchangeAADToken);
+  router.get('/teams', validateAuthorizedHeader, exchangeAADToken);
 
   return router;
 };
