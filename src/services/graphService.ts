@@ -6,8 +6,6 @@
 // Used to fix the error "PolyFillNotAvailable: Library cannot function without fetch. So, please provide polyfill for it."
 import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
 import { appSettings } from '../appSettings';
 
 // Error messages
