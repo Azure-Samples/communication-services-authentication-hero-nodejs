@@ -66,8 +66,6 @@ This ACS Solutions - Authentication sample provides the following features:
 
 ## Code Structure
 
-![ACS Authentication Server Sample - Code Dependency Diagram](/docs/images/ACS-Authentication-Server-sample_Dependency-Diagram.png)
-
 Here's the breakdown of the repo:
 
 - src
@@ -81,6 +79,8 @@ Here's the breakdown of the repo:
   - appSettings.ts - Where to contain all application settings about Graph Extensions, Communication Services and Azure Active Directory.
 - tests - Where to contain all unit tests.
 - deploy
+
+![ACS Authentication Server Sample - Code Dependency Diagram](/docs/images/ACS-Authentication-Server-sample_Dependency-Diagram.png)
 
 ## Getting Started
 
