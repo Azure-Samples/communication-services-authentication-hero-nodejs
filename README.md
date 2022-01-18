@@ -52,17 +52,35 @@ Since the sample only focuses on the server APIs, the client application is not 
 
 This ACS Solutions - Authentication sample provides the following features:
 
-- **/deleteUser** - Delete the identity mapping information from the user's roaming profile including the ACS identity.
+- **GET /user** - Get a Communication Services identity through Microsoft Graph.
 
-- **/getToken** - Get / refresh a token for an ACS user.
+- **POST /user** - Create a Communication Services identity and then add the roaming identity mapping information to Microsoft Graph.
 
-- **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
+- **DELETE /user** - Delete the identity mapping information from Microsoft Graph including the ACS resource related to the Communication Services identity.
+
+- **GET /token** - Get / refresh a Communication Services token for an ACS user.
+
+- **GET /token/teams** - Exchange an M365 token of a Teams user for an ACS token.
 
   > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
 
 ## Code Structure
 
-(Add after code freezing.)
+![ACS Authentication Server Sample - Code Dependency Diagram](/docs/images/ACS-Authentication-Server-sample_Dependency-Diagram.png)
+
+Here's the breakdown of the repo:
+
+- src
+  - routes - Where to define the application's subpaths.
+  - controllers - Where to contain each controller which describes the path of each route and the method to call.
+  - services - Where to contain services used in the project like Microsoft Graph, Communication Services and Azure Active Directory.
+  - types - Where to contain self-defined types
+  - utils - Where to contain helper functions
+  - server.ts - Where to start Express server.
+  - app.ts - Where to contain Express configurations and application configurations like global paths and error handling.
+  - appSettings.ts - Where to contain all application settings about Graph Extensions, Communication Services and Azure Active Directory.
+- tests - Where to contain all unit tests.
+- deploy
 
 ## Getting Started
 
