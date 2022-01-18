@@ -12,9 +12,9 @@ export const appSettings = {
     scopes: '<communication_services_token_scopes>' // Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]
   },
   azureActiveDirectory: {
-    instance: "https://login.microsoftonline.com",
+    instance: 'https://login.microsoftonline.com',
     clientId: '<your_client_id>', // Application (Client) ID from Overview of app registration from Azure Portal, e.g. 2ed40e05-ba00-4853-xxxx-xxx60029x596]
     clientSecret: '<your_client_secret>', // Client secret from Overview of app registration from Azure Portal
-    tenantId: '<your_tenant_id>', // Directory (Tenant) ID from Overview of app registration from Azure Portal, or 'common' or 'organizations' or 'consumers'
+    tenantId: '<your_tenant_id>' // Directory (Tenant) ID from Overview of app registration from Azure Portal, or 'common' or 'organizations' or 'consumers'
   }
 };
