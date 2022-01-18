@@ -1,7 +1,9 @@
 /**---------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
+
+import { TokenScope } from '@azure/communication-identity';
 
 export const appSettings = {
   graph: {
@@ -9,7 +11,9 @@ export const appSettings = {
   },
   communicationServices: {
     connectionString: '<your_connection_string>',
-    scopes: '<communication_services_token_scopes>' // Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]
+    scopes: [
+      /*'<communication_services_token_scopes>' */
+    ] as TokenScope[] // Scopes to include in the token. e.g. ['voip', 'chat'] as TokenScope[]
   },
   azureActiveDirectory: {
     instance: 'https://login.microsoftonline.com',
