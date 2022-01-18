@@ -32,7 +32,7 @@ jobs:
           # Build everything
           npm install
           npm run build
-          7z a -tzip -r "group-chat.zip" ./build/*
+          7z a -tzip -r "auth-sample.zip" ./build/*
           # Delete output directory
           # rm -r "./build"
 
