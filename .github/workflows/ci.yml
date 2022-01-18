@@ -36,4 +36,4 @@ jobs:
       # Tests
       - name: Test Packages
         if: ${{ success() }}
-        run: rush test:coverage
+        run: npm run test:coverage
