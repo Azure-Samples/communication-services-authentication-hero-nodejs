@@ -92,18 +92,18 @@ If you're wondering where to get started, here are a few scenarios to help you g
 * "How does the ACS Authentication Server sample work?"
   * Take a look at our conceptual documentation on 
     - [ACS Authentication Server Sample Architecture Design]().
-    - [Secured Web API Architecture Design]().
-    - [Identity Mapping Architecture Design]().
+    - [Secured Web API Architecture Design](./docs/design-guides/Secured-Web-API-Design.md).
+    - [Identity Mapping Architecture Design](./docs/design-guides/Identity-Mapping-Design_Graph-Open-Extensions.md).
     - [AAD Token Exchange Architecture Design]().
 * "I want to see what this ACS Authentication Server sample can do by running!"
-  * Check out our [Run Authentication Sample](docs/contribution-guides/3. run-authentication-sample.md) guide.
+  * Check out our [Run Authentication Sample](<docs/contribution-guides/3. run-authentication-sample.md>) guide.
 * "I want to submit a fix or a feature for this project"
   * Check out our [making a contribution](CONTRIBUTING.md) guide first.
   * Check out following guides in sequence after coding.
-    * [Test Your Changes](docs/contribution-guides/4. test-your-changes.md)
-    * [Write Unit Tests](docs/contribution-guides/5. write-unit-tests.md)
-    * [Submit a PR](docs/contribution-guides/6. submit-a-pr.md)
-    * [Publish Your Changes](docs/contribution-guides/7. publish-your-changes.md)
+    * [Test Your Changes](<docs/contribution-guides/4. test-your-changes.md>)
+    * [Write Unit Tests](<docs/contribution-guides/5. write-unit-tests.md>)
+    * [Submit a PR](<docs/contribution-guides/6. submit-a-pr.md>)
+    * [Publish Your Changes](<docs/contribution-guides/7. publish-your-changes.md>)
 
 ## Guidance
 
