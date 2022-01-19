@@ -98,7 +98,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
   * Check out our [making a contribution](CONTRIBUTING.md) guide first.
   * Check out following guides in sequence after coding.
     * [Test Your Changes](<docs/contribution-guides/4. test-your-changes.md>)
-    * [Write Unit Tests](<docs/contribution-guides/5.%20write-unit-tests.md>)
+    * [Write Unit Tests](<docs/contribution-guides/5. write-unit-tests.md>)
     * [Submit a PR](<docs/contribution-guides/6. submit-a-pr.md>)
     * [Publish Your Changes](<docs/contribution-guides/7. publish-your-changes.md>)
 
