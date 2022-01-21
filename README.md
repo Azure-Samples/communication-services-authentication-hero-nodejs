@@ -78,6 +78,9 @@ Here's the breakdown of the repo:
   - app.ts - Where to contain Express configurations and application configurations like global paths and error handling.
   - appSettings.ts - Where to contain all application settings about Graph Extensions, Communication Services and Azure Active Directory.
 - tests - Where to contain all unit tests.
+  - controllers - Where to contain each controller unit tests.
+  - services - Where to contain each service unit tests.
+  - utils - Where to contain all common mock data or testing methods.
 - deploy
 
 ![ACS Authentication Server Sample - Code Dependency Diagram](/docs/images/ACS-Authentication-Server-sample_Dependency-Diagram.png)

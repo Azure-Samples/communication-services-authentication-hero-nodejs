@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../../node_modules/@types/jest/index.d.ts" />
+/// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
 import {
   mockAadToken,
@@ -15,11 +15,11 @@ import {
   mockIdentityMapping,
   mockRequest,
   mockResponse
-} from '../utils/mockData';
-import { getACSToken } from '../../src/controllers/tokenController';
-import * as acsService from '../../src/services/acsService';
-import * as aadService from '../../src/services/aadService';
-import * as graphService from '../../src/services/graphService';
+} from '../../utils/mockData';
+import { getACSToken } from '../../../src/controllers/tokenController';
+import * as acsService from '../../../src/services/acsService';
+import * as aadService from '../../../src/services/aadService';
+import * as graphService from '../../../src/services/graphService';
 
 let getACSUserIdSpy: jest.SpyInstance;
 let createACSTokenSpy: jest.SpyInstance;
