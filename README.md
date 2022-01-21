@@ -19,7 +19,7 @@ products:
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 - [Overview](#overview)
-- [Features](#features)
+- [Endpoints](#endpoints)
 - [Code Structure](#code-structure)
 - [Getting Started](#getting-started)
 - [Guidance](#guidance)
@@ -32,13 +32,15 @@ products:
 
 ## Overview
 
-In order to properly implement Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to perform key actions for the communications lifecycle. These actions include authenticating users since the Azure Communication Services are identity-agnostic.
+In order to properly implement a secure Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to properly generate user and access token credentials for Azure Communication Services. Azure Communication Services is identity-agnostic, to learn more check out our [conceptual documentation](https://docs.microsoft.com/azure/communication-services/concepts/identity-model).
 
-This is an ACS Authentication Server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens. 
+This repository provides a sample of a server implementation of an authentication service for Azure Communication Services. It uses best practices to build a trusted backend service that issues Azure Communication Services credentials and maps them to Azure Active Direction identities. 
 
-There are two scenarios:
-1. As a developer, you need to enable the authentication flow for joining native ACS and Teams Interop calling/chat by mapping an ACS Identity to an Azure Active Directory identity and using this same ACS identity for the user to fetch an ACS token in every session.
-2. As a developer, you need to enable the authentication flow for Custom Teams Endpoint by using an Azure Active Directory identity of Teams' user to fetch an ACS token to be able to join Teams calling/chat.
+This sample can help you in the following scenarios:
+1. As a developer, you need to enable authentication flow for joining native ACS and Teams Interop calling/chat by mapping an ACS Identity to an Azure Active Directory identity and using this same ACS identity for the user to fetch an ACS token in every session.
+2. As a developer, you need to enable authentication flow for Custom Teams Endpoint by using an M365 Azure Active Directory identity of a Teams' user to fetch an ACS token to be able to join Teams calling/chat.
+
+If you are looking to get started with Azure Communication Services, but are still in learning / prototyping phases, check out our [quickstarts for getting started with azure communication services users and access tokens](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
 
 > :loudspeaker: An ACS Solutions - Authentication Server Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
 
@@ -48,9 +50,9 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 
 Since the sample only focuses on the server APIs, the client application is not part of the sample. If you want to add the client application to login user using Azure AD, then please follow the MSAL samples [here](https://github.com/AzureAD/microsoft-authentication-library-for-js).
 
-## Features
+## Endpoints
 
-This ACS Solutions - Authentication sample provides the following features:
+This ACS Solutions - Authentication sample provides the following endpoints:
 
 - **GET /user** - Get a Communication Services identity through Microsoft Graph.
 
