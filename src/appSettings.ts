@@ -11,9 +11,7 @@ export const appSettings = {
   },
   communicationServices: {
     connectionString: process.env['ResourceConnectionString'] || '<your_connection_string>',
-    scopes: [
-      'voip', 'chat'
-    ] as TokenScope[] // Scopes to include in the token.
+    scopes: ['voip', 'chat'] as TokenScope[] // Scopes to include in the token.
   },
   azureActiveDirectory: {
     instance: 'https://login.microsoftonline.com',
