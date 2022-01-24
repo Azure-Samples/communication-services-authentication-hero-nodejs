@@ -8,9 +8,6 @@ Thumbs.db
 # Ignore built ts files
 build/**/*
 
-# Configuration files
-src/appSettings.ts
-
 /.vs
 /.vscode
 

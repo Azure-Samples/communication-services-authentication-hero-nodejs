@@ -4,12 +4,12 @@
  *---------------------------------------------------------------------------------------------*/
 
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../../node_modules/@types/jest/index.d.ts" />
+/// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
-import { mockAcsUserId, mockAadToken, mockAuthorization, mockResponse, mockRequest } from '../utils/mockData';
-import { getACSUser } from '../../src/controllers/userController';
-import * as aadService from '../../src/services/aadService';
-import * as graphService from '../../src/services/graphService';
+import { mockAcsUserId, mockAadToken, mockAuthorization, mockResponse, mockRequest } from '../../utils/mockData';
+import { getACSUser } from '../../../src/controllers/userController';
+import * as aadService from '../../../src/services/aadService';
+import * as graphService from '../../../src/services/graphService';
 
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
 let getACSUserIdSpy: jest.SpyInstance;

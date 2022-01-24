@@ -19,7 +19,7 @@ products:
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 - [Overview](#overview)
-- [Features](#features)
+- [Endpoints](#endpoints)
 - [Code Structure](#code-structure)
 - [Getting Started](#getting-started)
 - [Guidance](#guidance)
@@ -32,13 +32,15 @@ products:
 
 ## Overview
 
-In order to properly implement Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to perform key actions for the communications lifecycle. These actions include authenticating users since the Azure Communication Services are identity-agnostic.
+In order to properly implement a secure Azure Communication Services solutions, developers must start by putting in place the correct infrastructure to properly generate user and access token credentials for Azure Communication Services. Azure Communication Services is identity-agnostic, to learn more check out our [conceptual documentation](https://docs.microsoft.com/azure/communication-services/concepts/identity-model).
 
-This is an ACS Authentication Server sample to provide a guidance establishing best practices on a simple use case to build trusted backend service that will manage ACS identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native ACS calling/chat) and issue ACS tokens. 
+This repository provides a sample of a server implementation of an authentication service for Azure Communication Services. It uses best practices to build a trusted backend service that issues Azure Communication Services credentials and maps them to Azure Active Direction identities. 
 
-There are two scenarios:
-1. As a developer, you need to enable the authentication flow for joining native ACS and Teams Interop calling/chat by mapping an ACS Identity to an Azure Active Directory identity and using this same ACS identity for the user to fetch an ACS token in every session.
-2. As a developer, you need to enable the authentication flow for Custom Teams Endpoint by using an Azure Active Directory identity of Teams' user to fetch an ACS token to be able to join Teams calling/chat.
+This sample can help you in the following scenarios:
+1. As a developer, you need to enable authentication flow for joining native ACS and Teams Interop calling/chat by mapping an ACS Identity to an Azure Active Directory identity and using this same ACS identity for the user to fetch an ACS token in every session.
+2. As a developer, you need to enable authentication flow for Custom Teams Endpoint by using an M365 Azure Active Directory identity of a Teams' user to fetch an ACS token to be able to join Teams calling/chat.
+
+If you are looking to get started with Azure Communication Services, but are still in learning / prototyping phases, check out our [quickstarts for getting started with azure communication services users and access tokens](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript).
 
 > :loudspeaker: An ACS Solutions - Authentication Server Sample (C# version) can be found [here](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp).
 
@@ -48,21 +50,42 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 
 Since the sample only focuses on the server APIs, the client application is not part of the sample. If you want to add the client application to login user using Azure AD, then please follow the MSAL samples [here](https://github.com/AzureAD/microsoft-authentication-library-for-js).
 
-## Features
+## Endpoints
 
-This ACS Solutions - Authentication sample provides the following features:
+This ACS Solutions - Authentication sample provides the following endpoints:
 
-- **/deleteUser** - Delete the identity mapping information from the user's roaming profile including the ACS identity.
+- **GET /user** - Get a Communication Services identity through Microsoft Graph.
 
-- **/getToken** - Get / refresh a token for an ACS user.
+- **POST /user** - Create a Communication Services identity and then add the roaming identity mapping information to Microsoft Graph.
 
-- **/exchangeToken** - Exchange an M365 token of a Teams user for an ACS token.
+- **DELETE /user** - Delete the identity mapping information from Microsoft Graph including the ACS resource related to the Communication Services identity.
+
+- **GET /token** - Get / refresh a Communication Services token for an ACS user.
+
+- **GET /token/teams** - Exchange an M365 token of a Teams user for an ACS token.
 
   > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
 
 ## Code Structure
 
-(Add after code freezing.)
+Here's the breakdown of the repo:
+
+- src
+  - routes - Where to define the application's subpaths.
+  - controllers - Where to contain each controller which describes the path of each route and the method to call.
+  - services - Where to contain services used in the project like Microsoft Graph, Communication Services and Azure Active Directory.
+  - types - Where to contain self-defined types
+  - utils - Where to contain helper functions
+  - server.ts - Where to start Express server.
+  - app.ts - Where to contain Express configurations and application configurations like global paths and error handling.
+  - appSettings.ts - Where to contain all application settings about Graph Extensions, Communication Services and Azure Active Directory.
+- tests - Where to contain all unit tests.
+  - controllers - Where to contain each controller unit tests.
+  - services - Where to contain each service unit tests.
+  - utils - Where to contain all common mock data or testing methods.
+- deploy
+
+![ACS Authentication Server Sample - Code Dependency Diagram](/docs/images/ACS-Authentication-Server-sample_Dependency-Diagram.png)
 
 ## Getting Started
 
@@ -71,18 +94,18 @@ If you're wondering where to get started, here are a few scenarios to help you g
 * "How does the ACS Authentication Server sample work?"
   * Take a look at our conceptual documentation on 
     - [ACS Authentication Server Sample Architecture Design]().
-    - [Secured Web API Architecture Design]().
-    - [Identity Mapping Architecture Design]().
+    - [Secured Web API Architecture Design](./docs/design-guides/Secured-Web-API-Design.md).
+    - [Identity Mapping Architecture Design](./docs/design-guides/Identity-Mapping-Design_Graph-Open-Extensions.md).
     - [AAD Token Exchange Architecture Design]().
 * "I want to see what this ACS Authentication Server sample can do by running!"
-  * Check out our [Run Authentication Sample](docs/contribution-guides/3. run-authentication-sample.md) guide.
+  * Check out our [Run Authentication Sample](<docs/contribution-guides/3. run-authentication-sample.md>) guide.
 * "I want to submit a fix or a feature for this project"
   * Check out our [making a contribution](CONTRIBUTING.md) guide first.
   * Check out following guides in sequence after coding.
-    * [Test Your Changes](docs/contribution-guides/4. test-your-changes.md)
-    * [Write Unit Tests](docs/contribution-guides/5. write-unit-tests.md)
-    * [Submit a PR](docs/contribution-guides/6. submit-a-pr.md)
-    * [Publish Your Changes](docs/contribution-guides/7. publish-your-changes.md)
+    * [Test Your Changes](<docs/contribution-guides/4. test-your-changes.md>)
+    * [Write Unit Tests](<docs/contribution-guides/5. write-unit-tests.md>)
+    * [Submit a PR](<docs/contribution-guides/6. submit-a-pr.md>)
+    * [Publish Your Changes](<docs/contribution-guides/7. publish-your-changes.md>)
 
 ## Guidance
 

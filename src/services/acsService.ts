@@ -9,8 +9,6 @@ import {
   CommunicationIdentityClient,
   CommunicationUserToken
 } from '@azure/communication-identity';
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-ignore
 import { appSettings } from '../appSettings';
 
 // Error messages
