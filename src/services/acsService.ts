@@ -18,6 +18,7 @@ const CREATE_ACS_TOKEN_ERROR = 'An error occured when creating an ACS token';
 const CREATE_ACS_USER_IDENTITY_TOKEN_ERROR =
   'An error occured when creating an ACS user id and issuing an access token for it in one go';
 const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occured when deleting an ACS user id';
+const EXCHANGE_AAD_TOKEN_ERROR = 'An error occured when exchanging an AAD token';
 
 const communicationServicesScopes = appSettings.communicationServices.scopes.map((item) => item as TokenScope);
 
@@ -63,6 +64,26 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
     return tokenResponse;
   } catch (error) {
     const errorMessage = `${CREATE_ACS_TOKEN_ERROR}: ${error.message}`;
+    console.log(errorMessage);
+    throw new Error(errorMessage);
+  }
+};
+
+/**
+ * Exchange an AAD access token of a Teams user for a new Communication Services AccessToken with a matching expiration time.
+ * @param aadToken - the Azure AD token of the Teams user
+ */
+export const getACSTokenForTeamsUser = async (aadToken: string): Promise<CommunicationAccessToken> => {
+  const identityClient = createAuthenticatedClient();
+  try {
+    // Issue an access token for the Teams user that can be used with the Azure Communication Services SDKs.
+    // Notice: the function name will be renamed to exchangeTeamsUserAadToken
+    // Know more, please read this https://github.com/Azure/azure-sdk-for-js/pull/18306
+    const tokenResponse = await identityClient.getTokenForTeamsUser(aadToken);
+
+    return tokenResponse;
+  } catch (error) {
+    const errorMessage = `${EXCHANGE_AAD_TOKEN_ERROR}: ${error.message}`;
     console.log(errorMessage);
     throw new Error(errorMessage);
   }

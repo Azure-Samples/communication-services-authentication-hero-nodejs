@@ -6,7 +6,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { getAADTokenViaRequest } from '../utils/utils';
 import { addIdentityMapping, getACSUserId } from '../services/graphService';
-import { createACSToken, createACSUserIdentityAndToken } from '../services/acsService';
+import { createACSToken, createACSUserIdentityAndToken, getACSTokenForTeamsUser } from '../services/acsService';
 import { exchangeAADTokenViaOBO } from '../services/aadService';
 
 /**
@@ -51,4 +51,22 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
   }
 
   return res.status(201).json(acsIdentityTokenObject);
+};
+
+/**
+ * Eexchange AAD token for an ACS access token of Teams user using the Azure Communication Services Identity SDK.
+ *
+ * 1. Get an AAD user access token passed through request header
+ * 2. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
+ */
+export const exchangeAADToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Get an AAD token passed through request header
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    // Exchange the AAD user token for the Teams access token
+    const acsTokenForTeamsUser = await getACSTokenForTeamsUser(aadTokenViaRequest);
+    return res.status(201).json(acsTokenForTeamsUser);
+  } catch (error) {
+    next(error);
+  }
 };

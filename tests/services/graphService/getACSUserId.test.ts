@@ -9,7 +9,7 @@
 import { Client, GraphRequest } from '@microsoft/microsoft-graph-client';
 import * as appSettings from '../../../src/appSettings.json';
 import * as graphService from '../../../src/services/graphService';
-import { mockAccessToken, mockAcsUserId } from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockAcsUserId } from '../../utils/mockData';
 
 let callPath = '';
 const mockGraphClient = (
@@ -96,7 +96,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
 
     let mockError: any = undefined;
     try {
-      await graphService.getACSUserId(mockAccessToken.token);
+      await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -116,7 +116,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
     let mockError: any = undefined;
     let userId: string;
     try {
-      userId = await graphService.getACSUserId(mockAccessToken.token);
+      userId = await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -137,7 +137,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
     let mockError: any = undefined;
     let userId: string;
     try {
-      userId = await graphService.getACSUserId(mockAccessToken.token);
+      userId = await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -161,7 +161,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
     let mockError: any = undefined;
     let userId: string;
     try {
-      userId = await graphService.getACSUserId(mockAccessToken.token);
+      userId = await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -186,7 +186,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
     let mockError: any = undefined;
     let userId: string;
     try {
-      userId = await graphService.getACSUserId(mockAccessToken.token);
+      userId = await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -218,7 +218,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
     let mockError: any = undefined;
     let userId: string;
     try {
-      userId = await graphService.getACSUserId(mockAccessToken.token);
+      userId = await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -251,7 +251,7 @@ describe('Graph Service - Get ACS User Id: ', () => {
     let mockError: any = undefined;
     let userId: string;
     try {
-      userId = await graphService.getACSUserId(mockAccessToken.token);
+      userId = await graphService.getACSUserId(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }

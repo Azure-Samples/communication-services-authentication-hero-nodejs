@@ -36,12 +36,12 @@ export const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
 export const mockCommunicationUserIdentifier: CommunicationUserIdentifier = {
   communicationUserId: 'mock-user-id'
 };
-export const mockAccessToken: CommunicationAccessToken = {
+export const mockCommunicationAccessToken: CommunicationAccessToken = {
   token: 'mock-access-token',
   expiresOn: new Date()
 };
 export const mockCommunicationUserToken: CommunicationUserToken = {
   user: { communicationUserId: mockAcsUserId },
-  token: mockAccessToken.token,
-  expiresOn: mockAccessToken.expiresOn
+  token: mockCommunicationAccessToken.token,
+  expiresOn: mockCommunicationAccessToken.expiresOn
 };
