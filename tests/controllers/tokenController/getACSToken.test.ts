@@ -8,7 +8,7 @@
 
 import {
   mockAadToken,
-  mockAccessToken,
+  mockCommunicationAccessToken,
   mockAcsUserId,
   mockAuthorization,
   mockCommunicationUserToken,
@@ -196,7 +196,9 @@ describe('Token Controller - Get ACS Token: ', () => {
       .spyOn(aadService, 'exchangeAADTokenViaOBO')
       .mockImplementation(async () => mockAadToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
-    createACSTokenSpy = jest.spyOn(acsService, 'createACSToken').mockImplementation(async () => mockAccessToken);
+    createACSTokenSpy = jest
+      .spyOn(acsService, 'createACSToken')
+      .mockImplementation(async () => mockCommunicationAccessToken);
 
     await getACSToken(req, res, () => {
       return res.status(500);

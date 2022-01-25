@@ -8,7 +8,7 @@
 
 import { Client, GraphRequest } from '@microsoft/microsoft-graph-client';
 import * as graphService from '../../../src/services/graphService';
-import { mockAccessToken, mockAcsUserId } from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockAcsUserId } from '../../utils/mockData';
 
 let callPath = '';
 const mockGraphClient = (
@@ -59,7 +59,7 @@ describe('Graph Service - Delete Identity Mapping: ', () => {
 
     let mockError: any = undefined;
     try {
-      await graphService.deleteIdentityMapping(mockAccessToken.token);
+      await graphService.deleteIdentityMapping(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -79,7 +79,7 @@ describe('Graph Service - Delete Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.deleteIdentityMapping(mockAccessToken.token);
+      acsUserIdentity = await graphService.deleteIdentityMapping(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -100,7 +100,7 @@ describe('Graph Service - Delete Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.deleteIdentityMapping(mockAccessToken.token);
+      acsUserIdentity = await graphService.deleteIdentityMapping(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }
@@ -121,7 +121,7 @@ describe('Graph Service - Delete Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.deleteIdentityMapping(mockAccessToken.token);
+      acsUserIdentity = await graphService.deleteIdentityMapping(mockCommunicationAccessToken.token);
     } catch {
       mockError = 'error';
     }

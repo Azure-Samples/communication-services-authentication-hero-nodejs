@@ -8,7 +8,7 @@
 
 import { Client, GraphRequest } from '@microsoft/microsoft-graph-client';
 import * as graphService from '../../../src/services/graphService';
-import { mockAccessToken, mockAcsUserId } from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockAcsUserId } from '../../utils/mockData';
 
 let callPath = '';
 const mockGraphClient = (isCreateClientResolved?: boolean, isApiResolved?: boolean, graphResponse?: any): Client => {
@@ -55,7 +55,7 @@ describe('Graph Service - Add Identity Mapping: ', () => {
 
     let mockError: any = undefined;
     try {
-      await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      await graphService.addIdentityMapping(mockCommunicationAccessToken.token, mockAcsUserId);
     } catch {
       mockError = 'error';
     }
@@ -75,7 +75,7 @@ describe('Graph Service - Add Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      acsUserIdentity = await graphService.addIdentityMapping(mockCommunicationAccessToken.token, mockAcsUserId);
     } catch {
       mockError = 'error';
     }
@@ -95,7 +95,7 @@ describe('Graph Service - Add Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      acsUserIdentity = await graphService.addIdentityMapping(mockCommunicationAccessToken.token, mockAcsUserId);
     } catch {
       mockError = 'error';
     }
@@ -115,7 +115,7 @@ describe('Graph Service - Add Identity Mapping: ', () => {
     let mockError: any = undefined;
     let acsUserIdentity;
     try {
-      acsUserIdentity = await graphService.addIdentityMapping(mockAccessToken.token, mockAcsUserId);
+      acsUserIdentity = await graphService.addIdentityMapping(mockCommunicationAccessToken.token, mockAcsUserId);
     } catch {
       mockError = 'error';
     }
