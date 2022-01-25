@@ -6,7 +6,7 @@
 // Used to fix the error "PolyFillNotAvailable: Library cannot function without fetch. So, please provide polyfill for it."
 import 'isomorphic-fetch';
 import { Client } from '@microsoft/microsoft-graph-client';
-import { appSettings } from '../appSettings';
+import * as appSettings from '../appSettings.json';
 
 // Error messages
 const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occured when retrieving the identity mapping information';

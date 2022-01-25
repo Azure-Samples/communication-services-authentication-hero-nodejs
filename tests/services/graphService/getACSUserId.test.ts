@@ -7,7 +7,7 @@
 /// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
 import { Client, GraphRequest } from '@microsoft/microsoft-graph-client';
-import { appSettings } from '../../../src/appSettings';
+import * as appSettings from '../../../src/appSettings.json';
 import * as graphService from '../../../src/services/graphService';
 import { mockCommunicationAccessToken, mockAcsUserId } from '../../utils/mockData';
 

@@ -7,9 +7,10 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CommunicationAccessToken,
   CommunicationIdentityClient,
-  CommunicationUserToken
+  CommunicationUserToken,
+  TokenScope
 } from '@azure/communication-identity';
-import { appSettings } from '../appSettings';
+import * as appSettings from '../appSettings.json';
 
 // Error messages
 const CREATE_ACS_USER_IDENTITY_ERROR = 'An error occured when creating an ACS user id';
@@ -18,6 +19,8 @@ const CREATE_ACS_USER_IDENTITY_TOKEN_ERROR =
   'An error occured when creating an ACS user id and issuing an access token for it in one go';
 const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occured when deleting an ACS user id';
 const EXCHANGE_AAD_TOKEN_ERROR = 'An error occured when exchanging an AAD token';
+
+const communicationServicesScopes = appSettings.communicationServices.scopes.map((item) => item as TokenScope);
 
 /**
  * Instantiate the identity client using the connection string.
@@ -56,10 +59,7 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
   try {
     // Issue an access token with the given scopes for an identity
     const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(
-      communicationUserIdentifierObject,
-      appSettings.communicationServices.scopes
-    );
+    const tokenResponse = await identityClient.getToken(communicationUserIdentifierObject, communicationServicesScopes);
 
     return tokenResponse;
   } catch (error) {
@@ -96,7 +96,7 @@ export const createACSUserIdentityAndToken = async (): Promise<CommunicationUser
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an identity and an access token with the given scopes for the new identity
-    const identityTokenResponse = await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
+    const identityTokenResponse = await identityClient.createUserAndToken(communicationServicesScopes);
 
     return identityTokenResponse;
   } catch (error) {
