@@ -8,7 +8,7 @@
 
 import { CommunicationIdentityClient } from '@azure/communication-identity';
 import * as acsService from '../../../src/services/acsService';
-import { mockAccessToken, mockAcsUserId } from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockAcsUserId } from '../../utils/mockData';
 
 const mockCommunicationIdentityClient = (
   isCreateClientResolved?: boolean,
@@ -20,7 +20,7 @@ const mockCommunicationIdentityClient = (
     if (!isGetTokenResolved) {
       return new Promise((resolve, reject) => reject(null));
     }
-    return new Promise((resolve, reject) => resolve(mockAccessToken));
+    return new Promise((resolve, reject) => resolve(mockCommunicationAccessToken));
   };
   return !isCreateClientResolved ? undefined : (clientApp as CommunicationIdentityClient);
 };
@@ -76,6 +76,6 @@ describe('ACS Service - Create ACS Token: ', () => {
 
     expect(createAuthenticatedClientSpy).toHaveBeenCalled();
     expect(mockError).toBeFalsy();
-    expect(accessToken).toBe(mockAccessToken);
+    expect(accessToken).toBe(mockCommunicationAccessToken);
   });
 });

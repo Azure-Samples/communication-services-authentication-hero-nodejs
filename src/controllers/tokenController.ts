@@ -62,9 +62,9 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
 export const exchangeAADToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Get an AAD token passed through request header
-    const aadToken = getAADTokenViaRequest(req);
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
     // Exchange the AAD user token for the Teams access token
-    const acsTokenForTeamsUser = await getACSTokenForTeamsUser(aadToken);
+    const acsTokenForTeamsUser = await getACSTokenForTeamsUser(aadTokenViaRequest);
     return res.status(201).json(acsTokenForTeamsUser);
   } catch (error) {
     next(error);
