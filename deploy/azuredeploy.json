@@ -15,6 +15,13 @@
     "packageUrl": {
       "type": "string",
       "defaultValue": "https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/releases/latest/download/auth-sample.zip"
+    },
+    "linuxFxVersion": {
+      "type": "string",
+      "defaultValue": "DOTNETCORE|3.0",
+      "metadata": {
+        "description": "The Runtime stack of current web app"
+      }
     }
   },
   "variables": {
@@ -38,8 +45,12 @@
       "apiVersion": "2020-06-01",
       "name": "[variables('appServicePlanPortalName')]",
       "location": "[resourceGroup().location]",
+      "kind": "linux",
       "sku": {
         "name": "[parameters('sku')]"
+      },
+      "properties": {
+        "reserved": true
       }
     },
     {
@@ -52,7 +63,10 @@
         "[resourceId('Microsoft.Communication/communicationServices', variables('commsName'))]"
       ],
       "properties": {
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "[parameters('linuxFxVersion')]"
+        }
       },
       "resources": [
         {
