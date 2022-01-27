@@ -22,9 +22,9 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 Sample apps are built to help showcase the capabilities of Azure Communication Services.
 This app uses all best practices and follows limitations related to the service.
-As you contribute make sure to follow service guidelines or your work might not be accepted.
+As a contributor, make sure to follow our guidelines or your work might not be accepted.
 The app is built on top of the existing Azure Communication Services SDKs, and will not diverge from the capabilities offered by the SDK.
-This means that if the feature desired is not supported on the SDK, please don't try to hack it into the sample.
+This means that if your desired feature is not supported on the SDK, please don't try to hack it into the sample.
 
 ## <a name="coc"></a> Code of Conduct
 
@@ -33,7 +33,7 @@ Help us keep this project open and inclusive. Please read and follow our [Code o
 ## <a name="issue"></a> Found an Issue?
 
 If you find a bug in the source code or a mistake in the documentation, you can help us by
-[submitting an issue](.github/ISSUE_TEMPLATE/report-a-bug.md) to the GitHub Repository. Even better, you can
+[submitting an issue](.github/ISSUE_TEMPLATE/report-a-bug.md) to the GitHub Repository, or even better, you can
 [submit a Pull Request](#submit-pr) with a fix.
 
 ## <a name="feature"></a> Want a Feature?
