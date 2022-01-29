@@ -76,7 +76,7 @@ describe('Token Controller - Get ACS Token: ', () => {
     getACSUserIdSpy.mockClear();
   });
 
-  test('when no ACS user ID is stored in Graph and ACS identity an token fail to be created, it should return an error.', async () => {
+  test('when no ACS user ID is stored in Graph, it should return a 404 error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeAADTokenViaOBOSpy = jest
@@ -85,9 +85,6 @@ describe('Token Controller - Get ACS Token: ', () => {
     getACSUserIdSpy = jest
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => resolve(undefined)));
-    createACSUserIdentityAndTokenSpy = jest
-      .spyOn(acsService, 'createACSUserIdentityAndToken')
-      .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
     await getACSToken(req, res, () => {
       return res.status(500);
@@ -95,74 +92,9 @@ describe('Token Controller - Get ACS Token: ', () => {
 
     expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
-    expect(createACSUserIdentityAndTokenSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(404);
     exchangeAADTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
-    createACSUserIdentityAndTokenSpy.mockClear();
-  });
-
-  test('when no ACS user ID is stored in Graph and Graph identity mapping fails to be added, it should return an error.', async () => {
-    const req = mockRequest(mockAuthorization);
-    const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => new Promise((resolve, reject) => resolve(undefined)));
-    createACSUserIdentityAndTokenSpy = jest
-      .spyOn(acsService, 'createACSUserIdentityAndToken')
-      .mockImplementation(async () => mockCommunicationUserToken);
-    addIdentityMappingSpy = jest
-      .spyOn(graphService, 'addIdentityMapping')
-      .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
-
-    await getACSToken(req, res, () => {
-      return res.status(500);
-    });
-
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
-    expect(getACSUserIdSpy).toHaveBeenCalled();
-    expect(createACSUserIdentityAndTokenSpy).toHaveBeenCalled();
-    expect(addIdentityMappingSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(500);
-    exchangeAADTokenViaOBOSpy.mockClear();
-    getACSUserIdSpy.mockClear();
-    createACSUserIdentityAndTokenSpy.mockClear();
-    addIdentityMappingSpy.mockClear();
-  });
-
-  test('when no ACS user ID is stored in Graph and ACS user is successfully created and mapped, it should return a response with status 201 and an ACS token object.', async () => {
-    const req = mockRequest(mockAuthorization);
-    const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
-    getACSUserIdSpy = jest
-      .spyOn(graphService, 'getACSUserId')
-      .mockImplementation(async () => new Promise((resolve, reject) => resolve(undefined)));
-    createACSUserIdentityAndTokenSpy = jest
-      .spyOn(acsService, 'createACSUserIdentityAndToken')
-      .mockImplementation(async () => mockCommunicationUserToken);
-    addIdentityMappingSpy = jest
-      .spyOn(graphService, 'addIdentityMapping')
-      .mockImplementation(async () => mockIdentityMapping);
-
-    await getACSToken(req, res, () => {
-      return res.status(500);
-    });
-
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
-    expect(getACSUserIdSpy).toHaveBeenCalled();
-    expect(createACSUserIdentityAndTokenSpy).toHaveBeenCalled();
-    expect(addIdentityMappingSpy).toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith(mockCommunicationUserToken);
-    exchangeAADTokenViaOBOSpy.mockClear();
-    getACSUserIdSpy.mockClear();
-    createACSUserIdentityAndTokenSpy.mockClear();
-    addIdentityMappingSpy.mockClear();
   });
 
   test('when an ACS user ID is stored in Graph and ACS token fails to be created, it should return an error.', async () => {
