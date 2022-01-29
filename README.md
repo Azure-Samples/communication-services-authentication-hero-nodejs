@@ -18,17 +18,18 @@ products:
 [![Node.js](https://img.shields.io/badge/%3C%2F%3E-Node.js-%230074c1.svg)](https://nodejs.org/en/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-- [Overview](#overview)
-- [Endpoints](#endpoints)
-- [Code Structure](#code-structure)
-- [Getting Started](#getting-started)
-- [Guidance](#guidance)
-  - [Identity Storage Options](#identity-storage-options)
-  - [Bring Your Own Identity (BYOI)](#bring-your-own-identity-byoi)
-- [Known Issues](#known-issues)
-- [Contributing](#contributing)
-- [Trademark](#trademark)
-- [License](#license)
+1. [Overview](#overview)
+2. [Endpoints](#endpoints)
+3. [Code Structure](#code-structure)
+4. [Getting Started](#getting-started)
+5. [Guidance](#guidance)
+  1. [Identity Storage Options](#identity-storage-options)
+  2. [Bring Your Own Identity (BYOI)](#bring-your-own-identity-byoi)
+6. [Resources](#resources)
+7. [Known Issues](#known-issues)
+8. [Contributing](#contributing)
+9. [Trademark](#trademark)
+10. [License](#license)
 
 ## Overview
 
@@ -64,7 +65,7 @@ This ACS Solutions - Authentication sample provides the following endpoints:
 
 - **GET /token/teams** - Exchange an M365 token of a Teams user for an Azure Communication Services token.
 
-  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Azure Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity)
+  > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Azure Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/en-ca/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity).
 
 ## Code Structure
 
@@ -79,7 +80,7 @@ Here's the breakdown of the repo:
 │    ├── types - folder gathering any self-defined types.
 │    ├── utils - folder gathering any helper functions.
 │    ├── app.ts - file containing Express configurations and application configurations like │global paths and error handling.
-│    ├── appSettings.ts - file containing all application settings about Graph Extensions, Communication Services and Azure Active Directory.
+│    ├── appSettings.json - file containing all application settings about Graph Extensions, Communication Services and Azure Active Directory.
 │    └── server.ts - file containing process of starting the Express server.
 └── tests - folder gathering all unit tests.
      ├── controllers - folder gathering unit tests for each controller.
@@ -98,9 +99,9 @@ If you're wondering where to get started, here are a few scenarios to help you g
   * Take a look at our conceptual documentation on:
     - [ACS Authentication Server Sample Architecture Design](). !!! TODO: add link
     - [Secured Web API Architecture Design](./docs/design-guides/Secured-Web-API-Design.md).
-    - [Identity Mapping Architecture Design](./docs/design-guides/Identity-Mapping-Design_Graph-Open-Extensions.md).
+    - [Identity Mapping Architecture Design](./docs/design-guides/Identity-Mapping-Design_Graph-Open-Extensions.md). !!! TODO: to add
     - [AAD Token Exchange Architecture Design](). !!! TODO: add link
-* "I want to see what this ACS Authentication Server sample can do by running it!"
+* "I want to see what this ACS Authentication Server sample can do by running it!" 
   * Check out our [Run Authentication Sample](<docs/contribution-guides/3. run-authentication-sample.md>) guide.
 * "I want to submit a fix or a feature for this project"
   * Check out our [making a contribution](CONTRIBUTING.md) guide first.
@@ -111,9 +112,11 @@ If you're wondering where to get started, here are a few scenarios to help you g
     * [Publish Your Changes](<docs/contribution-guides/7. publish-your-changes.md>)
 
 ## Guidance
+
  !!! TODO
 
 ### Identity Storage Options
+
  !!! TODO
 
 (Add privacy to provide links to data protection of ACS user Id)
@@ -121,9 +124,17 @@ If you're wondering where to get started, here are a few scenarios to help you g
 (Add a comparison table here...)
 
 ### Bring Your Own Identity (BYOI)
+
  !!! TODO
 
 (AAD B2C)
+
+## Resources
+
+- [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
+- [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
+- [On-Behalf-Of workflow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) - Find more about the OBO workflow
+- [Creating a protected API](https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2/tree/master/2.%20Web%20API%20now%20calls%20Microsoft%20Graph) - Detailed example of creating a protected API
 
 ## Known Issues
 
