@@ -1,0 +1,39 @@
+name: Create Auth Sample Release
+
+on: 
+  release:
+    types: [created]
+    name: Release
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Build
+        shell: bash
+        run: |
+          release_name=Auth-sample
+          unset CI
+          # Build everything
+          npm install
+          npm run build
+          7z a -tzip -r "auth-sample.zip" ./*
+
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "auth-sample.zip"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

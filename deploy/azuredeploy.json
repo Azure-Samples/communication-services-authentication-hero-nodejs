@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appName": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "F1",
+      "metadata": {
+        "description": "The SKU of App Service Plan."
+      }
+    },
+    "packageUrl": {
+      "type": "string",
+      "defaultValue": "https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/releases/latest/download/auth-sample.zip"
+    }
+  },
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "commsName": "[concat('CommunicationServices-', parameters('appName'))]",
+    "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('appName'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Communication/communicationServices",
+      "apiVersion": "2020-08-20-preview",
+      "name": "[variables('commsName')]",
+      "location": "global",
+      "tags": {},
+      "properties": {
+        "dataLocation": "United States"
+      }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-06-01",
+      "name": "[variables('appServicePlanPortalName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "[parameters('sku')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('appName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
+        "[resourceId('Microsoft.Communication/communicationServices', variables('commsName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
+      },
+      "resources": [
+        {
+          "type": "config",
+          "apiVersion": "2018-11-01",
+          "name": "appSettings",
+          "dependsOn": ["[resourceId('Microsoft.Web/sites', parameters('appName'))]"],
+          "tags": {
+            "displayName": "appSettings"
+          },
+          "properties": {
+            "communicationServices__connectionString": "[listkeys(variables('commsName'), '2020-08-20-preview' ).primaryConnectionString]",
+            "azureActiveDirectory__clientId": "",
+            "azureActiveDirectory__clientSecret": "",
+            "azureActiveDirectory__tenantId": ""
+          }
+        },
+        {
+          "type": "extensions",
+          "apiVersion": "2015-08-01",
+          "name": "MSDeploy",
+          "location": "[resourceGroup().location]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('appName'))]",
+            "[resourceId('Microsoft.Web/sites/config', parameters('appName'), 'appSettings')]"
+          ],
+          "properties": {
+            "packageUri": "[parameters('packageUrl')]"
+          }
+        }
+      ]
+    }
+  ]
+}

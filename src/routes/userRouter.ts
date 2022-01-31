@@ -4,7 +4,8 @@
  *---------------------------------------------------------------------------------------------*/
 
 import express from 'express';
-import { userController } from '../controllers/userController';
+import { createACSUser, deleteACSUser, getACSUser } from '../controllers/userController';
+import { validateAuthorizedHeader } from '../utils/utils';
 
 export const userRouter = () => {
   // Initialize router
@@ -12,11 +13,11 @@ export const userRouter = () => {
 
   // Token routes
   // 1. Get an ACS user
-  router.get('/user', async (req, res, next) => userController.getACSUser(req, res, next));
+  router.get('/', validateAuthorizedHeader, getACSUser);
   // 2. Create an ACS user
-  router.post('/user', async (req, res, next) => userController.createACSUser(req, res, next));
+  router.post('/', validateAuthorizedHeader, createACSUser);
   // 3. Delete an ACS user
-  router.delete('/user', async (req, res, next) => userController.deleteACSUser(req, res, next));
+  router.delete('/', validateAuthorizedHeader, deleteACSUser);
 
   return router;
 };

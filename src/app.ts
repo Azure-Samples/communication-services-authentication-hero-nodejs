@@ -5,13 +5,15 @@
 
 import express, { NextFunction } from 'express';
 import { Request, Response } from 'express';
-import { errorUtil } from './utils/errorUtil';
+import * as utils from './utils/utils';
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
 import { userRouter } from './routes/userRouter';
 
 // Create Express server
 const app = express();
+// Get the environment mode
+const env = app.get('env');
 
 // Express configuration
 app.set('port', process.env.PORT || 3000);
@@ -19,8 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Api routes
-app.use('/api/', userRouter());
-app.use('/api/', tokenRouter());
+app.use('/api/user', userRouter());
+app.use('/api/token', tokenRouter());
 
 // Any other route is going to wind up at the app.all() function defined.
 // The all() method encompasses all types of requests, including GET and PATCH, and the asterisk accepts any URL.
@@ -29,7 +31,7 @@ app.use('/api/', tokenRouter());
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const statusCode = 404;
   const errorMessage = `The ${req.originalUrl} endpoint is invalid!`;
-  const errorResponse = errorUtil.createErrorResponse(statusCode, errorMessage);
+  const errorResponse = utils.createErrorResponse(statusCode, errorMessage);
 
   res.status(statusCode).send(errorResponse);
 });
@@ -39,7 +41,12 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const statusCode = 500;
-  const errorResponse = errorUtil.createErrorResponse(statusCode, err.message, err.stack);
+  // In development mode, print stacktrace, otherwise, no stacktrace will be leaked to users
+  const errorResponse = utils.createErrorResponse(
+    statusCode,
+    err.message,
+    env === 'development' ? err.stack : undefined
+  );
 
   res.status(statusCode).send(errorResponse);
 });

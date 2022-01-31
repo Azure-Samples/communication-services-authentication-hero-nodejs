@@ -4,66 +4,64 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import { acsService } from '../services/acsService';
-import { aadService } from '../services/aadService';
-import { graphService } from '../services/graphService';
-import { IdentityMappingNotFoundError } from '../errors/identityMappingNotFoundError';
+import { createErrorResponse, getAADTokenViaRequest } from '../utils/utils';
+import { getACSUserId } from '../services/graphService';
+import { createACSToken, getACSTokenForTeamsUser } from '../services/acsService';
+import { exchangeAADTokenViaOBO } from '../services/aadService';
 
-export const tokenController = {
-  /**
-   * Get or refresh a Communication Services access token
-   *
-   * 1. If the identity mapping information existing in the user's roaming profile,
-   *    then issue an access token for an already existing Communication Services identity
-   * 2. If not, create a Communication Services identity and then
-   *    2.1 If successfully adding the identity mapping information, then issue an access token.
-   *    2.2 If not, return an error message.
-   *
-   * If having issues when using ACS services, return an error message as well.
-   */
-  getACSToken: async (req: Request, res: Response, next: NextFunction) => {
-    let aadToken, aadOboToken, acsToken;
+const ACS_IDENTITY_NOT_FOUND_ERROR = 'Can not find any ACS identities in Microsoft Graph used to create an ACS token';
 
-    // Extract the aadToken from the authorization header
-    const authHeader = req.headers.authorization;
-    if (authHeader) {
-      aadToken = authHeader.split(' ')[1];
+/**
+ * Get or refresh a Communication Services access token
+ *
+ * 1. If the identity mapping information exists in Microsoft Graph,
+ *    then issue an access token for an already existing Communication Services identity
+ * 2. If not, return an error message.
+ *
+ * If having issues when using ACS services, return an error message as well.
+ */
+export const getACSToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Get aad token via the request
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    // Retrieve the AAD token via OBO flow
+    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+
+    // Retrieve ACS Identity from Microsoft Graph
+    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+
+    if (acsUserId !== undefined) {
+      // The ACS user exists
+      const acsToken = await createACSToken(acsUserId);
+      const acsIdentityTokenObject = {
+        ...acsToken,
+        user: { communicationUserId: acsUserId }
+      };
+
+      return res.status(201).json(acsIdentityTokenObject);
     } else {
-      return res.sendStatus(401);
+      // The ACS user does not exist
+      return res.status(404).json(createErrorResponse(404, ACS_IDENTITY_NOT_FOUND_ERROR));
     }
+  } catch (error) {
+    return next(error);
+  }
+};
 
-    try {
-      // Retrieve the AAD token via OBO flow
-      aadOboToken = await aadService.exchangeAADTokenViaOBO(aadToken);
-
-      // User exists
-      const acsUserId = await graphService.getACSUserId(aadOboToken);
-      acsToken = await acsService.createACSToken(acsUserId);
-
-      return res.status(200).json(acsToken);
-    } catch (error) {
-      if (error && error instanceof IdentityMappingNotFoundError) {
-        // User doesn't exist
-        try {
-          const identityTokenResponse = await acsService.createACSUserIdentityAndToken();
-          // retrieve the token, its expiry date and user object from the response
-          const { token, expiresOn, user } = identityTokenResponse;
-          // Store the identity mapping information
-          graphService.addIdentityMapping(aadOboToken, user.communicationUserId);
-          // This LoC below should be excuted after AddIdentityMapping excuted successfully
-          // because the acsToken can not be returned if failing to add the identity mapping information to Microsoft Graph
-          acsToken = {
-            token: token,
-            expiresOn: expiresOn
-          };
-
-          return res.status(200).json(acsToken);
-        } catch (error) {
-          next(error);
-        }
-      } else {
-        next(error);
-      }
-    }
+/**
+ * Eexchange AAD token for an ACS access token of Teams user using the Azure Communication Services Identity SDK.
+ *
+ * 1. Get an AAD user access token passed through request header
+ * 2. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
+ */
+export const exchangeAADToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Get an AAD token passed through request header
+    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    // Exchange the AAD user token for the Teams access token
+    const acsTokenForTeamsUser = await getACSTokenForTeamsUser(aadTokenViaRequest);
+    return res.status(201).json(acsTokenForTeamsUser);
+  } catch (error) {
+    next(error);
   }
 };
