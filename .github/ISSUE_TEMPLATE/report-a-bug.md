@@ -24,3 +24,10 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
+
+- **Version** - what version is affected (e.g. 0.1.2)
+- **Motivation for or Use Case** - explain what are you trying to do and why the current behavior is a bug for you
+- **Browsers and Operating System** - is this a problem with all browsers?
+- **Related Issues** - has a similar issue been reported before?
+
+**Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be causing the problem (line of code or commit)
