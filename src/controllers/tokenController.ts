@@ -35,7 +35,7 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
       const acsToken = await createACSToken(acsUserId);
       const acsIdentityTokenObject = {
         ...acsToken,
-        user: { communicationUserId: acsUserId }
+        user: { acsUserIdentity: acsUserId }
       };
 
       return res.status(201).json(acsIdentityTokenObject);
