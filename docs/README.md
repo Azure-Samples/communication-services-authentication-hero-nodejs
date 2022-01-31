@@ -3,6 +3,7 @@
 ## Architecture Design Guides
 
 - [Secured Web API Design](./design-guides/Secured-Web-API-Design.md) - How to protect Web API using the **Authentication Code Grant flow** (Client side excluded from the project) and secure an access token from the Microsoft identity platform using the **On-Behalf-Of flow** (Server side) to make authenticated requests to the downstream services.
+- [Identity Mapping Design](./design-guides/Identity-Mapping-Design_Graph-Open-Extensions.md) - How to utilize the **Microsoft Graph Open Extensions** to manage ACS identities by mapping them 1:1 with Azure Active Directory identities.
 
 ## Contribution Guides
 
@@ -15,4 +16,3 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 5. [Write Unit Tests](<./contribution-guides/5. write-unit-tests.md>)
 6. [Submit a PR](<./contribution-guides/6. submit-a-pr.md>)
 7. [Publish Your Changes](<./contribution-guides/7. publish-your-changes.md>)
-
