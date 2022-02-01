@@ -4,7 +4,7 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { Configuration, ConfidentialClientApplication } from '@azure/msal-node';
-import * as appSettings from '../appSettings.json';
+import { appSettings } from '../appSettings';
 
 // Error messages
 const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =

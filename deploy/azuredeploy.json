@@ -15,13 +15,6 @@
     "packageUrl": {
       "type": "string",
       "defaultValue": "https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/releases/latest/download/auth-sample.zip"
-    },
-    "linuxFxVersion": {
-      "type": "string",
-      "defaultValue": "node|14",
-      "metadata": {
-        "description": "The Runtime stack of current web app"
-      }
     }
   },
   "variables": {
@@ -45,12 +38,8 @@
       "apiVersion": "2020-06-01",
       "name": "[variables('appServicePlanPortalName')]",
       "location": "[resourceGroup().location]",
-      "kind": "linux",
       "sku": {
         "name": "[parameters('sku')]"
-      },
-      "properties": {
-        "reserved": true
       }
     },
     {
@@ -63,10 +52,7 @@
         "[resourceId('Microsoft.Communication/communicationServices', variables('commsName'))]"
       ],
       "properties": {
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
-        "siteConfig": {
-          "linuxFxVersion": "[parameters('linuxFxVersion')]"
-        }
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]"
       },
       "resources": [
         {
@@ -78,10 +64,11 @@
             "displayName": "appSettings"
           },
           "properties": {
-            "communicationServices__connectionString": "[listkeys(variables('commsName'), '2020-08-20-preview' ).primaryConnectionString]",
-            "azureActiveDirectory__clientId": "",
-            "azureActiveDirectory__clientSecret": "",
-            "azureActiveDirectory__tenantId": ""
+            "communicationServices_connectionString": "[listkeys(variables('commsName'), '2020-08-20-preview' ).primaryConnectionString]",
+            "azureActiveDirectory_clientId": "",
+            "azureActiveDirectory_clientSecret": "",
+            "azureActiveDirectory_tenantId": "",
+            "WEBSITE_NODE_DEFAULT_VERSION": "12.21.0"
           }
         },
         {
