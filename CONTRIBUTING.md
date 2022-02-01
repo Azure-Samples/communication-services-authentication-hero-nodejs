@@ -66,21 +66,9 @@ You can file new issues by providing the above information at the corresponding 
 
 ### <a name="submit-pr"></a> Submitting a Pull Request (PR)
 
-Before you submit your Pull Request (PR), consider the following guidelines:
+Before you submit your Pull Request (PR), consider searching the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-csharp/pulls) 
+for an open or closed PR that relates to your submission. You don't want to duplicate effort.
 
-* Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
-  that relates to your submission. You don't want to duplicate effort.
-* Make your changes in a new git fork
-* Commit your changes using a descriptive commit message
-* Push your fork to GitHub
-* In GitHub, create a pull request
-* If the reviewers suggest changes then:
-  - Make the required updates
-  - Rebase your fork and force push to your GitHub repository (this will update your Pull Request):
+If you did not find anything, please, make a contribution following our [submit a PR guideline](<docs/contribution-guides/6. submit-a-pr.md>)
 
-    ```shell
-    git rebase main -i
-    git push -f
-    ```
-
-That's it! Thank you for your contribution!
+Thank you for your contribution!
