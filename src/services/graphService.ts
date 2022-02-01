@@ -3,10 +3,9 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-// Used to fix the error "PolyFillNotAvailable: Library cannot function without fetch. So, please provide polyfill for it."
-import 'isomorphic-fetch';
+import 'cross-fetch/polyfill';
 import { Client } from '@microsoft/microsoft-graph-client';
-import * as appSettings from '../appSettings.json';
+import { appSettings } from '../appSettings';
 
 // Error messages
 const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occured when retrieving the identity mapping information';

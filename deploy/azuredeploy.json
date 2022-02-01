@@ -64,10 +64,11 @@
             "displayName": "appSettings"
           },
           "properties": {
-            "communicationServices__connectionString": "[listkeys(variables('commsName'), '2020-08-20-preview' ).primaryConnectionString]",
-            "azureActiveDirectory__clientId": "",
-            "azureActiveDirectory__clientSecret": "",
-            "azureActiveDirectory__tenantId": ""
+            "communicationServices_connectionString": "[listkeys(variables('commsName'), '2020-08-20-preview' ).primaryConnectionString]",
+            "azureActiveDirectory_clientId": "",
+            "azureActiveDirectory_clientSecret": "",
+            "azureActiveDirectory_tenantId": "",
+            "WEBSITE_NODE_DEFAULT_VERSION": "12.21.0"
           }
         },
         {
