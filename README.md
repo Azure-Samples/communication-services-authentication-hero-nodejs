@@ -8,7 +8,7 @@ products:
   - azure-communication-services
 ---
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)]()
+Deploy to Azure using instructions [here](./docs/deploy/deploy_test-sample-on-azure.md).
 
 # ACS Solutions - Authentication Server Sample
 
@@ -49,6 +49,8 @@ If you are looking to get started with Azure Communication Services, but are sti
 Additional documentation for this sample can be found on [Microsoft Docs](https://docs.microsoft.com/azure/communication-services/samples/calling-hero-sample). !!! TODO: change link?
 
 Since this sample only focuses on the server APIs, the client application is not part of it. If you want to add the client application to login user using Azure AD, then please follow the MSAL samples [here](https://github.com/AzureAD/microsoft-authentication-library-for-js).
+
+Before contributing to this sample, please read our [contribution guidelines](./CONTRIBUTING.md).
 
 ## Endpoints
 
@@ -128,6 +130,13 @@ If you're wondering where to get started, here are a few scenarios to help you g
 !!! TODO
 
 (AAD B2C)
+
+## Resources
+
+- [Azure Communication Services Documentation](https://docs.microsoft.com/en-us/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
+- [Azure Communication Services Hero Samples](https://docs.microsoft.com/en-us/azure/communication-services/samples/overview) - Find more ACS samples and examples on our samples overview page.
+- [On-Behalf-Of workflow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) - Find more about the OBO workflow
+- [Creating a protected API](https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2/tree/master/2.%20Web%20API%20now%20calls%20Microsoft%20Graph) - Detailed example of creating a protected API
 
 ## Known Issues
 
