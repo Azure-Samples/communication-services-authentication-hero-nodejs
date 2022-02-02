@@ -15,22 +15,22 @@ import { SignOutButton } from './SignOutButton';
  * @param props
  */
 export const PageLayout = (props) => {
-    const isAuthenticated = useIsAuthenticated();
+  const isAuthenticated = useIsAuthenticated();
 
-    return (
-        <>
-            <Navbar bg="primary" variant="dark">
-                <a className="navbar-brand" href="/">
-                    ACS Authentication Sample
-                </a>
-                {isAuthenticated ? <SignOutButton /> : <SignInButton />}
-            </Navbar>
-            <h5>
-                <center>Welcome to the ACS authentication sample client For Javascript - React Quickstart</center>
-            </h5>
-            <br />
-            <br />
-            {props.children}
-        </>
-    );
+  return (
+    <>
+      <Navbar bg="primary" variant="dark">
+        <a className="navbar-brand" href="/">
+          ACS Authentication Sample
+        </a>
+        {isAuthenticated ? <SignOutButton /> : <SignInButton />}
+      </Navbar>
+      <h5>
+        <center>Welcome to the ACS authentication sample client For Javascript - React Quickstart</center>
+      </h5>
+      <br />
+      <br />
+      {props.children}
+    </>
+  );
 };

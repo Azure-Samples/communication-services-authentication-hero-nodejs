@@ -4,17 +4,17 @@
  */
 
 export async function GetAcsToken(accessToken) {
-    const headers = new Headers();
-    const bearer = `Bearer ${accessToken}`;
+  const headers = new Headers();
+  const bearer = `Bearer ${accessToken}`;
 
-    headers.append('Authorization', bearer);
+  headers.append('Authorization', bearer);
 
-    const options = {
-        method: 'GET',
-        headers: headers
-    };
+  const options = {
+    method: 'GET',
+    headers: headers
+  };
 
-    return await fetch('https://localhost:5001/api/token', options) //Update this to your deployed endpoint if not testing locally
-        .then((response) => response.json())
-        .catch((error) => console.log(error));
+  return await fetch('https://localhost:5001/api/token', options) //Update this to your deployed endpoint if not testing locally
+    .then((response) => response.json())
+    .catch((error) => console.log(error));
 }
