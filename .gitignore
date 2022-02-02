@@ -1,3 +1,6 @@
+# Minimal client node modules
+MinimalClient/node_modules/
+
 # Dependency directory
 node_modules
 
