@@ -1,7 +1,7 @@
-/*
+/**---------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- */
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ *---------------------------------------------------------------------------------------------*/
 
 import React, { useState } from 'react';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
