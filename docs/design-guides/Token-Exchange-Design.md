@@ -42,6 +42,6 @@ For more information, visit the following links:
 
 - To learn more about the scenario, visit:
   - [Custom Teams Endpoint Overview](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint)
-  - [Build a custom Teams endpoint](https://docs.microsoft.com/en-us/azure/communication-services/concepts/teams-endpoint)
+  - [Build a custom Teams endpoint](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint)
 - To learn more about the Teams Access Token Management, visit:
   - [Quickstart: Set up and manage access tokens for Teams users](https://docs.microsoft.com/azure/communication-services/quickstarts/manage-teams-identity?pivots=programming-language-javascript)
