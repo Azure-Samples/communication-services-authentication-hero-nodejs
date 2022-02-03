@@ -25,8 +25,8 @@ In this ACS Authentication Server sample, we would describe how developers can a
 
 As displayed in the ACS Authentication Server - Token Exchange flow diagram below, the **Token Exchange for single tenant** includes two steps:
 
- 	1. The developer configures the Microsoft Authentication Library (MSAL) to authenticate the Microsoft 365 user for the application that was created earlier for Communication Services **Teams.ManageCalls** permission, in order to to obtain Microsoft Azure Active Directory (Azure AD) user tokens using **Authorization Code Grant flow** (Client side).
- 	2. The developer initializes the Azure Communication Services Identity SDK and exchanges the incoming Azure AD user token for the access token of Teams user via the identity SDK. The access token of Teams user is then returned to the client application (Server side).
+1. The developer configures the Microsoft Authentication Library (MSAL) to authenticate the Microsoft 365 user for the application that was created earlier for Communication Services **Teams.ManageCalls** permission, in order to to obtain Microsoft Azure Active Directory (Azure AD) user tokens using **Authorization Code Grant flow** (Client side).
+2. The developer initializes the **Azure Communication Services Identity SDK** and exchanges the incoming Azure AD user token for the access token of Teams user via the identity SDK. The access token of Teams user is then returned to the client application (Server side).
 
 ![Token Exchange flow](../images/ACS-Authentication-Server-Sample_Token-Exchange-Flow.png)
 
