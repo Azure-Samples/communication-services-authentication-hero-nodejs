@@ -20,7 +20,8 @@
     "serve": "node build/server.js",
     "start": "npm run build && npm run serve",
     "start:dev": "nodemon --watch src/** -e ts,js --exec npm run start",
-    "prod": "npm run build && webpack"
+    "clean": "rimraf dist",
+    "prod": "npm run clean && npm run build && webpack"
   },
   "dependencies": {
     "@azure/communication-identity": "^1.1.0-beta.1",
