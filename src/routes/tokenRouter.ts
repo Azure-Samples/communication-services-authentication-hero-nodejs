@@ -15,7 +15,7 @@ export const tokenRouter = () => {
   // 1. Get an ACS token or refresh an ACS token
   router.get('/', validateAuthorizedHeader, getACSToken);
   // 2. Get an ACS token for a Teams user
-  router.get('/aad', validateAuthorizedHeader, exchangeAADToken);
+  router.get('/teams', validateAuthorizedHeader, exchangeAADToken);
 
   return router;
 };
