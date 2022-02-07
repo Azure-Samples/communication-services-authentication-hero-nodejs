@@ -4,7 +4,7 @@
 
 - [Scenario](#scenario)
 - [Overview](#overview)
-- [The Way How to Exchange](#the-way-how-to-exchange)
+- [How Token Exchange Works](#how-token-exchange-works)
 - [Contributing](#contributing)
 - [More Information](#more-information)
 
@@ -21,12 +21,12 @@ In this ACS Authentication Server sample, we would describe how developers can a
 > 1. Functionality described in this document is currently in public preview. This preview version is provided without a service-level agreement, and it's not recommended for production workloads. Certain features might not be supported or might have constrained capabilities. For more information, see [Supplemental Terms of Use for Microsoft Azure Previews](https://azure.microsoft.com/support/legal/preview-supplemental-terms/).
 > 2. When you're in a production environment, we recommend that you implement this exchange mechanism in back-end services, because requests for an exchange are signed with a secret.
 
-## The Way How to Exchange
+## How Token Exchange Works
 
 As displayed in the ACS Authentication Server - Token Exchange flow diagram below, the **Token Exchange for single tenant** includes two steps:
 
-1. The developer configures the Microsoft Authentication Library (MSAL) to authenticate the Microsoft 365 user for the application that was created earlier for Communication Services **Teams.ManageCalls** permission, in order to to obtain Microsoft Azure Active Directory (Azure AD) user tokens using **Authorization Code Grant flow** (Client side).
-2. The developer initializes the **Azure Communication Services Identity SDK** and exchanges the incoming Azure AD user token for the access token of Teams user via the identity SDK. The access token of Teams user is then returned to the client application (Server side).
+1. From the **Client side**, the developer configures the Microsoft Authentication Library (MSAL) to authenticate the Microsoft 365 user for the application that was created earlier for Communication Services **Teams.ManageCalls** permission, in order to to obtain Microsoft Azure Active Directory (Azure AD) user tokens using **Authorization Code Grant flow**.
+2. From the **Server side**, the developer initializes the **Azure Communication Services Identity SDK** and exchanges the incoming Azure AD user token for the access token of Teams user via the identity SDK. The access token of Teams user is then returned to the client application.
 
 ![Token Exchange flow](../images/ACS-Authentication-Server-Sample_Token-Exchange-Flow.png)
 
