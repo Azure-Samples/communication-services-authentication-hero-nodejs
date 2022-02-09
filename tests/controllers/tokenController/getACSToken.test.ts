@@ -12,7 +12,6 @@ import {
   mockAcsUserId,
   mockAuthorization,
   mockCommunicationUserToken,
-  mockIdentityMapping,
   mockRequest,
   mockResponse
 } from '../../utils/mockData';
@@ -24,8 +23,6 @@ import * as graphService from '../../../src/services/graphService';
 let getACSUserIdSpy: jest.SpyInstance;
 let createACSTokenSpy: jest.SpyInstance;
 let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
-let createACSUserIdentityAndTokenSpy: jest.SpyInstance;
-let addIdentityMappingSpy: jest.SpyInstance;
 
 describe('Token Controller - Get ACS Token: ', () => {
   test('when request has no authorization header, it should return an error.', async () => {
