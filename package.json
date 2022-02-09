@@ -49,6 +49,7 @@
     "json-loader": "^0.5.7",
     "nodemon": "^2.0.15",
     "prettier": "2.3.2",
+    "rimraf": "^3.0.2",
     "supertest": "^6.0.1",
     "ts-jest": "^26.4.4",
     "ts-loader": "^9.2.6",
