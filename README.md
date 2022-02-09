@@ -96,7 +96,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
     - [ACS Authentication Server Sample Architecture Design]().
     - [Secured Web API Architecture Design](./docs/design-guides/Secured-Web-API-Design.md).
     - [Identity Mapping Architecture Design](./docs/design-guides/Identity-Mapping-Design_Graph-Open-Extensions.md).
-    - [AAD Token Exchange Architecture Design]().
+    - [AAD Token Exchange Architecture Design](./docs/design-guides/Token-Exchange-Design.md).
 * "I want to see what this ACS Authentication Server sample can do by running!"
   * Check out our [Run Authentication Sample](<docs/contribution-guides/3. run-authentication-sample.md>) guide.
 * "I want to submit a fix or a feature for this project"
