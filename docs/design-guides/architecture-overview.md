@@ -35,7 +35,9 @@ The Azure Communication Services identity for the user could be co-located with 
 
 ## Guidance
 !!!
+
 1. !!! TODO: adapt to JS --> If 1:1 identity model of Azure Active Directory and Azure Communication Services in the sample does not meet your requirement, then you can consider adapting the [IdentityMappingModel class](https://github.com/Azure-Samples/communication-services-authentication-hero-csharp/blob/main/src/Models/IdentityMappingModel.cs) to handle multiple identity mappings.
+
 !!!
 
 2. Since Azure Communication Services is a data processor and you are the controller of the user data, you are responsible for ensuring the data privacy compliance. To learn more, please visit [Azure Communication Services privacy concept](https://docs.microsoft.com/azure/communication-services/concepts/privacy).
@@ -45,7 +47,7 @@ The Azure Communication Services identity for the user could be co-located with 
 ## Alternate Identity Mapping Approach
 If Graph Open Extensions does not meet your requirement for storage of Identity Mappings, you can consider storing them in databases such as [CosmosDB](https://docs.microsoft.com/azure/cosmos-db/) or [Azure Tables](https://docs.microsoft.com/azure/storage/tables/) for an example. You will need to make the below changes though:
 
-1. Update the write and read operations in [GraphService.cs class](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/blob/main/src/services/graphService.ts)
+1. Update the write and read operations in [graphService.ts](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/blob/main/src/services/graphService.ts) file.
 2. Replace the usage of Graph `/me/extensions` endpoint with [`/me`](https://docs.microsoft.com/graph/api/resources/users?view=graph-rest-1.0) endpoint. The `/me` endpoint will get the M365 user ID in response as `id` attribute. This could be used as key to map the Azure Communication Services identity. The permissions for Graph API on server app registrations just needs to be reduced to `User.Read`.
 3. Persist the mapping of Azure Communication Services identity to M365 user ID within the database of your choice.
 4. Since the Azure Communication Services Identity is classified as EUPI(End User Pseudonymous Identifiers), please make sure all the required data privacy compliance are met on your end while the data is at rest and in transit. To learn more about how Azure Communication Services handles privacy, please visit [Azure Communication Services privacy concept](https://docs.microsoft.com/azure/communication-services/concepts/privacy).

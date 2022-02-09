@@ -49,7 +49,8 @@ npm install
 Once set up, you can run the following commands to build the repo.
 
 ```shell
-npm run build # equals to npm run prettier && npm run lint:fix && npm run build-tsc
+# this command equals to npm run prettier && npm run lint:fix && npm run build-tsc
+npm run build
 ```
 
 This command consists of three sub-commands:
