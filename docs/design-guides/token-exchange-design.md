@@ -14,7 +14,7 @@ As you may know, Azure Communication Services SDKs has the ability to allow deve
 
 ## Overview
 
-In this ACS Authentication Server sample, we would describe how developers can authenticate a Microsoft 365 user by using the Microsoft Authentication Library (MSAL) and retrieving a Microsoft Azure Active Directory (Azure AD) user token. They will then exchange that token for an access token of Teams user with the Azure Communication Services Identity SDK. The access token for Teams user can then be used by the Communication Services Calling SDK to build a custom Teams endpoint.
+In this Azure Communication Services Authentication Server sample, we would describe how developers can authenticate a Microsoft 365 user by using the Microsoft Authentication Library (MSAL) and retrieving a Microsoft Azure Active Directory (Azure AD) user token. They will then exchange that token for an access token of Teams user with the Azure Communication Services Identity SDK. The access token for Teams user can then be used by the Communication Services Calling SDK to build a custom Teams endpoint.
 
 > :bangbang: Important: 
 >
@@ -23,7 +23,7 @@ In this ACS Authentication Server sample, we would describe how developers can a
 
 ## How Token Exchange Works
 
-As displayed in the ACS Authentication Server - Token Exchange flow diagram below, the **Token Exchange for single tenant** includes two steps:
+As displayed in the Azure Communication Services Authentication Server - Token Exchange flow diagram below, the **Token Exchange for single tenant** includes two steps:
 
 1. From the **Client side**, the developer configures the Microsoft Authentication Library (MSAL) to authenticate the Microsoft 365 user for the application that was created earlier for Communication Services **Teams.ManageCalls** permission, in order to to obtain Microsoft Azure Active Directory (Azure AD) user tokens using **Authorization Code Grant flow**.
 2. From the **Server side**, the developer initializes the **Azure Communication Services Identity SDK** and exchanges the incoming Azure AD user token for the access token of Teams user via the identity SDK. The access token of Teams user is then returned to the client application.
