@@ -7,15 +7,8 @@
 /// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
 import { exchangeAADToken } from '../../../src/controllers/tokenController';
-import {
-  mockAadToken,
-  mockCommunicationAccessToken,
-  mockAuthorization,
-  mockRequest,
-  mockResponse
-} from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockAuthorization, mockRequest, mockResponse } from '../../utils/mockData';
 import * as acsService from '../../../src/services/acsService';
-import * as aadService from '../../../src/services/aadService';
 
 let getACSTokenForTeamsUserSpy: jest.SpyInstance;
 
