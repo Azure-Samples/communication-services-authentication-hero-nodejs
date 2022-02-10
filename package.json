@@ -47,6 +47,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "26.6.0",
     "json-loader": "^0.5.7",
+    "jwt-decode": "^3.1.2",
     "nodemon": "^2.0.15",
     "prettier": "2.3.2",
     "rimraf": "^3.0.2",
