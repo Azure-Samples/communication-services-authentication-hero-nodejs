@@ -1,0 +1,105 @@
+{
+    "Sample": {
+        "Title": "A client application that calls an ASP.NET Core Web API protected by Azure AD using OAuth 2.0 access tokens. ",
+        "Level": 200,
+        "Client": "SPA client application - UI to test Web Api",
+        "Service": "ASP.NET Core Web API",
+        "RepositoryUrl": "communication-services-authentication-hero-csharp",
+        "Endpoint": "AAD v2.0"
+    },
+
+    /*
+    This section describes the Azure AD Applications to configure, and their dependencies
+  */
+    "AADApps": [
+        {
+            "Id": "service",
+            "Name": "auther-server-sample-webApi",
+            "Kind": "WebApi",
+            "HomePage": "https://localhost:5000/",
+            "ReplyUrls": "https://localhost:5000/",
+            "PasswordCredentials": "Auto",
+            "RequiredResourcesAccess": [
+                {
+                    "Resource": "Microsoft Graph",
+                    "DelegatedPermissions": [ "User.Read", "User.ReadWrite.All" ]
+                }
+            ],
+            "ManualSteps": [
+                {
+                    "Comment": "If you are a tenant admin, you can navigate to the API Permissions page and select 'Grant admin consent for (your tenant)' for all the Graph Api permissions, otherwise please follow up with your tenant admin to grant those permissions. You can follow the link https://docs.microsoft.com/azure/active-directory/manage-apps/grant-admin-consent."
+                }
+            ]
+        },
+        {
+            "Id": "client",
+            "Name": "auther-server-sample-webClient",
+            "Kind": "Desktop",
+            "ReplyUrls": "http://localhost/3000/",
+            "RequiredResourcesAccess": [
+                {
+                    "Resource": "service",
+                    "DelegatedPermissions": [ "access_as_user" ]
+                }
+            ],
+            "ManualSteps": [
+                {
+                    "Comment": "Navigate to the Manifest page and change 'replyUrlsWithType[].type' to 'Spa'."
+                },
+                {
+                    "Comment": "If you are a tenant admin, you can navigate to the API Permissions page and select 'Grant admin consent for (your tenant)' to grant admin consent only to Azure Communication Services permissions, otherwise please follow up with your tenant admin to grant those permissions. You can follow the link https://docs.microsoft.com/azure/active-directory/manage-apps/grant-admin-consent."
+                }
+            ]
+        }
+    ],
+
+    /*
+    This section describes how to update the code in configuration files from the apps coordinates, once the apps
+    are created in Azure AD.
+    Each section describes a configuration file, for one of the apps, it's type (Javascript, JSon, plain text), its location
+    with respect to the root of the sample, and the mappping (which string in the config file is mapped to which value
+  */
+    "CodeConfiguration": [
+        
+        {
+            "App": "service",
+            "SettingKind": "Typescript",
+            "SettingFile": "\\..\\src\\appsettings.ts",
+            "Mappings": [
+                {
+                    "key": "azureActiveDirectory.tenantId",
+                    "value": "$tenantId"
+                },
+                {
+                    "key": "azureActiveDirectory.clientId",
+                    "value": "service.AppId"
+                },
+                {
+                    "key": "azureActiveDirectory.clientSecret",
+                    "value": "service.AppKey"
+                }
+            ]
+        },
+
+
+        {
+            "App": "client",
+            "SettingKind": "Javascript",
+            "SettingFile": "\\..\\MinimalClient\\src\\authConfig.js",
+            "Mappings": [
+                {
+                    "key": "msalConfig.auth.clientId",
+                    "value": ".AppId"
+                },
+                {
+                    "key": "loginRequest.scopes",
+                    "value": "service.ScopeDefault"
+                },
+                {
+                    "key": "msalConfig.auth.authority",
+                    "value": "$tenantId"
+                }
+            ]
+        }
+    ]
+}
