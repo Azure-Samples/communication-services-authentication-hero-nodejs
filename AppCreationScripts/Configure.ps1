@@ -389,13 +389,6 @@ Function ConfigureApplications
 
 
    # Update config file for 'service'
-   <#
-   $configFile = $pwd.Path + "\..\src\appsettings.json"
-   Write-Host "Updating the sample code ($configFile)"
-   $dictionary = @{ "TenantId" = $tenantId;"ClientId" = $serviceAadApplication.AppId;"ClientSecret" = $serviceAppKey };
-   UpdateTextFile -configFilePath $configFile -dictionary $dictionary
-   #>
-
    $configFile = $pwd.Path + "\..\src\appSettings.ts"
    Write-Host "Updating the sample code ($configFile)"
    ReplaceSetting -configFilePath $configFile -placeholderValue "<your_client_id>" -newValue ($serviceAadApplication.AppId)
