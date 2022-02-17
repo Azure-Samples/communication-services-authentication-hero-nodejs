@@ -106,7 +106,7 @@ This Azure Communication Services Solutions - Authentication server sample provi
 2. When running the sample application in production e.g. Azure App Service, you can enable Application Insights to troubleshoot the Api failures in absence of application logs. 
    > (i) You can refer to [Enable Application Insights on App Service](https://docs.microsoft.com/azure/azure-monitor/app/azure-web-apps-net-core?tabs=Linux%2Cwindows#enable-monitoring) for enabling Application Insights on web application deployed on App Service.
    >
-   > (ii) You can refer to [Analyze Failures](https://docs.microsoft.com/en-us/azure/azure-monitor/app/tutorial-runtime-exceptions#analyze-failures) on how to troubleshoot unexpected Api response. 
+   > (ii) You can refer to [Analyze Failures](https://docs.microsoft.com/azure/azure-monitor/app/tutorial-runtime-exceptions#analyze-failures) on how to troubleshoot unexpected Api response. 
 
 ## Contributing
 
