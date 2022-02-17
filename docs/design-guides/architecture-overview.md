@@ -23,9 +23,8 @@ This sample is primarily focused on building a Trusted Service for Azure Communi
 As seen from the overview diagram, the key components of the sample are:
 1. [Secure Web API backed by Azure Active Directory](./secured-web-api-design.md)
 2. [Identity Mapping leveraging Graph Open Extensions](./identity-mapping-design-graph-open-extensions.md)
-3. Azure Communication Identity service which generates an Azure Communication Services identity and access tokens. The sample uses the [Azure Communication Services Identity SDK](https://docs.microsoft.com/azure/communication-services/concepts/sdk-options#sdks). 
+3. Azure Communication Identity service which generates an Azure Communication Services identity and access tokens. The sample uses the [Azure Communication Services Identity SDK](https://docs.microsoft.com/azure/communication-services/concepts/sdk-options#sdks).
 >**Note:** The `api/token/teams` endpoint does not leverage #2, as the M365 Azure Active Directory Identity is internally mapped to user's Teams Identity within Azure Communication Services, see [Custom Teams Endpoint documentation](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint).
-
 ### Motivation for leveraging Graph Open Extensions for Identity Mapping
 The Azure Communication Services identity for the user could be co-located with the information for the Azure Active Directory user. This optimizes the complexity to maintain additional storage to keep mappings and instead enables developers to keep everything inside of Azure Active Directory.
 
@@ -34,7 +33,7 @@ The Azure Communication Services identity for the user could be co-located with 
 - Graph Open Extensions have a [rate limit](https://docs.microsoft.com/graph/throttling#open-and-schema-extensions-service-limits) of 455 requests per 10 seconds. 
 
 ## Guidance
-1. If 1:1 identity model of Azure Active Directory and Azure Communication Services in the sample does not meet your requirement, then you can consider adapting the [addIdentityMapping method](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/blob/main/src/services/graphService.ts) to handle multiple identity mappings.
+1. If 1:1 identity model of Azure Active Directory and Azure Communication Services in the sample does not meet your requirement, then you can consider adapting the [Identity Mapping Model within addIdentityMapping function](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/blob/main/src/services/graphService.ts) to handle multiple identity mappings.
 2. Since Azure Communication Services is a data processor and you are the controller of the user data, you are responsible for ensuring the data privacy compliance. To learn more, please visit [Azure Communication Services privacy concept](https://docs.microsoft.com/azure/communication-services/concepts/privacy).
 3. **For information of the users:** When the Azure Active Directory instance is used for 3rd party application sign in with [delegated permissions granted over Graph API](https://docs.microsoft.com/graph/auth/auth-concepts#delegated-and-application-permissions), the 3rd Party application with delegated permissions as `user.read` would also have access to the Azure Communication Services user Id persisted as open extension data of the user. This scenario is possible only if the sample is adapted for Multi Tenancy.
 4. You as users of the sample would be data controllers of Azure Communication Services Identity and are hence responsible for handling GDPR compliance. The sample has `api/user` endpoints for user management and is provided as a way to handle Azure Communication Services Identity in the appropriate context. The DELETE `api/user` in sample for an example is responsible for deleting the Azure Communication Services Identity mapping in the Azure Active Directory.
@@ -53,6 +52,5 @@ If Graph Open Extensions does not meet your requirement for storage of Identity 
 - [Example on how M365 handles data rentention policy](https://docs.microsoft.com/compliance/assurance/assurance-data-retention-deletion-and-destruction-overview#data-retention) to meet the Data Privacy requirements for different data category.
 - [Microsoft Identity Platform](https://docs.microsoft.com/azure/active-directory/develop/v2-overview)
 - [Azure Communication Services Documentation](https://docs.microsoft.com/azure/communication-services/)
-
 
 **[Setting up for Local Development ...](<../deployment-guides/deploy-locally.md>)**
