@@ -1,4 +1,5 @@
 # Minimal client node modules
+MinimalClient/build/
 MinimalClient/node_modules/
 
 # Dependency directory

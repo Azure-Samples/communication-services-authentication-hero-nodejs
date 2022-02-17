@@ -3,8 +3,8 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import express, { NextFunction } from 'express';
-import { Request, Response } from 'express';
+import cors from 'cors';
+import express, { NextFunction, Request, Response } from 'express';
 import * as utils from './utils/utils';
 // Routes
 import { tokenRouter } from './routes/tokenRouter';
@@ -16,6 +16,7 @@ const app = express();
 const env = app.get('env');
 
 // Express configuration
+app.use(cors());
 app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
