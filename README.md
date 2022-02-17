@@ -115,13 +115,12 @@ Join us by making a contribution. To get you started check out our [contribution
 We look forward to building an amazing open source Azure Communication Services Authentication server sample with you!
 
 ## Resources
+
 - [Azure Communication Services Documentation](https://docs.microsoft.com/azure/communication-services/) - Find more about how to add voice, video, chat, and telephony on our official documentation.
 - [Azure Communication Services Hero Samples](https://docs.microsoft.com/azure/communication-services/samples/overview) - Find more Azure Communication Services samples and examples on our samples overview page.
 - [On-Behalf-Of workflow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) - Find more about the OBO workflow.
 - [Creating a protected API](https://github.com/Azure-Samples/active-directory-dotnet-native-aspnetcore-v2/tree/master/2.%20Web%20API%20now%20calls%20Microsoft%20Graph) - Detailed example of creating a protected API.
 - [Graph Open Extensions](https://docs.microsoft.com/graph/extensibility-open-users) - Find out more about Microsoft Graph open extensions.
-
-
 
 ## Trademark
 

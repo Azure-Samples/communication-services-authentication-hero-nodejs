@@ -32,7 +32,7 @@ git clone git@github.com:Azure-Samples/communication-services-authentication-her
 
 ### Installing dependencies
 
-Navigate to your cloned repo and install dependencies for all packages and samples:
+Navigate to the project directory and install dependencies for all packages and samples:
 
 ```shell
 # Navigate to the repository
