@@ -14,7 +14,7 @@ export const msalConfig = {
   auth: {
     clientId: '<your_client_id>', // Application (Client) ID from Overview of app registration from Azure Portal, e.g. 2ed40e05-ba00-4853-xxxx-xxx60029x596]
     authority: 'https://login.microsoftonline.com/<your_tenant_id>', // Directory (Tenant) ID from Overview of app registration from Azure Portal, or 'common' or 'organizations' or 'consumers'
-    redirectUri: 'http://localhost:3001/' // The port number can be changed in .env file if 3001 is not available
+    redirectUri: 'http://localhost:3000/' // The port number can be changed in .env file if 3001 is not available
   },
   cache: {
     cacheLocation: 'sessionStorage', // This configures where your cache will be stored
