@@ -9,60 +9,67 @@ a CLA and decorate the PR appropriately (e.g., status check, comment). Simply fo
 provided by the bot. You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+For more information, please check the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-  - [Sample App Purpose](#purpose)
-  - [Code of Conduct](#coc)
-  - [Issues and Bugs](#issue)
-  - [Feature Requests](#feature)
-  - [Submission Guidelines](#submit)
+- [Sample App Purpose](#sample-app-purpose)
+- [Code of Conduct](#code-of-conduct)
+- [Issues and Bugs](#found-an-issue)
+- [Feature Requests](#want-a-feature)
+- [Submission Guidelines](#submission-guidelines)
 
-## <a name="purpose"></a>Sample App Purpose
+## Sample App Purpose
 
 Sample apps are built to help showcase the capabilities of Azure Communication Services.
-This app uses all best practices and follows limitations related to the service.
-As you contribute make sure to follow service guidelines or your work might not be accepted.
-The app is built on top of the existing Azure Communication Services SDKs, and will not diverge from the capabilities offered by the SDK.
-This means that if the feature desired is not supported on the SDK, please don't try to hack it into the sample.
+This sample app uses all best practices and follows limitations related to the service.
+As a contributor, make sure to follow our guidelines or your work might not be accepted.
+The app is built on top of the existing Azure Communication Services SDKs, and will not diverge from the capabilities offered by those SDKs.
+This means that if your desired feature is not supported by those SDKs, please don't try to hack it into the sample.
 
-## <a name="coc"></a> Code of Conduct
+## Code of Conduct
 
 Help us keep this project open and inclusive. Please read and follow our [Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 
-## <a name="issue"></a> Found an Issue?
+## Found an Issue?
 
-If you find a bug in the source code or a mistake in the documentation, you can help us by
-[submitting an issue](.github/ISSUE_TEMPLATE/report-a-bug.md) to the GitHub Repository. Even better, you can
-[submit a Pull Request](#submit-pr) with a fix.
+If you find a bug in the source code or a mistake in the documentation, you can help us by:
+- [submitting a bug](#submitting-an-issue) to the GitHub repository. 
+- [submit a documention issue](.github/ISSUE_TEMPLATE/report-a-documentation-issue.md) to the GitHub repository.
+- [submit a Pull Request](#submitting-a-pull-request-pr) with a fix which will be even better.
 
-## <a name="feature"></a> Want a Feature?
+## Want a Feature?
 
-You can *request* a new feature by [submitting an issue](.github/ISSUE_TEMPLATE/request-a-feature.md) to the GitHub
-Repository. If you would like to *implement* a new feature, please submit an issue with
-a proposal for your work first, to be sure that we can use it.
+You can *request* a new feature by [submitting a request](.github/ISSUE_TEMPLATE/request-a-feature.md) to the GitHub
+repository. If you would like to *implement* a new feature, please submit a request with a proposal for your work first,
+to be sure that we can use it.
 
-- **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr).
+**Small Features** can be crafted and directly [submitted as a Pull Request](#submitting-a-pull-request-pr).
 
-## <a name="submit"></a> Submission Guidelines
+## Submission Guidelines
 
-### <a name="submit-pr"></a> Submitting a Pull Request (PR)
+### Submitting an Issue
 
-Before you submit your Pull Request (PR) consider the following guidelines:
+Before you submit an issue, search the archive, maybe your question was already answered.
 
-* Search the repository (https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) for an open or closed PR
-  that relates to your submission. You don't want to duplicate effort.
-* Make your changes in a new git fork
-* Commit your changes using a descriptive commit message
-* Push your fork to GitHub
-* In GitHub, create a pull request
-* If the reviewers suggest changes then:
-  - Make the required updates
-  - Rebase your fork and force push to your GitHub repository (this will update your Pull Request):
+If your issue appears to be a bug, and hasn't been reported, open a new issue.
+Help us to maximize the effort we can spend fixing issues and adding new features, by not reporting duplicate issues.
+Providing the following information will increase the chances of your issue being dealt with quickly:
 
-    ```shell
-    git rebase main -i
-    git push -f
-    ```
+* **Overview of the Issue** - if an error is being thrown, a non-minified stack trace helps
+* **Version** - what version is affected (e.g. 0.1.2)
+* **Motivation for or Use Case** - explain what are you trying to do and why the current behavior is a bug for you
+* **Browsers and Operating System** - is this a problem with all browsers?
+* **Reproduce the Error** - provide a live example or an unambiguous set of steps
+* **Related Issues** - has a similar issue been reported before?
+* **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be causing the problem (line of code or commit)
 
-That's it! Thank you for your contribution!
+You can file new issues by providing the above information at the corresponding repository's issues link [here](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/issues/new).
+
+### Submitting a Pull Request (PR)
+
+Before you submit your PR, consider searching the [repository PR list](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/pulls) 
+for an open or closed PR that relates to your submission. You don't want to duplicate effort.
+
+If you did not find anything, please, make a contribution following our [contribution guide](<docs/contribution-guides/1. get-set-up.md>)
+
+Thank you for your contribution!
