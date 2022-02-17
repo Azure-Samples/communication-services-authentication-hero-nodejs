@@ -65,7 +65,7 @@ The `Configure.ps1` will stop if it tries to create an Azure AD application whic
 ### Install AzureAD PowerShell modules
 The scripts install the required PowerShell module (AzureAD) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
 
-4. If you have never done it already, in the PowerShell window, install the AzureAD PowerShell modules. For this:
+4. If you have never done it already, in the PowerShell window, install the AzureAD PowerShell modules following these steps::
 
    1. Open PowerShell as admin (On Windows, search **Powershell** in the Search bar, right click on it and select **Run as administrator**).
    2. Type:
