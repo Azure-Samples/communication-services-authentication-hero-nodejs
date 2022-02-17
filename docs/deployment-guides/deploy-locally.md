@@ -49,10 +49,12 @@ npm install
 After installing all necessary dependencies, you can run the following command to build the repo.
 
 ```shell
-npm run build # equals to npm run prettier && npm run lint:fix && npm run build-tsc
+# this command equals to npm run prettier && npm run lint:fix && npm run build-tsc
+npm run build
 ```
 
 This command consists of three sub-commands:
+
 1. `npm run prettier` - Formats code to ensure that all outputted code conforms to a consistent style defined in the `.prettierrc.json` file.
 2. `npm run lint:fix` - Instructs ESLint to try to fix issues which break what the `.eslintrc.js` file defines.
 3. `npm run build-tsc` - Compiles TypeScript files.
@@ -60,7 +62,7 @@ This command consists of three sub-commands:
 >**Note:**
 >
 > 1. This may take some time the first time it runs.
-> 2. For details on all the scripts available for the repo, please check the`scripts` section in the `package.json` file.
+> 2. More scripts are available for this repo, to see the full list, please check `scripts` section in the `package.json` file.
 
 ## Run Authentication Server Sample
 
