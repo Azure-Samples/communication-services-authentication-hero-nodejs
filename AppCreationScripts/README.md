@@ -122,7 +122,7 @@ Of course, in real life, you might already get the password as a `SecureString`.
 
 #### Option 3 (Interactive, but create apps in a specified tenant)
 
-  if you want to create the apps in a particular tenant, you can use the following option:
+If you want to create the apps in a particular tenant, you can use the following option:
 - open the [Azure portal](https://portal.azure.com)
 - Select the Azure Active Directory you are interested in (in the combo-box below your name on the top right of the browser window)
 - Find the "Active Directory" object in this tenant
