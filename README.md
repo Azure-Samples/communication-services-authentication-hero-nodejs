@@ -24,10 +24,11 @@ Deploy to Azure using instructions [here](./docs/deployment-guides/deploy-and-te
 4. [Endpoints](#endpoints)
 5. [Troubleshooting](#troubleshooting)
    - 5.1 [Application Troubleshooting](#application-troubleshooting)
-6. [Contributing](#contributing)
-7. [Resources](#resources)
-8. [Trademark](#trademark)
-9. [License](#license)
+6. [Need Help](#need-help)
+7. [Contributing](#contributing)
+8. [Resources](#resources)
+9. [Trademark](#trademark)
+10. [License](#license)
 
 ## Overview
 
@@ -84,6 +85,7 @@ If you're wondering where to get started, here are a few scenarios to help you g
 This Azure Communication Services Solutions - Authentication server sample provides responses for **user** and **token** endpoints. For more details, please check our [Endpoints and Responses designe doc](./docs/design-guides/endpoints-and-responses.md).
 
 ## Troubleshooting
+
 1. Maximum number of extensions values supported per application is 2.
    > An application can add [at most two open extensions](https://docs.microsoft.com/graph/extensibility-overview#open-extension-limits) for an Azure Active Directory user. 
 
@@ -107,6 +109,10 @@ This Azure Communication Services Solutions - Authentication server sample provi
    > (i) You can refer to [Enable Application Insights on App Service](https://docs.microsoft.com/azure/azure-monitor/app/azure-web-apps-net-core?tabs=Linux%2Cwindows#enable-monitoring) for enabling Application Insights on web application deployed on App Service.
    >
    > (ii) You can refer to [Analyze Failures](https://docs.microsoft.com/azure/azure-monitor/app/tutorial-runtime-exceptions#analyze-failures) on how to troubleshoot unexpected Api response. 
+
+## Need Help
+
+If you are are unable to find solution to the issue you are facing while running the sample on local or on production, you can use [Discussions Channel](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/discussions) to seek advise.
 
 ## Contributing
 
