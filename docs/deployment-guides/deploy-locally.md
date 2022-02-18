@@ -97,14 +97,12 @@ In order to run the Azure Communication Services Authentication Server sample,
    ```
 
 3. We have two ways of testing the backend service
-   - Using a manually generated token and calling the server directly
-   - Using a sample client
+   - Calling the backend APIs directly with an Azure Active Directory Access Token
+   - Using the MinimalClient
 
-   Please see the two options in detail here. [Test deployed service](../test-tools/test-backend-service.md).
+   Please see the two options in detail here. [Test backend service](../test-tools/test-backend-service.md).
 
-   Here is a set of endpoints that can be tested. [API Endpoints](../design-guides/endpoints-and-responses.md). 
-
-   For testing with the client, we currently use the `GET /api/token`, and `POST /api/user` endpoints.
+   Here is a set of endpoints that can be tested. [API Endpoints](../design-guides/endpoints-and-responses.md).
 
 4. During local development/testing, if the identity mapping needs to be verified in Graph for `/api/user` and `/api/token` endpoint, please use [Graph Explorer](https://developer.microsoft.com/graph/graph-explorer). Sign in with your Azure Active Directory Identity and verify the response on GET `https://graph.microsoft.com/v1.0/me/extensions` endpoint.
 

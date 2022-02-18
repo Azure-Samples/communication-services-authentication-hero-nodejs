@@ -32,14 +32,13 @@
     2. You can also follow the Troubleshooting section on [README](../../README.md) to resolve the issue of Mismatched Azure Communication Services Identity and Azure Communication Services resource.
 
 3. We have two ways of testing the backend service
-   - Using a manually generated token and calling the server directly
-   - Using a sample client
+   - Calling the backend APIs directly with an Azure Active Directory Access Token
+   - Using the MinimalClient
 
-   Please see the two options in detail here. [Test deployed service](../test-tools/test-backend-service.md).
+   Please see the two options in detail here. [Test backend service](../test-tools/test-backend-service.md).
 
-   Here is a set of endpoints that can be tested. [API Endpoints](../design-guides/endpoints-and-responses.md). 
+   Here is a set of endpoints that can be tested. [API Endpoints](../design-guides/endpoints-and-responses.md).
 
-   For testing with the client, we currently use the `GET /api/token`, and `POST /api/user` endpoints.
 
 **[Proceed to Architecture Overview ...](../design-guides/architecture-overview.md)**
 
