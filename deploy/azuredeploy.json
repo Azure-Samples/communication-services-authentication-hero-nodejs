@@ -83,6 +83,19 @@
           "properties": {
             "packageUri": "[parameters('packageUrl')]"
           }
+        },
+        {
+          "type": "Microsoft.Web/sites/config",
+          "apiVersion": "2021-02-01",
+          "name": "[concat(parameters('appName'), '/web')]",
+          "location": "[variables('location')]",
+          "dependsOn": ["[resourceId('Microsoft.Web/sites', parameters('appName'))]"],
+          "properties": {
+            "cors": {
+              "allowedOrigins": ["*"],
+              "supportCredentials": false
+            }
+          }
         }
       ]
     }
