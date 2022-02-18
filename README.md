@@ -56,9 +56,8 @@ Before contributing to this sample, please read our [contribution guidelines](./
 
 To be able to run this sample, you will need to:
 
-- Register a Client and Server (Web API) applications in Azure Active Directory as part of [On Behalf Of workflow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow). Follow instructions on [registrations set up guideline](./docs/deployment-guides/set-up-app-registrations.md)
+- Register a Client and Server (Web API) applications in Azure Active Directory as part of [On Behalf Of workflow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow). Follow instructions on how to [set up App Registrations](./docs/deployment-guides/set-up-app-registrations.md)
 - Create an Azure Communication Services resource through [Azure Portal](https://portal.azure.com). Follow [Quickstart: Create and manage Communication Services resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp) to create an Azure Communication Services resource using Azure Portal.
-- Update the Server (Web API) application with information from the app registrations.
 
 ## Getting Started
 
