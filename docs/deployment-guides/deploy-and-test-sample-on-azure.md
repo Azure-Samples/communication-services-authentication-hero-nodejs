@@ -6,7 +6,7 @@
 
 2. Deploy to Azure
 
-    1. Follow the button [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-authentication-hero-nodejs%2Fmain%2Fdeploy%2Fazuredeploy.json) to deploy to Azure through [Azure Resource Manager template](https://docs.microsoft.com/azure/azure-resource-manager/templates/overview).
+    1. Follow the button [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fcommunication-services-authentication-hero-nodejs%2Fmain%2Fdeploy%2Fazure-deploy.json) to deploy to Azure through [Azure Resource Manager template](https://docs.microsoft.com/azure/azure-resource-manager/templates/overview).
 
     2. The template provisions an instance of Communication Services and App Service with deployed code.
 
