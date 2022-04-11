@@ -100,6 +100,19 @@ We advise four ways of running the script:
 - Interactive in specific tenant:you will provide the tenant in which you want to create the objects and then you will be prompted for credentials, and the scripts will create the objects,
 - Non-interactive in specific tenant:you will provide tenant in which you want to create the objects and credentials, and the scripts will create the objects.
 
+> Note: You need to add service principal for Azure Communication service manually when it is not existed.
+> 
+> 1. **How to check if service principal is existed**:
+>    
+>    ```PowerShell
+>    az ad sp show --id "Your-App-ID"
+>    ```
+> 2. **How to add service principal**:
+>    
+>    ```PowerShell
+>    New-AzureADServicePrincipal -AppId "Your-App-ID"
+>  
+
 Here are the details on how to do this.
 
 #### Option 1 (interactive)

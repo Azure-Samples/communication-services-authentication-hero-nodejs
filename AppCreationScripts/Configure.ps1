@@ -372,7 +372,7 @@ Function ConfigureApplications
    # Add Required Resources Access for managing Azure Communication Services calls.
    Write-Host "Getting access for Azure Communication Resource to manage calls'"
    $requiredACSPermissions = GetRequiredPermissions -applicationDisplayName "Azure Communication Services" `
-                                                -requiredDelegatedPermissions "VoIP" `
+                                                -requiredDelegatedPermissions "Teams.ManageCalls" `
 
    $requiredResourcesAccess.Add($requiredACSPermissions)
 
