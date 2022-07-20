@@ -8,7 +8,7 @@ import { appSettings } from '../appSettings';
 
 // Error messages
 const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =
-  'An error occured when exchanging the incoming access token for another access token to call downstream APIs through On-Behalf-Of flow';
+  'An error occurred when exchanging the incoming access token for another access token to call downstream APIs through On-Behalf-Of flow';
 
 /**
  * Create a client for communication with Azure Active Directory

@@ -24,13 +24,15 @@
     "prod": "npm run clean && npm run build && webpack"
   },
   "dependencies": {
-    "@azure/communication-identity": "^1.1.0-beta.1",
+    "@azure/communication-identity": "^1.1.0-alpha.20220720.5",
     "@azure/identity": "^2.0.1",
     "@azure/msal-node": "^1.5.0",
     "@microsoft/microsoft-graph-client": "^2.2.1",
     "cors": "^2.8.5",
     "express": "~4.16.1",
-    "express-session": "^1.17.1"
+    "express-session": "^1.17.1",
+    "express-jwt": "^7.7.5",
+    "jwks-rsa": "^2.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

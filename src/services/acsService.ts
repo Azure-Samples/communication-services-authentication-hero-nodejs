@@ -12,12 +12,12 @@ import {
 import { appSettings } from '../appSettings';
 
 // Error messages
-const CREATE_ACS_USER_IDENTITY_ERROR = 'An error occured when creating an ACS user id';
-const CREATE_ACS_TOKEN_ERROR = 'An error occured when creating an ACS token';
+const CREATE_ACS_USER_IDENTITY_ERROR = 'An error occurred when creating an ACS user id';
+const CREATE_ACS_TOKEN_ERROR = 'An error occurred when creating an ACS token';
 const CREATE_ACS_USER_IDENTITY_TOKEN_ERROR =
-  'An error occured when creating an ACS user id and issuing an access token for it in one go';
-const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occured when deleting an ACS user id';
-const EXCHANGE_AAD_TOKEN_ERROR = 'An error occured when exchanging an AAD token';
+  'An error occurred when creating an ACS user id and issuing an access token for it in one go';
+const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occurred when deleting an ACS user id';
+const EXCHANGE_AAD_TOKEN_ERROR = 'An error occurred when exchanging an AAD token';
 
 /**
  * Instantiate the identity client using the connection string.
@@ -26,12 +26,11 @@ const EXCHANGE_AAD_TOKEN_ERROR = 'An error occured when exchanging an AAD token'
  */
 export const createAuthenticatedClient = (): CommunicationIdentityClient => {
   const connectionString = appSettings.communicationServices.connectionString;
-  const identityClient = new CommunicationIdentityClient(connectionString);
-  return identityClient;
+  return new CommunicationIdentityClient(connectionString);
 };
 
 /**
- * Create a Communication Servicesidentity using the client authenticated with Azure AD
+ * Create a Communication Services identity using the client authenticated with Azure AD
  */
 export const createACSUserIdentity = async (): Promise<string> => {
   const identityClient = createAuthenticatedClient();
@@ -56,12 +55,7 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
   try {
     // Issue an access token with the given scopes for an identity
     const communicationUserIdentifierObject: CommunicationUserIdentifier = { communicationUserId: acsUserId };
-    const tokenResponse = await identityClient.getToken(
-      communicationUserIdentifierObject,
-      appSettings.communicationServices.scopes
-    );
-
-    return tokenResponse;
+    return await identityClient.getToken(communicationUserIdentifierObject, appSettings.communicationServices.scopes);
   } catch (error) {
     const errorMessage = `${CREATE_ACS_TOKEN_ERROR}: ${error.message}`;
     console.log(errorMessage);
@@ -71,17 +65,21 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
 
 /**
  * Exchange an AAD access token of a Teams user for a new Communication Services AccessToken with a matching expiration time.
- * @param aadToken - the Azure AD token of the Teams user
+ * @param teamsUserAadToken - The Azure AD token of the Teams user
+ * @param userObjectId - Object ID of an Azure AD user (Teams User) to be verified against the OID claim in the Azure AD access token.
  */
-export const getACSTokenForTeamsUser = async (aadToken: string): Promise<CommunicationAccessToken> => {
+export const getACSTokenForTeamsUser = async (
+  teamsUserAadToken: string,
+  userObjectId: string
+): Promise<CommunicationAccessToken> => {
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an access token for the Teams user that can be used with the Azure Communication Services SDKs.
-    // Notice: the function name will be renamed to exchangeTeamsUserAadToken
-    // Know more, please read this https://github.com/Azure/azure-sdk-for-js/pull/18306
-    const tokenResponse = await identityClient.getTokenForTeamsUser(aadToken);
-
-    return tokenResponse;
+    return await identityClient.getTokenForTeamsUser({
+      clientId: appSettings.azureActiveDirectory.clientId,
+      teamsUserAadToken: teamsUserAadToken,
+      userObjectId: userObjectId
+    });
   } catch (error) {
     const errorMessage = `${EXCHANGE_AAD_TOKEN_ERROR}: ${error.message}`;
     console.log(errorMessage);
@@ -96,9 +94,7 @@ export const createACSUserIdentityAndToken = async (): Promise<CommunicationUser
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an identity and an access token with the given scopes for the new identity
-    const identityTokenResponse = await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
-
-    return identityTokenResponse;
+    return await identityClient.createUserAndToken(appSettings.communicationServices.scopes);
   } catch (error) {
     const errorMessage = `${CREATE_ACS_USER_IDENTITY_TOKEN_ERROR}: ${error.message}`;
     console.log(errorMessage);

@@ -10,11 +10,11 @@
 
 ## Scenario
 
-As you may know, Azure Communication Services SDKs has the ability to allow developers to build custom applications that are usable by Teams users using **Custom Teams Endpoints**. Developers can build custom Teams endpoints to communicate with the Microsoft Teams client or other custom Teams endpoints. With a custom Teams endpoint, they can customize a voice, video, chat, and screen-sharing experience for Teams users.
+As you may know, Azure Communication Services SDKs has the ability to allow developers to build custom applications that support Teams identities. These applications can communicate with the Microsoft Teams client or other custom applications utilizing the Azure Communication Services support for Teams identities. With the support for Teams identities, developers can customize a voice, video, chat, and screen-sharing experience for Teams users.
 
 ## Overview
 
-In this Azure Communication Services Authentication Server sample, we would describe how developers can authenticate a Microsoft 365 user by using the Microsoft Authentication Library (MSAL) and retrieving a Microsoft Azure Active Directory (Azure AD) user token. They will then exchange that token for an access token of Teams user with the Azure Communication Services Identity SDK. The access token for Teams user can then be used by the Communication Services Calling SDK to build a custom Teams endpoint.
+In this Azure Communication Services Authentication Server sample, we would describe how developers can authenticate a Microsoft 365 user by using the Microsoft Authentication Library (MSAL) and retrieving a Microsoft Azure Active Directory (Azure AD) user token. They will then exchange that token for an access token of Teams user with the Azure Communication Services Identity SDK. The access token for Teams user can then be used by the Communication Services Calling SDK.
 
 > :bangbang: Important: 
 >
@@ -41,7 +41,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information, visit the following links:
 
 - To learn more about the scenario, visit:
-  - [Custom Teams Endpoint Overview](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint)
-  - [Build a custom Teams endpoint](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint)
+  - [Integrate communication as Teams user with Azure Communication Services and Graph API](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint)
 - To learn more about the Teams Access Token Management, visit:
   - [Quickstart: Set up and manage access tokens for Teams users](https://docs.microsoft.com/azure/communication-services/quickstarts/manage-teams-identity?pivots=programming-language-javascript)
