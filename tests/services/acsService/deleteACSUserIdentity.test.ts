@@ -33,7 +33,7 @@ describe('ACS Service - Delete ACS User Identity: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(false));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     try {
       await acsService.deleteACSUserIdentity(mockAcsUserId);
     } catch {
@@ -49,7 +49,7 @@ describe('ACS Service - Delete ACS User Identity: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(true, false));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     try {
       await acsService.deleteACSUserIdentity(mockAcsUserId);
     } catch {
@@ -65,7 +65,7 @@ describe('ACS Service - Delete ACS User Identity: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(true, true));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     try {
       await acsService.deleteACSUserIdentity(mockAcsUserId);
     } catch {

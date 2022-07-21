@@ -41,7 +41,7 @@ describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
       .spyOn(aadService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication());
 
-    let mockError: any = undefined;
+    let mockError: undefined | String = undefined;
     try {
       await aadService.exchangeAADTokenViaOBO(mockAadToken);
     } catch {
@@ -58,7 +58,7 @@ describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
       .spyOn(aadService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication(mockMsalConfig));
 
-    let mockError: any = undefined;
+    let mockError: undefined | String = undefined;
     let token: string;
     try {
       token = await aadService.exchangeAADTokenViaOBO(mockAadToken);
@@ -76,8 +76,8 @@ describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
       .spyOn(aadService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication(mockMsalConfig, true));
 
-    let mockError: any = undefined;
-    let token: string;
+    let mockError: undefined | String = undefined;
+    let token: string = '';
     try {
       token = await aadService.exchangeAADTokenViaOBO(mockAadToken);
     } catch {
