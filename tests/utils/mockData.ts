@@ -6,10 +6,12 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationAccessToken, CommunicationUserToken } from '@azure/communication-identity';
 import { Request, Response } from 'express';
+import { AuthenticatedRequest } from '../../src/types/authenticatedRequest';
 
-export const mockRequest = (authorization?: string): Request => {
+export const mockRequest = (authorization?: string, body?: string): Request => {
   const req = {
-    headers: {}
+    headers: {},
+    body: {}
   };
 
   if (authorization) {
@@ -18,7 +20,30 @@ export const mockRequest = (authorization?: string): Request => {
     };
   }
 
+  if (body) {
+    req.body = body;
+  }
+
   return req as Request;
+};
+
+export const mockAuthenticatedRequest = (
+  authorization?: string,
+  userObjectId?: string,
+  body?: string
+): AuthenticatedRequest => {
+  const req = mockRequest(authorization, body) as AuthenticatedRequest;
+  if (authorization) {
+    req.headers = {
+      authorization: authorization
+    };
+  }
+
+  if (userObjectId) {
+    req.user = { oid: userObjectId };
+  }
+
+  return req as AuthenticatedRequest;
 };
 
 export const mockResponse = (): Response => {
@@ -32,6 +57,8 @@ export const mockResponse = (): Response => {
 export const mockAcsUserId = 'mock-acs-user-id';
 export const mockAadToken = 'mock-aad-token';
 export const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
+export const mockAadUserObjectId = 'mock-aad-user-object-id';
+export const mockAadTokenWithDelegatedPermissions = 'mock-aad-token-with-delegated-permissions';
 export const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
 export const mockCommunicationUserIdentifier: CommunicationUserIdentifier = {
   communicationUserId: 'mock-user-id'

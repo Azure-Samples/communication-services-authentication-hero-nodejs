@@ -24,7 +24,7 @@
     "prod": "npm run clean && npm run build && webpack"
   },
   "dependencies": {
-    "@azure/communication-identity": "^1.1.0-alpha.20220720.5",
+    "@azure/communication-identity": "^1.1.0",
     "@azure/identity": "^2.0.1",
     "@azure/msal-node": "^1.5.0",
     "@microsoft/microsoft-graph-client": "^2.2.1",

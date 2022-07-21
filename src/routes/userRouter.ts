@@ -5,7 +5,7 @@
 
 import express from 'express';
 import { createACSUser, deleteACSUser, getACSUser } from '../controllers/userController';
-import { validateAuthorizedHeader } from '../utils/utils';
+import { checkJwt } from '../utils/utils';
 
 export const userRouter = () => {
   // Initialize router
@@ -13,11 +13,11 @@ export const userRouter = () => {
 
   // Token routes
   // 1. Get an ACS user
-  router.get('/', validateAuthorizedHeader, getACSUser);
+  router.get('/', checkJwt, getACSUser);
   // 2. Create an ACS user
-  router.post('/', validateAuthorizedHeader, createACSUser);
+  router.post('/', checkJwt, createACSUser);
   // 3. Delete an ACS user
-  router.delete('/', validateAuthorizedHeader, deleteACSUser);
+  router.delete('/', checkJwt, deleteACSUser);
 
   return router;
 };
