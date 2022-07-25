@@ -75,8 +75,9 @@ export const getACSTokenForTeamsUser = async (
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an access token for the Teams user that can be used with the Azure Communication Services SDKs.
+    const clientId = appSettings.azureActiveDirectory.clientId;
     return await identityClient.getTokenForTeamsUser({
-      clientId: appSettings.azureActiveDirectory.clientId,
+      clientId: clientId,
       teamsUserAadToken: teamsUserAadToken,
       userObjectId: userObjectId
     });
