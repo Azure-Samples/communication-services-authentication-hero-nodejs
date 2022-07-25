@@ -8,11 +8,15 @@ import { CommunicationAccessToken, CommunicationUserToken } from '@azure/communi
 import { Request, Response } from 'express';
 import { AuthenticatedRequest } from '../../src/types/authenticatedRequest';
 
-export const mockRequest = (authorization?: string, body?: string): Request => {
+export const mockRequest = (authorization?: string, body?: string, headers?: { [key: string]: string }): Request => {
   const req = {
     headers: {},
     body: {}
   };
+
+  if (headers) {
+    Object.assign(req.headers, headers);
+  }
 
   if (authorization) {
     req.headers = {
@@ -30,14 +34,10 @@ export const mockRequest = (authorization?: string, body?: string): Request => {
 export const mockAuthenticatedRequest = (
   authorization?: string,
   userObjectId?: string,
-  body?: string
+  body?: string,
+  headers?: { [key: string]: string }
 ): AuthenticatedRequest => {
-  const req = mockRequest(authorization, body) as AuthenticatedRequest;
-  if (authorization) {
-    req.headers = {
-      authorization: authorization
-    };
-  }
+  const req = mockRequest(authorization, body, headers) as AuthenticatedRequest;
 
   if (userObjectId) {
     req.user = { oid: userObjectId };
