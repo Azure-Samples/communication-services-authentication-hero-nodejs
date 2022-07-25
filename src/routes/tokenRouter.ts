@@ -5,7 +5,7 @@
 
 import express from 'express';
 import { exchangeAADToken, getACSToken } from '../controllers/tokenController';
-import { checkJwt } from '../utils/utils';
+import { checkJwt, checkScope } from '../utils/utils';
 
 export const tokenRouter = () => {
   // Initialize router
@@ -13,9 +13,9 @@ export const tokenRouter = () => {
 
   // Token routes
   // 1. Get an ACS token or refresh an ACS token
-  router.get('/', checkJwt, getACSToken);
+  router.get('/', checkJwt, checkScope, getACSToken);
   // 2. Get an ACS token for a Teams user
-  router.get('/teams', checkJwt, exchangeAADToken);
+  router.get('/teams', checkJwt, checkScope, exchangeAADToken);
 
   return router;
 };

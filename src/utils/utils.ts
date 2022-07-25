@@ -8,6 +8,7 @@ import { ErrorResponse } from '../types/errorResponse';
 import * as jwt from 'express-jwt';
 import jwksRsa, { GetVerificationKey } from 'jwks-rsa';
 import { appSettings } from '../appSettings';
+import jwtAuthz from 'express-jwt-authz';
 
 // Get an AAD token passed through request header
 export const getAADTokenViaRequest = (req: Request): string => {
@@ -37,3 +38,8 @@ export const checkJwt = jwt.expressjwt({
   requestProperty: 'user', // Name of the property in the request object where the payload is set.
   algorithms: ['RS256']
 });
+
+/**
+ * Middleware to check whether the token has the required scopes.
+ */
+export const checkScope = jwtAuthz(['access_as_user'], { customScopeKey: 'scp' });
