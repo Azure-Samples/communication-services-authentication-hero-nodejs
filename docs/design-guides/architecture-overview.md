@@ -24,7 +24,7 @@ As seen from the overview diagram, the key components of the sample are:
 1. [Secure Web API backed by Azure Active Directory](./secured-web-api-design.md)
 2. [Identity Mapping leveraging Graph Open Extensions](./identity-mapping-design-graph-open-extensions.md)
 3. Azure Communication Identity service which generates an Azure Communication Services identity and access tokens. The sample uses the [Azure Communication Services Identity SDK](https://docs.microsoft.com/azure/communication-services/concepts/sdk-options#sdks).
->**Note:** The `api/token/teams` endpoint does not leverage #2, as the M365 Azure Active Directory Identity is internally mapped to user's Teams Identity within Azure Communication Services, see [Custom Teams Endpoint documentation](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint).
+>**Note:** The `api/token/teams` endpoint does not leverage #2, as the M365 Azure Active Directory Identity is internally mapped to user's Teams Identity within Azure Communication Services, see [Communication for Teams identities documentation](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint).
 ### Motivation for leveraging Graph Open Extensions for Identity Mapping
 The Azure Communication Services identity for the user could be co-located with the information for the Azure Active Directory user. This optimizes the complexity to maintain additional storage to keep mappings and instead enables developers to keep everything inside of Azure Active Directory.
 

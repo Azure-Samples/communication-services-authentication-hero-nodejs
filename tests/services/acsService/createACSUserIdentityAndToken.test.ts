@@ -33,7 +33,7 @@ describe('ACS Service - Create ACS User Identity And Token: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(false));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     try {
       await acsService.createACSUserIdentityAndToken();
     } catch {
@@ -49,7 +49,7 @@ describe('ACS Service - Create ACS User Identity And Token: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(true, false));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     let userToken;
     try {
       userToken = await acsService.createACSUserIdentityAndToken();
@@ -66,7 +66,7 @@ describe('ACS Service - Create ACS User Identity And Token: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(true, true));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     let userToken;
     try {
       userToken = await acsService.createACSUserIdentityAndToken();

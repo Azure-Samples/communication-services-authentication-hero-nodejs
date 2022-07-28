@@ -8,7 +8,7 @@
 
 import { CommunicationIdentityClient } from '@azure/communication-identity';
 import * as acsService from '../../../src/services/acsService';
-import { mockCommunicationAccessToken, mockAadToken, mockAcsUserId } from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockAadToken, mockAcsUserId, mockAadUserObjectId } from '../../utils/mockData';
 
 const mockCommunicationIdentityClient = (
   isCreateClientResolved?: boolean,
@@ -33,9 +33,9 @@ describe('ACS Service - Get ACS Token For Teams User: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(false));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     try {
-      await acsService.getACSTokenForTeamsUser(mockAadToken);
+      await acsService.getACSTokenForTeamsUser(mockAadToken, mockAadUserObjectId);
     } catch {
       mockError = 'error';
     }
@@ -44,15 +44,15 @@ describe('ACS Service - Get ACS Token For Teams User: ', () => {
     expect(mockError).toBeTruthy();
   });
 
-  test('when token fails to be retreived, it should throw an error.', async () => {
+  test('when token fails to be retrieved, it should throw an error.', async () => {
     createAuthenticatedClientSpy = jest
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(true, false));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     let accessToken;
     try {
-      accessToken = await acsService.getACSTokenForTeamsUser(mockAadToken);
+      accessToken = await acsService.getACSTokenForTeamsUser(mockAadToken, mockAadUserObjectId);
     } catch {
       mockError = 'error';
     }
@@ -66,10 +66,10 @@ describe('ACS Service - Get ACS Token For Teams User: ', () => {
       .spyOn(acsService, 'createAuthenticatedClient')
       .mockImplementation(() => mockCommunicationIdentityClient(true, true));
 
-    let mockError = undefined;
+    let mockError: undefined | String = undefined;
     let accessToken;
     try {
-      accessToken = await acsService.getACSTokenForTeamsUser(mockAadToken);
+      accessToken = await acsService.getACSTokenForTeamsUser(mockAadToken, mockAadUserObjectId);
     } catch {
       mockError = 'error';
     }

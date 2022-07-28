@@ -8,13 +8,13 @@ import { Client } from '@microsoft/microsoft-graph-client';
 import { appSettings } from '../appSettings';
 
 // Error messages
-const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occured when retrieving the identity mapping information';
-const ADD_IDENTITY_MAPPING_ERROR = 'An error occured when adding the identity mapping information';
-const DELETE_IDENTITY_MAPPING_ERROR = 'An error occured when deleting the identity mapping information';
+const RETRIEVE_IDENTITY_MAPPING_ERROR = 'An error occurred when retrieving the identity mapping information';
+const ADD_IDENTITY_MAPPING_ERROR = 'An error occurred when adding the identity mapping information';
+const DELETE_IDENTITY_MAPPING_ERROR = 'An error occurred when deleting the identity mapping information';
 
 const GRAPH_EXTENSIONS_ENDPOINT = '/me/extensions';
 
-// Get the identity mapping extension from Graph exthensions
+// Get the identity mapping extension from Graph extensions
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getIdentityMappingExtension = (roamingProfileInfoResponse: any) => {
   for (const extensionObject of roamingProfileInfoResponse.extensions) {
@@ -32,13 +32,12 @@ const getIdentityMappingExtension = (roamingProfileInfoResponse: any) => {
  */
 export const createAuthenticatedClient = (accessToken: string): Client => {
   // Initialize Graph client
-  const graphServiceClient = Client.init({
+  return Client.init({
     // Use the provided access token to authenticate requests
     authProvider: (done) => {
       done(null, accessToken);
     }
   });
-  return graphServiceClient;
 };
 
 /**

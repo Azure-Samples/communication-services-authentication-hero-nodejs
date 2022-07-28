@@ -3,12 +3,12 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import { NextFunction, Request, Response } from 'express';
+import { Request } from 'express';
 import { ErrorResponse } from '../types/errorResponse';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-
-const GET_AUTHORIZATION_CODE_ERROR = 'Fail to get the authorization code from the request header';
-const AAD_EXPIRATION_ERROR = 'The AAD token provided is already expired';
+import * as jwt from 'express-jwt';
+import jwksRsa, { GetVerificationKey } from 'jwks-rsa';
+import { appSettings } from '../appSettings';
+import jwtAuthz from 'express-jwt-authz';
 
 // Get an AAD token passed through request header
 export const getAADTokenViaRequest = (req: Request): string => {
@@ -24,19 +24,22 @@ export const createErrorResponse = (code: number, message: string, stack_trace?:
   };
 };
 
-// A middleware function used to check if get the authorization code from the request header successfully
-export const validateAuthorizedHeader = (req: Request, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
+/**
+ * Middleware to check the token integrity and validity.
+ * By default, the middleware will check the token signature, expiration, and set the user object in the request.
+ */
+export const checkJwt = jwt.expressjwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://login.microsoftonline.com/${appSettings.azureActiveDirectory.tenantId}/discovery/keys?appid=${appSettings.azureActiveDirectory.clientId}` // Obtain public signing keys from a well-known URL
+  }) as GetVerificationKey,
+  requestProperty: 'user', // Name of the property in the request object where the payload is set.
+  algorithms: ['RS256']
+});
 
-  if (!authHeader || !authHeader.split(' ')[1]) {
-    return res.status(401).json(createErrorResponse(401, GET_AUTHORIZATION_CODE_ERROR));
-  }
-
-  // Verify if the AAD token is expired
-  const decodedToken: JwtPayload = jwtDecode(authHeader.split(' ')[1]);
-  if (Date.now() >= decodedToken.exp * 1000) {
-    return res.status(401).json(createErrorResponse(401, AAD_EXPIRATION_ERROR));
-  }
-
-  next();
-};
+/**
+ * Middleware to check whether the token has the required scopes.
+ */
+export const checkScope = jwtAuthz(['access_as_user'], { customScopeKey: 'scp' });

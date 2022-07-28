@@ -21,11 +21,11 @@ export const createACSUser = async (req: Request, res: Response, next: NextFunct
     // Retrieve the AAD token via OBO flow
     const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
-    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+    let acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
 
     if (acsUserId === undefined) {
       // Create a Communication Services identity.
-      const acsUserId = await createACSUserIdentity();
+      acsUserId = await createACSUserIdentity();
       const identityMappingResponse = await addIdentityMapping(aadTokenExchangedViaOBO, acsUserId);
       return res.status(201).json(identityMappingResponse);
     }
