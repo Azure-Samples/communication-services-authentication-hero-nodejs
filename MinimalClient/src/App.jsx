@@ -3,12 +3,13 @@
  * Licensed under the MIT License. See LICENSE.md in the project root for license information.
  *---------------------------------------------------------------------------------------------*/
 
-import React, { useState } from 'react';
+import React from 'react';
 import { AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react';
 import { PageLayout } from './components/PageLayout';
 import './styles/App.css';
 import { TestCallContent } from './components/TestCallContent';
 import { TestCallTeamsUserContent } from './components/TestCallTeamsUserContent';
+import { useSessionStorage } from './reactExtensions';
 
 /**
  * If a user is authenticated as a regular Azure AD user, the TestCallContent component is rendered.
@@ -35,7 +36,7 @@ const MainContent = (props) => {
 };
 
 export default function App() {
-  const [isTeamsUser, setIsTeamsUser] = useState(false);
+  const [isTeamsUser, setIsTeamsUser] = useSessionStorage('isTeamsUser', false);
   return (
     <PageLayout setIsTeamsUser={setIsTeamsUser} isTeamsUser={isTeamsUser}>
       <MainContent isTeamsUser={isTeamsUser} />
