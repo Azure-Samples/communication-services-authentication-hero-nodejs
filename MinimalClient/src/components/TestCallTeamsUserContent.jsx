@@ -50,11 +50,7 @@ export const TestCallTeamsUserContent = () => {
   async function RequestTeamsUserCallData() {
     setJoinTeamsButtonText('Loading call...');
     getCommunicationTokenForTeamsUser().then((response) => {
-      let communicationIdentifier = {
-        microsoftTeamsUserId: response.aadToken.uniqueId,
-        isAnonymous: false
-      };
-      let rawId = getIdentifierRawId(communicationIdentifier);
+      let rawId = getIdentifierRawId({ microsoftTeamsUserId: response.aadToken.uniqueId });
       setAcsToken(response.acsToken);
       setId(rawId);
     });
