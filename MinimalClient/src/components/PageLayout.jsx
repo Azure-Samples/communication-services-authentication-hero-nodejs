@@ -23,7 +23,7 @@ export const PageLayout = (props) => {
         <a className="navbar-brand" href="/">
           ACS Authentication Sample
         </a>
-        {isAuthenticated ? <SignOutButton /> : <SignInButton />}
+        {isAuthenticated ? <SignOutButton /> : <SignInButton setIsTeamsUser={props.setIsTeamsUser} />}
       </Navbar>
       <h5>
         <center>Welcome to the ACS authentication sample client For Javascript - React Quickstart</center>

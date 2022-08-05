@@ -52,5 +52,17 @@ export const msalConfig = {
  * https://docs.microsoft.com/azure/active-directory/develop/v2-permissions-and-consent#openid-connect-scopes
  */
 export const loginRequest = {
-  scopes: ['<server api scope>'] //scope added in server registration step
+  scopes: [`api://${msalConfig.auth.clientId}/access_as_user`] //scope added in server registration step
+};
+
+export const teamsUserRequest = {
+  scopes: [
+    'https://auth.msft.communication.azure.com/Teams.ManageCalls',
+    'https://auth.msft.communication.azure.com/Teams.ManageChats'
+  ]
+};
+
+export const teamsUserLoginRequest = {
+  ...loginRequest,
+  extraScopesToConsent: teamsUserRequest.scopes
 };

@@ -1,4 +1,4 @@
-# Enpoints and Responses
+# Endpoints and Responses
 
 ## User Endpoint
 
@@ -13,7 +13,7 @@ The `user` endpoint consists of three operations:
 The `token` endpoint only consists of two operations:
 
 1. **GET /api/token** - Get / refresh an Azure Communication Services token for an Azure Communication Services user.
-2. **GET /api/token/teams** - Exchange an Azure Active Directory token of a M365 user for an Azure Communication Services token.
+2. [**GET /api/token/teams**](./token-exchange-design.md) - Exchange an Azure Active Directory token of a M365 user for an Azure Communication Services token.
 
 > :information_source: Teams users are authenticated via the MSAL library against Azure Active Directory in the client application. Authentication tokens are exchanged for Microsoft 365 Teams token via the Azure Communication Services Identity SDK. Developers are encouraged to implement an exchange of tokens in their backend services as exchange requests are signed by credentials for Azure Communication Services. In backend services, developers can require any additional authentication. Learn more [here](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop#microsoft-365-teams-identity).
 
