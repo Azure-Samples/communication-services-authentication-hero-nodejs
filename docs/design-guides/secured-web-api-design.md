@@ -12,11 +12,11 @@
 
 ## Scenario
 
-In this Azure Communication Services Authentication Server sample, we would protect custom Web APIs using the Microsoft Identity Platform. The Web API, supporting authenticated users with personal Microsoft accounts as well as work and school accounts, will be protected using Azure Active Directory OAuth Bearer Authorization. Further on the API will also call a downstream API (Microsoft Graph) on-behalf of the signed-in user to provide additional value to its apps.
+In this Azure Communication Services Authentication Server sample, we would protect custom Web APIs using the Microsoft Identity Platform. The Web API, supporting authenticated users with personal Microsoft accounts as well as work and school accounts, will be protected using Microsoft Entra OAuth Bearer Authorization. Further on the API will also call a downstream API (Microsoft Graph) on-behalf of the signed-in user to provide additional value to its apps.
 
 ## Overview
 
-This sample demonstrates how to call a Node.js web API, protected by [Azure Active Directory](https://azure.microsoft.com/services/active-directory/) using the [OAuth 2.0 Authorization Code Grant flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow). The web API then calls the [Microsoft Graph API](https://developer.microsoft.com/graph) using the [OAuth 2.0 On-Behalf-Of flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow). The web API's call to Microsoft Graph is made using the [Microsoft Graph SDK](https://docs.microsoft.com/graph/sdks/sdks-overview).
+This sample demonstrates how to call a Node.js web API, protected by [Microsoft Entra ID](https://azure.microsoft.com/services/active-directory/) using the [OAuth 2.0 Authorization Code Grant flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow). The web API then calls the [Microsoft Graph API](https://developer.microsoft.com/graph) using the [OAuth 2.0 On-Behalf-Of flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow). The web API's call to Microsoft Graph is made using the [Microsoft Graph SDK](https://docs.microsoft.com/graph/sdks/sdks-overview).
 
 > Developers who wish to become more familiar with programming using Microsoft Graph are advised to go through the [An introduction to Microsoft Graph for developers](https://www.youtube.com/watch?v=EBbnpFdB92A) recorded session, and also make requests and see responses against the Microsoft Graph using [Microsoft Graph explorer](https://developer.microsoft.com/graph/graph-explorer).
 
@@ -33,7 +33,7 @@ As displayed in the Azure Communication Services Authentication Server flow diag
 
 **Server Side (Steps 3&4 in below dagram):**
 
-1. Once the user is passing the Azure Active Directory token (as would be gained on client side) in Authorization Header of the API call request, the flow acquires another access token on behalf of the signed-in user using the [On-Behalf-Of flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow).
+1. Once the user is passing the Microsoft Entra token (as would be gained on client side) in Authorization Header of the API call request, the flow acquires another access token on behalf of the signed-in user using the [On-Behalf-Of flow](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow).
 2. The Web API then uses this new access token to call downstream APIs (Microsoft Graph in this sample).
 
 ![OBO Flow](../images/ACS-Authentication-Server-Sample_Secured-Web-API-Flow.png)

@@ -10,8 +10,8 @@ param(
 #Requires -Modules AzureAD
 
 <#
- This script creates the Azure AD applications needed for this sample and updates the configuration files
- for the visual Studio projects from the data in the Azure AD applications.
+ This script creates the Microsoft Entra applications needed for this sample and updates the configuration files
+ for the visual Studio projects from the data in the Microsoft Entra applications.
 
  Before running this script you need to install the AzureAD cmdlets as an administrator. 
  For this:
@@ -162,7 +162,7 @@ Function UpdateTextFile([string] $configFilePath, [System.Collections.HashTable]
     Set-Content -Path $configFilePath -Value $lines -Force
 }
 <#.Description
-   This function creates a new Azure AD scope (OAuth2Permission) with default and provided values
+   This function creates a new Microsoft Entra scope (OAuth2Permission) with default and provided values
 #>  
 Function CreateScope( [string] $value, [string] $userConsentDisplayName, [string] $userConsentDescription, [string] $adminConsentDisplayName, [string] $adminConsentDescription)
 {
@@ -179,7 +179,7 @@ Function CreateScope( [string] $value, [string] $userConsentDisplayName, [string
 }
 
 <#.Description
-   This function creates a new Azure AD AppRole with default and provided values
+   This function creates a new Microsoft Entra AppRole with default and provided values
 #>  
 Function CreateAppRole([string] $types, [string] $name, [string] $description)
 {
@@ -206,7 +206,7 @@ $ErrorActionPreference = "Stop"
 Function ConfigureApplications
 {
 <#.Description
-   This function creates the Azure AD applications for the sample in the provided Azure AD tenant and updates the
+   This function creates the Microsoft Entra applications for the sample in the provided Microsoft Entra tenant and updates the
    configuration files in the client and service project  of the visual studio solution (App.Config and Web.Config)
    so that they are consistent with the Applications parameters
 #> 
@@ -218,7 +218,7 @@ Function ConfigureApplications
     }
 
     # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of the AzureAD tenant
-    # into which you want to create the apps. Look it up in the Azure portal in the "Properties" of the Azure AD.
+    # into which you want to create the apps. Look it up in the Azure portal in the "Properties" of the Microsoft Entra.
 
     # Login to Azure PowerShell (interactive if credentials are not already provided:
     # you'll need to sign-in with creds enabling your to create apps in the tenant)
@@ -251,7 +251,7 @@ Function ConfigureApplications
     # Get the user running the script to add the user as the app owner
     $user = Get-AzureADUser -ObjectId $creds.Account.Id
 
-   # Create the service AAD application
+   # Create the service Microsoft Entra application
    Write-Host "Creating the AAD application (auther-server-sample-webApi)"
    # Get a 2 years application key for the service Application
    $pw = ComputePassword
@@ -313,7 +313,7 @@ Function ConfigureApplications
 
    Write-Host "Done creating the service application auther-server-sample-webApi"
 
-   # URL of the AAD application in the Azure portal
+   # URL of the Microsoft Entra application in the Azure portal
    # Future? $servicePortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$serviceAadApplication.AppId+"/objectId/"+$serviceAadApplication.ObjectId+"/isMSAApp/"
    $servicePortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$serviceAadApplication.AppId+"/objectId/"+$serviceAadApplication.ObjectId+"/isMSAApp/"
    Add-Content -Value "<tr><td>service</td><td>$currentAppId</td><td><a href='$servicePortalUrl'>auther-server-sample-webApi</a></td></tr>" -Path createdApps.html
@@ -331,7 +331,7 @@ Function ConfigureApplications
    Set-AzureADApplication -ObjectId $serviceAadApplication.ObjectId -RequiredResourceAccess $requiredResourcesAccess
    Write-Host "Granted permissions."
 
-   # Create the client AAD application
+   # Create the client Microsoft Entra application
    Write-Host "Creating the AAD application auther-server-sample-webClient"
    # create the application 
    $clientAadApplication = New-AzureADApplication -DisplayName "auther-server-sample-webClient" `
@@ -355,7 +355,7 @@ Function ConfigureApplications
 
    Write-Host "Done creating the client application auther-server-sample-webClient"
 
-   # URL of the AAD application in the Azure portal
+   # URL of the Microsoft Entra application in the Azure portal
    # Future? $clientPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$clientAadApplication.AppId+"/objectId/"+$clientAadApplication.ObjectId+"/isMSAApp/"
    $clientPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$clientAadApplication.AppId+"/objectId/"+$clientAadApplication.ObjectId+"/isMSAApp/"
    Add-Content -Value "<tr><td>client</td><td>$currentAppId</td><td><a href='$clientPortalUrl'>\auther-server-sample-webClient</a></td></tr>" -Path createdApps.html

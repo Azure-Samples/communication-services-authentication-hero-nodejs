@@ -1,6 +1,6 @@
 {
   "Sample": {
-    "Title": "A client application that calls an ASP.NET Core Web API protected by Azure AD using OAuth 2.0 access tokens. ",
+    "Title": "A client application that calls an ASP.NET Core Web API protected by Microsoft Entra using OAuth 2.0 access tokens. ",
     "Level": 200,
     "Client": "SPA client application - UI to test Web Api",
     "Service": "ASP.NET Core Web API",
@@ -9,7 +9,7 @@
   },
 
   /*
-    This section describes the Azure AD Applications to configure, and their dependencies
+    This section describes the Microsoft Entra Applications to configure, and their dependencies
   */
   "AADApps": [
     {
@@ -22,7 +22,7 @@
       "RequiredResourcesAccess": [
         {
           "Resource": "Microsoft Graph",
-          "DelegatedPermissions": ["User.Read", "User.ReadWrite.All"]
+          "DelegatedPermissions": [ "User.Read", "User.ReadWrite.All" ]
         }
       ],
       "ManualSteps": [
@@ -39,7 +39,7 @@
       "RequiredResourcesAccess": [
         {
           "Resource": "service",
-          "DelegatedPermissions": ["access_as_user"]
+          "DelegatedPermissions": [ "access_as_user" ]
         }
       ],
       "ManualSteps": [
@@ -55,7 +55,7 @@
 
   /*
     This section describes how to update the code in configuration files from the apps coordinates, once the apps
-    are created in Azure AD.
+    are created in Microsoft Entra.
     Each section describes a configuration file, for one of the apps, it's type (Javascript, JSon, plain text), its location
     with respect to the root of the sample, and the mappping (which string in the config file is mapped to which value
   */

@@ -20,7 +20,7 @@ Once the script is run in local environment following the [instructions](../../A
 
 ### Server App Registration
 
-Follow below instructions on how to register your server application with Azure Active Directory [here](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app).
+Follow below instructions on how to register your server application with Microsoft Entra [here](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app).
 
 1. When registering your server app, use the following information:
    - give your application a meaningful name as this will be the displayed name of your app, for example `auther-server-sample-webApi`.
@@ -47,7 +47,7 @@ Follow below instructions on how to register your server application with Azure 
       4. On the permission list, scroll to **User** group and expand it, then check **User.Read** and **User.ReadWrite.All**.
       5. Now click on the **Add permissions** button at the bottom to save your permissions.
       6. Once the permissions are added, click on **Grant admin consent** for the Microsoft Graph API call.
-      >**Note:** The 'Grant admin consent' step can only be performed by your Azure Active Directory Admin.
+      >**Note:** The 'Grant admin consent' step can only be performed by your Microsoft Entra Admin.
 
    3. Navigate to and click on the **Expose an API** menu item on the left to open the page where you can declare the parameters to expose this app as an API from which client applications can obtain the [access tokens](https://docs.microsoft.com/azure/active-directory/develop/access-tokens).
 
@@ -74,15 +74,15 @@ Follow below instructions on how to register your server application with Azure 
 
 ### Client App Registration
 
->**Note** - This client app registration will be used to manually generate the Azure Active Directory Token required to call Azure Active Directory protected Web API as there is no client application in the sample.
+>**Note** - This client app registration will be used to manually generate the Microsoft Entra Token required to call Microsoft Entra protected Web API as there is no client application in the sample.
 
-Follow instructions on how to register your client application with Azure Active Directory [here](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app).
+Follow instructions on how to register your client application with Microsoft Entra ID [here](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app).
 
 1. When registering your client app, use the following information:
 
    - give your application a meaningful name as this will be the displayed name of your app, for example `auther-server-sample-webClient`.
    - select the **Accounts in this organizational directory only (<Default Directory> only - Single tenant)** option for who can use or access this application.
-   - set the **Redirect URI (optional)** with **Single-page Application (SPA)** as platform and `http://localhost:3000/` as URI. In case of manual generation of Azure Active Directory token for testing Auth Sample Apis, select **Web** as platform instead of **SPA**.
+   - set the **Redirect URI (optional)** with **Single-page Application (SPA)** as platform and `http://localhost:3000/` as URI. In case of manual generation of Microsoft Entra token for testing Auth Sample Apis, select **Web** as platform instead of **SPA**.
 
    >**Note:** clicking on the **Register** button will open your application page once the registration is sucessful.
 

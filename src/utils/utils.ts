@@ -10,7 +10,7 @@ import jwksRsa, { GetVerificationKey } from 'jwks-rsa';
 import { appSettings } from '../appSettings';
 import jwtAuthz from 'express-jwt-authz';
 
-// Get an AAD token passed through request header
+// Get an Microsoft Entra token passed through request header
 export const getAADTokenViaRequest = (req: Request): string => {
   return req.headers.authorization.split(' ')[1];
 };

@@ -25,7 +25,7 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
   try {
     // Get aad token via the request
     const aadTokenViaRequest = getAADTokenViaRequest(req);
-    // Retrieve the AAD token via OBO flow
+    // Retrieve the Microsoft Entra token via OBO flow
     const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
 
     // Retrieve ACS Identity from Microsoft Graph
@@ -50,19 +50,19 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
 };
 
 /**
- * Exchange Azure AD token of a Teams user for an ACS access token using the Azure Communication Services Identity SDK.
+ * Exchange Microsoft Entra token of a Teams user for an ACS access token using the Azure Communication Services Identity SDK.
  *
- * 1. Get an Azure AD token with Teams.ManageCalls and Teams.ManageChats delegated permissions passed through the 'teams-user-aad-token' header
- * 2. Get Azure AD user object ID obtained from the oid claim of the token received in the Authorization header
+ * 1. Get an Microsoft Entra token with Teams.ManageCalls and Teams.ManageChats delegated permissions passed through the 'teams-user-aad-token' header
+ * 2. Get Microsoft Entra user object ID obtained from the oid claim of the token received in the Authorization header
  * 3. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
  */
 export const exchangeAADToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    // Get an Azure AD token passed through the 'teams-user-aad-token' header
+    // Get an Microsoft Entra token passed through the 'teams-user-aad-token' header
     const teamsUserAadToken = req.headers['teams-user-aad-token'] as string;
     // Get the oid claim of the token received in the Authorization header
     const userObjectId = req.user.oid;
-    // Exchange the AAD user token for the Teams access token
+    // Exchange the Microsoft Entra user token for the Teams access token
     const acsTokenForTeamsUser = await getACSTokenForTeamsUser(teamsUserAadToken, userObjectId);
     return res.status(201).json(acsTokenForTeamsUser);
   } catch (error) {

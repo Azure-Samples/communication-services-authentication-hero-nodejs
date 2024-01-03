@@ -11,32 +11,32 @@
 - [Other Helpful Links to Explore](#other-helpful-links-to-explore)
 
 ## Overview
-This sample is primarily focused on building a Trusted Service for Azure Communication Services authentication. It is the Azure Communication Services Authentication Backend Server backed by Azure Active Directory as the Identity Provider and using open source libraries from [Microsoft Identity Platform](https://docs.microsoft.com/azure/active-directory/develop/v2-overview). The sample can be used directly if the below conditions are met, otherwise the sample needs to be adapted as described in our [Guidance section](#guidance):
+This sample is primarily focused on building a Trusted Service for Azure Communication Services authentication. It is the Azure Communication Services Authentication Backend Server backed by Microsoft Entra as the Identity Provider and using open source libraries from [Microsoft Identity Platform](https://docs.microsoft.com/azure/active-directory/develop/v2-overview). The sample can be used directly if the below conditions are met, otherwise the sample needs to be adapted as described in our [Guidance section](#guidance):
 - The sample supports single tenant use case. 
-  >**Note:** You can verify the configuration through app registration used for user sign in flow for Azure Active Directory instance. Go to the specific app registration within Azure Active Directory through [Azure Portal](https://portal.azure.com/) and check the Authentication tab to verify the tenancy configuration.
+  >**Note:** You can verify the configuration through app registration used for user sign in flow for Microsoft Entra instance. Go to the specific app registration within Microsoft Entra ID through [Azure Portal](https://portal.azure.com/) and check the Authentication tab to verify the tenancy configuration.
 
-- The sample only supports 1:1 identity mapping between Azure Active Directory user Id and Azure Communication Services user Id.
+- The sample only supports 1:1 identity mapping between Microsoft Entra user Id and Azure Communication Services user Id.
 
 ## Components
 ![Diagram](../images/ACS-Authentication-Server-Sample_Overview-Flow.png)
 
 As seen from the overview diagram, the key components of the sample are:
-1. [Secure Web API backed by Azure Active Directory](./secured-web-api-design.md)
+1. [Secure Web API backed by Microsoft Entra ID](./secured-web-api-design.md)
 2. [Identity Mapping leveraging Graph Open Extensions](./identity-mapping-design-graph-open-extensions.md)
 3. Azure Communication Identity service which generates an Azure Communication Services identity and access tokens. The sample uses the [Azure Communication Services Identity SDK](https://docs.microsoft.com/azure/communication-services/concepts/sdk-options#sdks).
->**Note:** The `api/token/teams` endpoint does not leverage #2, as the M365 Azure Active Directory Identity is internally mapped to user's Teams Identity within Azure Communication Services, see [Communication for Teams identities documentation](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint).
+>**Note:** The `api/token/teams` endpoint does not leverage #2, as the M365 Microsoft Entra Identity is internally mapped to user's Teams Identity within Azure Communication Services, see [Communication for Teams identities documentation](https://docs.microsoft.com/azure/communication-services/concepts/teams-endpoint).
 ### Motivation for leveraging Graph Open Extensions for Identity Mapping
-The Azure Communication Services identity for the user could be co-located with the information for the Azure Active Directory user. This optimizes the complexity to maintain additional storage to keep mappings and instead enables developers to keep everything inside of Azure Active Directory.
+The Azure Communication Services identity for the user could be co-located with the information for the Microsoft Entra user. This optimizes the complexity to maintain additional storage to keep mappings and instead enables developers to keep everything inside of Microsoft Entra ID.
 
 ## Limitations
-- An application can add [at most two open extensions](https://docs.microsoft.com/graph/extensibility-overview#open-extension-limits) for an Azure Active Directory user. 
+- An application can add [at most two open extensions](https://docs.microsoft.com/graph/extensibility-overview#open-extension-limits) for an Microsoft Entray user. 
 - Graph Open Extensions have a [rate limit](https://docs.microsoft.com/graph/throttling#open-and-schema-extensions-service-limits) of 455 requests per 10 seconds. 
 
 ## Guidance
-1. If 1:1 identity model of Azure Active Directory and Azure Communication Services in the sample does not meet your requirement, then you can consider adapting the [Identity Mapping Model within addIdentityMapping function](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/blob/main/src/services/graphService.ts) to handle multiple identity mappings.
+1. If 1:1 identity model of Microsoft Entra ID and Azure Communication Services in the sample does not meet your requirement, then you can consider adapting the [Identity Mapping Model within addIdentityMapping function](https://github.com/Azure-Samples/communication-services-authentication-hero-nodejs/blob/main/src/services/graphService.ts) to handle multiple identity mappings.
 2. Since Azure Communication Services is a data processor and you are the controller of the user data, you are responsible for ensuring the data privacy compliance. To learn more, please visit [Azure Communication Services privacy concept](https://docs.microsoft.com/azure/communication-services/concepts/privacy).
-3. **For information of the users:** When the Azure Active Directory instance is used for 3rd party application sign in with [delegated permissions granted over Graph API](https://docs.microsoft.com/graph/auth/auth-concepts#delegated-and-application-permissions), the 3rd Party application with delegated permissions as `user.read` would also have access to the Azure Communication Services user Id persisted as open extension data of the user. This scenario is possible only if the sample is adapted for Multi Tenancy.
-4. You as users of the sample would be data controllers of Azure Communication Services Identity and are hence responsible for handling GDPR compliance. The sample has `api/user` endpoints for user management and is provided as a way to handle Azure Communication Services Identity in the appropriate context. The DELETE `api/user` in sample for an example is responsible for deleting the Azure Communication Services Identity mapping in the Azure Active Directory.
+3. **For information of the users:** When the Microsoft Entra instance is used for 3rd party application sign in with [delegated permissions granted over Graph API](https://docs.microsoft.com/graph/auth/auth-concepts#delegated-and-application-permissions), the 3rd Party application with delegated permissions as `user.read` would also have access to the Azure Communication Services user Id persisted as open extension data of the user. This scenario is possible only if the sample is adapted for Multi Tenancy.
+4. You as users of the sample would be data controllers of Azure Communication Services Identity and are hence responsible for handling GDPR compliance. The sample has `api/user` endpoints for user management and is provided as a way to handle Azure Communication Services Identity in the appropriate context. The DELETE `api/user` in sample for an example is responsible for deleting the Azure Communication Services Identity mapping in the Microsoft Entra ID.
 5. The sample does not have support for application logging. If you need to enable logging and telemetry on production, please refer to [Logging in .Net Core and ASP.Net core](https://docs.microsoft.com/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0) and [Toubleshoot Diagnostic Logs](https://docs.microsoft.com/azure/app-service/troubleshoot-diagnostic-logs). You can still troubleshoot the Api errors even if logging is not suported in sample, please refer to [Application Toubleshooting](../../README.md#application-troubleshooting) section.
 
 ## Alternate Identity Mapping Approach
