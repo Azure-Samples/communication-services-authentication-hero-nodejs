@@ -9,7 +9,7 @@
    ```PowerShell
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
    ```
-3. Make sure to [install Microsoft Entra PowerShell Modules](#install-azuread-powershell-modules)
+3. Make sure to [install AzureAD PowerShell Modules](#install-azuread-powershell-modules)
 4. Run the script to create your Microsoft Entra application and configure the code of the sample application accordingly. (Other ways of running the scripts are described below). Please refer to the **sample.json** file to get an overview of changes.
    ```PowerShell
    cd .\AppCreationScripts\
