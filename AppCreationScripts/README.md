@@ -23,7 +23,7 @@ If you prefer, you can directly go to the following paragraphs:
 
 - [Present the scripts](#presentation-of-the-scripts) and explain their [usage patterns](#usage-pattern-for-tests-and-devops-scenarios) for test and DevOps scenarios.
 - Explain the [pre-requisites](#pre-requisites)
-- [Install Microsoft Entra PowerShell modules](#install-azuread-powershell-modules)
+- [Install AzureAD PowerShell modules](#install-azuread-powershell-modules)
 - Explain [four ways of running the scripts](#four-ways-to-run-the-script):
   - [Interactively](#option-1-interactive) to create the app in your home tenant
   - [Passing credentials](#option-2-non-interactive) to create the app in your home tenant
@@ -65,7 +65,7 @@ The `Configure.ps1` will stop if it tries to create an Microsoft Entra applicati
     ```
 
 ### Install AzureAD PowerShell modules
-The scripts install the required PowerShell module (Microsoft Entra ID) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
+The scripts install the required PowerShell module (AzureAD) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
 
 4. If you have never done it already, in the PowerShell window, install the AzureAD PowerShell modules following these steps::
 
