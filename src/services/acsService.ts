@@ -17,7 +17,7 @@ const CREATE_ACS_TOKEN_ERROR = 'An error occurred when creating an ACS token';
 const CREATE_ACS_USER_IDENTITY_TOKEN_ERROR =
   'An error occurred when creating an ACS user id and issuing an access token for it in one go';
 const DELETE_ACS_USER_IDENTITY_ERROR = 'An error occurred when deleting an ACS user id';
-const EXCHANGE_AAD_TOKEN_ERROR = 'An error occurred when exchanging an AAD token';
+const EXCHANGE_MEID_TOKEN_ERROR = 'An error occurred when exchanging an Microsoft Entra ID token';
 
 /**
  * Instantiate the identity client using the connection string.
@@ -65,24 +65,24 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
 
 /**
  * Exchange an AAD access token of a Teams user for a new Communication Services AccessToken with a matching expiration time.
- * @param teamsUserAadToken - The Azure AD token of the Teams user
+ * @param teamsUserMeidToken - The Azure AD token of the Teams user
  * @param userObjectId - Object ID of an Azure AD user (Teams User) to be verified against the OID claim in the Azure AD access token.
  */
 export const getACSTokenForTeamsUser = async (
-  teamsUserAadToken: string,
+  teamsUserMeidToken: string,
   userObjectId: string
 ): Promise<CommunicationAccessToken> => {
   const identityClient = createAuthenticatedClient();
   try {
     // Issue an access token for the Teams user that can be used with the Azure Communication Services SDKs.
-    const clientId = appSettings.azureActiveDirectory.clientId;
+    const clientId = appSettings.microsoftEntraID.clientId;
     return await identityClient.getTokenForTeamsUser({
       clientId: clientId,
-      teamsUserAadToken: teamsUserAadToken,
+      teamsUserAadToken: teamsUserMeidToken,
       userObjectId: userObjectId
     });
   } catch (error) {
-    const errorMessage = `${EXCHANGE_AAD_TOKEN_ERROR}: ${error.message}`;
+    const errorMessage = `${EXCHANGE_MEID_TOKEN_ERROR}: ${error.message}`;
     console.log(errorMessage);
     throw new Error(errorMessage);
   }
