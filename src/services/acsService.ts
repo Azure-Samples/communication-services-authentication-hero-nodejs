@@ -78,7 +78,7 @@ export const getACSTokenForTeamsUser = async (
     const clientId = appSettings.microsoftEntraID.clientId;
     return await identityClient.getTokenForTeamsUser({
       clientId: clientId,
-      teamsUserAadToken: teamsUserMeidToken, 
+      teamsUserAadToken: teamsUserMeidToken,
       userObjectId: userObjectId
     });
   } catch (error) {
