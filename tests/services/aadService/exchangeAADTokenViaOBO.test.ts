@@ -7,8 +7,8 @@
 /// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
 import { Configuration, ConfidentialClientApplication, OnBehalfOfRequest } from '@azure/msal-node';
-import { mockAadToken } from '../../utils/mockData';
-import * as aadService from '../../../src/services/aadService';
+import { mockMeidToken } from '../../utils/mockData';
+import * as meidService from '../../../src/services/aadService';
 
 const mockConfidentialClientApplication = (
   msalConfig?: Configuration,
@@ -20,7 +20,7 @@ const mockConfidentialClientApplication = (
     if (!oboRequest.oboAssertion || !isOboResolved) {
       return new Promise((resolve, reject) => reject(null));
     }
-    return new Promise((resolve, reject) => resolve({ accessToken: mockAadToken }));
+    return new Promise((resolve, reject) => resolve({ accessToken: mockMeidToken }));
   };
   return !msalConfig ? undefined : (clientApp as ConfidentialClientApplication);
 };
@@ -35,7 +35,7 @@ const mockMsalConfig: Configuration = {
 
 let createConfidentialClientApplicationSpy: jest.SpyInstance;
 
-describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
+describe('Microsoft Entra ID Service - Exchange Microsoft Entra Token Via OBO: ', () => {
   test('when Confidential Client Application fails to be created, it should throw an error.', async () => {
     createConfidentialClientApplicationSpy = jest
       .spyOn(aadService, 'createConfidentialClientApplication')
@@ -43,7 +43,7 @@ describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
 
     let mockError: undefined | String = undefined;
     try {
-      await aadService.exchangeAADTokenViaOBO(mockAadToken);
+      await meidService.exchangeMEIDTokenViaOBO(mockMeidToken);
     } catch {
       mockError = 'error';
     }
@@ -55,13 +55,13 @@ describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
 
   test('when OBO token failed to be acquired, it should throw an error.', async () => {
     createConfidentialClientApplicationSpy = jest
-      .spyOn(aadService, 'createConfidentialClientApplication')
+      .spyOn(meidService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication(mockMsalConfig));
 
     let mockError: undefined | String = undefined;
     let token: string;
     try {
-      token = await aadService.exchangeAADTokenViaOBO(mockAadToken);
+      token = await meidService.exchangeMEIDTokenViaOBO(mockMeidToken);
     } catch {
       mockError = 'error';
     }
@@ -73,20 +73,20 @@ describe('AAD Service - Exchange AAD Token Via OBO: ', () => {
 
   test('when all succeeds, it should return mock token.', async () => {
     createConfidentialClientApplicationSpy = jest
-      .spyOn(aadService, 'createConfidentialClientApplication')
+      .spyOn(meidService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication(mockMsalConfig, true));
 
     let mockError: undefined | String = undefined;
     let token: string = '';
     try {
-      token = await aadService.exchangeAADTokenViaOBO(mockAadToken);
+      token = await meidService.exchangeMEIDTokenViaOBO(mockMeidToken);
     } catch {
       mockError = 'error';
     }
 
     expect(createConfidentialClientApplicationSpy).toHaveBeenCalled();
     expect(mockError).toBeFalsy();
-    expect(token).toBe(mockAadToken);
+    expect(token).toBe(mockMeidToken);
     createConfidentialClientApplicationSpy.mockClear();
   });
 });

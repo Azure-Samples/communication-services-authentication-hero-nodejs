@@ -8,7 +8,7 @@
 
 import { CommunicationIdentityClient } from '@azure/communication-identity';
 import * as acsService from '../../../src/services/acsService';
-import { mockCommunicationAccessToken, mockAadToken, mockAcsUserId, mockAadUserObjectId } from '../../utils/mockData';
+import { mockCommunicationAccessToken, mockMeidToken, mockAcsUserId, mockMeidUserObjectId } from '../../utils/mockData';
 
 const mockCommunicationIdentityClient = (
   isCreateClientResolved?: boolean,
@@ -35,7 +35,7 @@ describe('ACS Service - Get ACS Token For Teams User: ', () => {
 
     let mockError: undefined | String = undefined;
     try {
-      await acsService.getACSTokenForTeamsUser(mockAadToken, mockAadUserObjectId);
+      await acsService.getACSTokenForTeamsUser(mockMeidToken, mockMeidUserObjectId);
     } catch {
       mockError = 'error';
     }
@@ -52,7 +52,7 @@ describe('ACS Service - Get ACS Token For Teams User: ', () => {
     let mockError: undefined | String = undefined;
     let accessToken;
     try {
-      accessToken = await acsService.getACSTokenForTeamsUser(mockAadToken, mockAadUserObjectId);
+      accessToken = await acsService.getACSTokenForTeamsUser(mockMeidToken, mockMeidUserObjectId);
     } catch {
       mockError = 'error';
     }
@@ -69,7 +69,7 @@ describe('ACS Service - Get ACS Token For Teams User: ', () => {
     let mockError: undefined | String = undefined;
     let accessToken;
     try {
-      accessToken = await acsService.getACSTokenForTeamsUser(mockAadToken, mockAadUserObjectId);
+      accessToken = await acsService.getACSTokenForTeamsUser(mockMeidToken, mockMeidUserObjectId);
     } catch {
       mockError = 'error';
     }
