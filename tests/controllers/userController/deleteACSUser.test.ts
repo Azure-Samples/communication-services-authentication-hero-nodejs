@@ -71,7 +71,7 @@ describe('User Controller - Delete ACS User: ', () => {
     const res = mockResponse();
     exchangeMEIDTokenViaOBOSpy = jest
       .spyOn(meidService, 'exchangeMEIDTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
+      .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')

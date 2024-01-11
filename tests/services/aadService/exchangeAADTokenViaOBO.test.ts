@@ -38,7 +38,7 @@ let createConfidentialClientApplicationSpy: jest.SpyInstance;
 describe('Microsoft Entra ID Service - Exchange Microsoft Entra Token Via OBO: ', () => {
   test('when Confidential Client Application fails to be created, it should throw an error.', async () => {
     createConfidentialClientApplicationSpy = jest
-      .spyOn(aadService, 'createConfidentialClientApplication')
+      .spyOn(meidService, 'createConfidentialClientApplication')
       .mockImplementation(() => mockConfidentialClientApplication());
 
     let mockError: undefined | String = undefined;

@@ -77,7 +77,7 @@ describe('Token Controller - Get ACS Token: ', () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeMEIDTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
+      .spyOn(aadService, 'exchangeMEIDTokenViaOBO')
       .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest
       .spyOn(graphService, 'getACSUserId')
@@ -98,7 +98,7 @@ describe('Token Controller - Get ACS Token: ', () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeMEIDTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
+      .spyOn(aadService, 'exchangeMEIDTokenViaOBO')
       .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     createACSTokenSpy = jest
@@ -122,7 +122,7 @@ describe('Token Controller - Get ACS Token: ', () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
     exchangeMEIDTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
+      .spyOn(aadService, 'exchangeMEIDTokenViaOBO')
       .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     createACSTokenSpy = jest
