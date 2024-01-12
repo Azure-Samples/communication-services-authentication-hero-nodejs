@@ -22,7 +22,7 @@
       "RequiredResourcesAccess": [
         {
           "Resource": "Microsoft Graph",
-          "DelegatedPermissions": [ "User.Read", "User.ReadWrite.All" ]
+          "DelegatedPermissions": ["User.Read", "User.ReadWrite.All"]
         }
       ],
       "ManualSteps": [
@@ -39,7 +39,7 @@
       "RequiredResourcesAccess": [
         {
           "Resource": "service",
-          "DelegatedPermissions": [ "access_as_user" ]
+          "DelegatedPermissions": ["access_as_user"]
         }
       ],
       "ManualSteps": [
