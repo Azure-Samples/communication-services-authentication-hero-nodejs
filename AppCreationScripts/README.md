@@ -9,7 +9,7 @@
    ```PowerShell
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
    ```
-3. Make sure to [install AzureAD PowerShell Modules](#install-azuread-powershell-modules)
+3. Make sure to [install Microsoft Entra PowerShell Modules](#install-azuread-powershell-modules)
 4. Run the script to create your Microsoft Entra application and configure the code of the sample application accordingly. (Other ways of running the scripts are described below). Please refer to the **sample.json** file to get an overview of changes.
    ```PowerShell
    cd .\AppCreationScripts\
@@ -23,7 +23,7 @@ If you prefer, you can directly go to the following paragraphs:
 
 - [Present the scripts](#presentation-of-the-scripts) and explain their [usage patterns](#usage-pattern-for-tests-and-devops-scenarios) for test and DevOps scenarios.
 - Explain the [pre-requisites](#pre-requisites)
-- [Install AzureAD PowerShell modules](#install-azuread-powershell-modules)
+- [Install Microsoft Entra PowerShell modules](#install-azuread-powershell-modules)
 - Explain [four ways of running the scripts](#four-ways-to-run-the-script):
   - [Interactively](#option-1-interactive) to create the app in your home tenant
   - [Passing credentials](#option-2-non-interactive) to create the app in your home tenant
@@ -64,10 +64,10 @@ The `Configure.ps1` will stop if it tries to create an Microsoft Entra applicati
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
     ```
 
-### Install AzureAD PowerShell modules
-The scripts install the required PowerShell module (AzureAD) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
+### Install Microsoft Entra PowerShell modules
+The scripts install the required PowerShell module (Microsoft Entra) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
 
-4. If you have never done it already, in the PowerShell window, install the AzureAD PowerShell modules following these steps::
+4. If you have never done it already, in the PowerShell window, install the Microsoft Entra PowerShell modules following these steps::
 
    1. Open PowerShell as admin (On Windows, search **Powershell** in the Search bar, right click on it and select **Run as administrator**).
    2. Type:

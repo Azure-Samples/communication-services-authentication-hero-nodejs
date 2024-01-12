@@ -14,7 +14,7 @@ git clone https://github.com/Azure-Samples/communication-services-authentication
 git clone git@github.com:Azure-Samples/communication-services-authentication-hero-nodejs.git
 ```
 
-Once the script is run in local environment following the [instructions](../../AppCreationScripts/README.md), the `AzureActiveDirectory` fields are updated in **src/appSettings.ts** from service app registration and `msalConfig.auth` fields are updated in **MinimalClient/src/authConfig.js** from client app registration in the cloned repository.
+Once the script is run in local environment following the [instructions](../../AppCreationScripts/README.md), the `Microsoft Entra` fields are updated in **src/appSettings.ts** from service app registration and `msalConfig.auth` fields are updated in **MinimalClient/src/authConfig.js** from client app registration in the cloned repository.
 
 ## Set up App Registrations manually
 

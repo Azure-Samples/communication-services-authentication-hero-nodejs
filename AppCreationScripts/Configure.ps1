@@ -1,22 +1,22 @@
 [CmdletBinding()]
 param(
     [PSCredential] $Credential,
-    [Parameter(Mandatory=$False, HelpMessage='Tenant ID (This is a GUID which represents the "Directory ID" of the AzureAD tenant into which you want to create the apps')]
+    [Parameter(Mandatory=$False, HelpMessage='Tenant ID (This is a GUID which represents the "Directory ID" of the Microsoft Entra tenant into which you want to create the apps')]
     [string] $tenantId,
     [Parameter(Mandatory=$False, HelpMessage='Azure environment to use while running the script (it defaults to AzureCloud)')]
     [string] $azureEnvironmentName
 )
 
-#Requires -Modules AzureAD
+#Requires -Modules Microsoft Entra
 
 <#
  This script creates the Microsoft Entra applications needed for this sample and updates the configuration files
  for the visual Studio projects from the data in the Microsoft Entra applications.
 
- Before running this script you need to install the AzureAD cmdlets as an administrator. 
+ Before running this script you need to install the Microsoft EntraD cmdlets as an administrator. 
  For this:
  1) Run Powershell as an administrator
- 2) in the PowerShell window, type: Install-Module AzureAD
+ 2) in the PowerShell window, type: Install-Module Microsoft Entra
 
  There are four ways to run this script. For more information, read the AppCreationScripts.md file in the same folder as this script.
 #>
@@ -217,7 +217,7 @@ Function ConfigureApplications
         $azureEnvironmentName = "AzureCloud"
     }
 
-    # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of the AzureAD tenant
+    # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of theMicrosoft Entra tenant
     # into which you want to create the apps. Look it up in the Azure portal in the "Properties" of the Microsoft Entra.
 
     # Login to Azure PowerShell (interactive if credentials are not already provided:

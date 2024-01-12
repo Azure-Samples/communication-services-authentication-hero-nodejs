@@ -1,13 +1,13 @@
 [CmdletBinding()]
 param(    
     [PSCredential] $Credential,
-    [Parameter(Mandatory=$False, HelpMessage='Tenant ID (This is a GUID which represents the "Directory ID" of the AzureAD tenant into which you want to create the apps')]
+    [Parameter(Mandatory=$False, HelpMessage='Tenant ID (This is a GUID which represents the "Directory ID" of the Microsoft Entra tenant into which you want to create the apps')]
     [string] $tenantId,
     [Parameter(Mandatory=$False, HelpMessage='Azure environment to use while running the script (it defaults to AzureCloud)')]
     [string] $azureEnvironmentName
 )
 
-#Requires -Modules AzureAD
+#Requires -Modules Microsoft Entra
 
 
 if ($null -eq (Get-Module -ListAvailable -Name "AzureAD")) { 
@@ -28,7 +28,7 @@ Function Cleanup
     This function removes the Microsoft Entra applications for the sample. These applications were created by the Configure.ps1 script
     #>
 
-    # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of the AzureAD tenant 
+    # $tenantId is the Active Directory Tenant. This is a GUID which represents the "Directory ID" of the Microsoft Entra tenant 
     # into which you want to create the apps. Look it up in the Azure portal in the "Properties" of the Microsoft Entra ID. 
 
     # Login to Azure PowerShell (interactive if credentials are not already provided:
