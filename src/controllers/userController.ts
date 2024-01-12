@@ -16,9 +16,9 @@ const NO_IDENTITY_MAPPING_INFO_ERROR = 'There is no identity mapping information
  */
 export const createACSUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Get aad token via the request
+    // Get Microsoft Entra token via the request
     const aadTokenViaRequest = getAADTokenViaRequest(req);
-    // Retrieve the AAD token via OBO flow
+    // Retrieve the Microsoft Entra token via OBO flow
     const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
     let acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
@@ -41,9 +41,9 @@ export const createACSUser = async (req: Request, res: Response, next: NextFunct
  */
 export const getACSUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Get aad token via the request
+    // Get Microsoft Entra token via the request
     const aadTokenViaRequest = getAADTokenViaRequest(req);
-    // Retrieve the AAD token via OBO flow
+    // Retrieve the Microsoft Entra token via OBO flow
     const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
     const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
@@ -68,9 +68,9 @@ export const getACSUser = async (req: Request, res: Response, next: NextFunction
  */
 export const deleteACSUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Get aad token via the request
+    // Get Microsoft Entra token via the request
     const aadTokenViaRequest = getAADTokenViaRequest(req);
-    // Retrieve the AAD token via OBO flow
+    // Retrieve the Microsoft Entra token via OBO flow
     const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
     const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
