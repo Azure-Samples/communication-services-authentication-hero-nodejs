@@ -52,6 +52,10 @@ Since this sample only focuses on the server APIs, the client application is not
 
 Before contributing to this sample, please read our [contribution guidelines](./CONTRIBUTING.md).
 
+## ❤️ Feedback
+
+We appreciate your feedback and energy helping us improve our services. [If you've tried the service, please give us feedback through this survey](https://microsoft.qualtrics.com/jfe/form/SV_9WTOR2ItSo0oFee). 
+
 ## Prerequisites
 
 To be able to run this sample, you will need to:
