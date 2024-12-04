@@ -11,7 +11,7 @@ import { appSettings } from '../appSettings';
 import jwtAuthz from 'express-jwt-authz';
 
 // Get an AAD token passed through request header
-export const getAADTokenViaRequest = (req: Request): string => {
+export const getMEIDTokenViaRequest = (req: Request): string => {
   return req.headers.authorization.split(' ')[1];
 };
 
@@ -33,7 +33,7 @@ export const checkJwt = jwt.expressjwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://login.microsoftonline.com/${appSettings.azureActiveDirectory.tenantId}/discovery/keys?appid=${appSettings.azureActiveDirectory.clientId}` // Obtain public signing keys from a well-known URL
+    jwksUri: `https://login.microsoftonline.com/${appSettings.microsoftEntraID.tenantId}/discovery/keys?appid=${appSettings.microsoftEntraID.clientId}` // Obtain public signing keys from a well-known URL
   }) as GetVerificationKey,
   requestProperty: 'user', // Name of the property in the request object where the payload is set.
   algorithms: ['RS256']
