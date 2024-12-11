@@ -4,7 +4,7 @@
 
 - [Scenario](#scenario)
 - [Overview](#overview)
-- [1:1 Azure Communication Services Identity and Azure Active Directory user Identity mapping](#11-azure-communication-services-identity-and-azure-active-directory-user-identity-mapping)
+- [1:1 Azure Communication Services Identity and Microsoft Entra user Identity mapping](#11-azure-communication-services-identity-and-azure-active-directory-user-identity-mapping)
 - [Contributing](#contributing)
 - [More Information](#more-information)
 
@@ -14,11 +14,11 @@ The sample solution focuses on token management for below use cases:
 - Joining the native Azure Communication Services Chat, Calling / Teams Interop Meetings
 - Joining the Teams meeting as Authenticated Team's user
 
-The first scenario requires the identity mapping solution leveraged in `/token` and `/user` endpoints (endpoints implemented to support only the first scenario). The Azure Communication Services identity is mapped to Azure Active Directory user instance, so that the same Azure Communication Services identity for the user can be used in multiple sessions. Please refer to the [Azure Communication Services Identity Model](https://docs.microsoft.com/azure/communication-services/concepts/identity-model)
+The first scenario requires the identity mapping solution leveraged in `/token` and `/user` endpoints (endpoints implemented to support only the first scenario). The Azure Communication Services identity is mapped to Microsoft Entra user instance, so that the same Azure Communication Services identity for the user can be used in multiple sessions. Please refer to the [Azure Communication Services Identity Model](https://docs.microsoft.com/azure/communication-services/concepts/identity-model)
 
 ## Overview
 
-This sample solution demonstrates how to use Microsoft Graph open extensions as the solution of identity mapping storage to build trusted backend service that will manage Azure Communication Services identities by mapping them 1:1 with Azure Active Directory identities (for Teams Interop or native Azure Communication Services calling/chat) and issue Azure Communication Services tokens. For a Azure Active Directory user account, only a single Azure Communication Services Identity specific to a Azure Communication Services resource will be mapped. The Azure Communication Services Identity mapping cannot be updated once written through the sample. However, it is possible to reset the identity mapping of Azure Active Directory account to a different Azure Communication Services Identity by using DELETE `/api/user` endpoint and then recreating the user mapping using POST `/api/user thereafter.
+This sample solution demonstrates how to use Microsoft Graph open extensions as the solution of identity mapping storage to build trusted backend service that will manage Azure Communication Services identities by mapping them 1:1 with Microsoft Entra identities (for Teams Interop or native Azure Communication Services calling/chat) and issue Azure Communication Services tokens. For a Microsoft Entra user account, only a single Azure Communication Services Identity specific to a Azure Communication Services resource will be mapped. The Azure Communication Services Identity mapping cannot be updated once written through the sample. However, it is possible to reset the identity mapping of Microsoft Entra account to a different Azure Communication Services Identity by using DELETE `/api/user` endpoint and then recreating the user mapping using POST `/api/user thereafter.
 
 >**Note:** 
 > 1. Developers should not use extensions to store sensitive personally identifiable information, such as account credentials, government identification numbers, cardholder data, financial account data, healthcare information, or sensitive background information.
@@ -33,7 +33,7 @@ This sample solution demonstrates how to use Microsoft Graph open extensions as 
 
 ![ Azure Communication Services Authentication Server - Identity Mapping Flow](../images/ACS-Authentication-Server-Sample_Identity-Mapping-Flow.png)
 
-## 1:1 Azure Communication Services Identity and Azure Active Directory user Identity mapping
+## 1:1 Azure Communication Services Identity and Microsoft Entra user Identity mapping
 
 As displayed in the Azure Communication Services Authentication Server - Identity Mapping overview sequence diagram below, the identity mapping part consists of two endpoints - `/user` and `/token`
 
