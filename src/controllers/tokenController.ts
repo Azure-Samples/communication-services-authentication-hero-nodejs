@@ -4,10 +4,10 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import { createErrorResponse, getAADTokenViaRequest } from '../utils/utils';
+import { createErrorResponse, getMEIDTokenViaRequest } from '../utils/utils';
 import { getACSUserId } from '../services/graphService';
 import { createACSToken, getACSTokenForTeamsUser } from '../services/acsService';
-import { exchangeAADTokenViaOBO } from '../services/aadService';
+import { exchangeMEIDTokenViaOBO } from '../services/aadService';
 import { AuthenticatedRequest } from 'src/types/authenticatedRequest';
 
 const ACS_IDENTITY_NOT_FOUND_ERROR = 'Can not find any ACS identities in Microsoft Graph used to create an ACS token';
@@ -24,12 +24,12 @@ const ACS_IDENTITY_NOT_FOUND_ERROR = 'Can not find any ACS identities in Microso
 export const getACSToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Get aad token via the request
-    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    const meidTokenViaRequest = getMEIDTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
-    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    const meidTokenExchangedViaOBO = await exchangeMEIDTokenViaOBO(meidTokenViaRequest);
 
     // Retrieve ACS Identity from Microsoft Graph
-    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+    const acsUserId = await getACSUserId(meidTokenExchangedViaOBO);
 
     if (acsUserId !== undefined) {
       // The ACS user exists
@@ -56,14 +56,14 @@ export const getACSToken = async (req: Request, res: Response, next: NextFunctio
  * 2. Get Azure AD user object ID obtained from the oid claim of the token received in the Authorization header
  * 3. Initialize a Communication Identity Client and then issue an ACS access token for the Teams user
  */
-export const exchangeAADToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+export const exchangeMEIDToken = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     // Get an Azure AD token passed through the 'teams-user-aad-token' header
-    const teamsUserAadToken = req.headers['teams-user-aad-token'] as string;
+    const teamsUserMeidToken = req.headers['teams-user-meid-token'] as string;
     // Get the oid claim of the token received in the Authorization header
     const userObjectId = req.user.oid;
     // Exchange the AAD user token for the Teams access token
-    const acsTokenForTeamsUser = await getACSTokenForTeamsUser(teamsUserAadToken, userObjectId);
+    const acsTokenForTeamsUser = await getACSTokenForTeamsUser(teamsUserMeidToken, userObjectId);
     return res.status(201).json(acsTokenForTeamsUser);
   } catch (error) {
     next(error);

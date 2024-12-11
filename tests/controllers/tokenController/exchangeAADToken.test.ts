@@ -6,26 +6,26 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
-import { exchangeAADToken } from '../../../src/controllers/tokenController';
+import { exchangeMEIDToken } from '../../../src/controllers/tokenController';
 import {
   mockCommunicationAccessToken,
   mockAuthorization,
   mockRequest,
   mockResponse,
   mockAuthenticatedRequest,
-  mockAadUserObjectId,
-  mockAadTokenWithDelegatedPermissions
+  mockMeidUserObjectId,
+  mockMeidTokenWithDelegatedPermissions
 } from '../../utils/mockData';
 import * as acsService from '../../../src/services/acsService';
 
 let getACSTokenForTeamsUserSpy: jest.SpyInstance;
 
-describe('Token Controller - Exchange AAD Token: ', () => {
+describe('Token Controller - Exchange Microsoft Entra Token: ', () => {
   test('when request has no authorization header, it should return an error.', async () => {
     const req = mockRequest();
     const res = mockResponse();
 
-    await exchangeAADToken(req, res, () => {
+    await exchangeMEIDToken(req, res, () => {
       return res.status(500);
     });
 
@@ -33,15 +33,15 @@ describe('Token Controller - Exchange AAD Token: ', () => {
   });
 
   test('when failing to get ACS Token for Teams User, it should return an error.', async () => {
-    const req = mockAuthenticatedRequest(mockAuthorization, mockAadUserObjectId, undefined, {
-      'teams-user-aad-token': mockAadTokenWithDelegatedPermissions
+    const req = mockAuthenticatedRequest(mockAuthorization, mockMeidUserObjectId, undefined, {
+      'teams-user-meid-token': mockMeidTokenWithDelegatedPermissions
     });
     const res = mockResponse();
     getACSTokenForTeamsUserSpy = jest
       .spyOn(acsService, 'getACSTokenForTeamsUser')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
-    await exchangeAADToken(req, res, () => {
+    await exchangeMEIDToken(req, res, () => {
       return res.status(500);
     });
 
@@ -51,15 +51,15 @@ describe('Token Controller - Exchange AAD Token: ', () => {
   });
 
   test('when successful to get ACS Token for Teams User, it should return a response with status 201 and an ACS token object.', async () => {
-    const req = mockAuthenticatedRequest(mockAuthorization, mockAadUserObjectId, undefined, {
-      'teams-user-aad-token': mockAadTokenWithDelegatedPermissions
+    const req = mockAuthenticatedRequest(mockAuthorization, mockMeidUserObjectId, undefined, {
+      'teams-user-aad-token': mockMeidTokenWithDelegatedPermissions
     });
     const res = mockResponse();
     getACSTokenForTeamsUserSpy = jest
       .spyOn(acsService, 'getACSTokenForTeamsUser')
       .mockImplementation(async () => mockCommunicationAccessToken);
 
-    await exchangeAADToken(req, res, () => {
+    await exchangeMEIDToken(req, res, () => {
       return res.status(500);
     });
 
