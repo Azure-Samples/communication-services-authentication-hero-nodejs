@@ -32,7 +32,7 @@ export const TestCallTeamsUserContent = () => {
       })
       .catch((error) => console.log(error));
 
-    // Silently acquires an access token which is then used as a payload for the (AAD->ACS) token exchange
+    // Silently acquires an access token which is then used as a payload for the (Microsoft Entra ID->ACS) token exchange
     const teamsAadToken = await instance
       .acquireTokenSilent({
         ...teamsUserRequest,
