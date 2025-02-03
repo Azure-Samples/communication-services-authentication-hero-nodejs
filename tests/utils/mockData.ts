@@ -55,10 +55,10 @@ export const mockResponse = (): Response => {
 };
 
 export const mockAcsUserId = 'mock-acs-user-id';
-export const mockAadToken = 'mock-aad-token';
-export const mockAuthorization = `mock-authorization-header ${mockAadToken}`;
-export const mockAadUserObjectId = 'mock-aad-user-object-id';
-export const mockAadTokenWithDelegatedPermissions = 'mock-aad-token-with-delegated-permissions';
+export const mockMeidToken = 'mock-meid-token';
+export const mockAuthorization = `mock-authorization-header ${mockMeidToken}`;
+export const mockMeidUserObjectId = 'mock-meid-user-object-id';
+export const mockMeidTokenWithDelegatedPermissions = 'mock-meid-token-with-delegated-permissions';
 export const mockIdentityMapping = { acsUserIdentity: 'mock-identity-mapping' };
 export const mockCommunicationUserIdentifier: CommunicationUserIdentifier = {
   communicationUserId: 'mock-user-id'

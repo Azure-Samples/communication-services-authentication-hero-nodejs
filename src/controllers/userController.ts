@@ -4,8 +4,8 @@
  *---------------------------------------------------------------------------------------------*/
 
 import { NextFunction, Request, Response } from 'express';
-import { createErrorResponse, getAADTokenViaRequest } from '../utils/utils';
-import { exchangeAADTokenViaOBO } from '../services/aadService';
+import { createErrorResponse, getMEIDTokenViaRequest } from '../utils/utils';
+import { exchangeMEIDTokenViaOBO } from '../services/aadService';
 import { createACSUserIdentity, deleteACSUserIdentity } from '../services/acsService';
 import { addIdentityMapping, deleteIdentityMapping, getACSUserId } from '../services/graphService';
 
@@ -17,16 +17,16 @@ const NO_IDENTITY_MAPPING_INFO_ERROR = 'There is no identity mapping information
 export const createACSUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Get aad token via the request
-    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    const meidTokenViaRequest = getMEIDTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
-    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    const meidTokenExchangedViaOBO = await exchangeMEIDTokenViaOBO(meidTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
-    let acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+    let acsUserId = await getACSUserId(meidTokenExchangedViaOBO);
 
     if (acsUserId === undefined) {
       // Create a Communication Services identity.
       acsUserId = await createACSUserIdentity();
-      const identityMappingResponse = await addIdentityMapping(aadTokenExchangedViaOBO, acsUserId);
+      const identityMappingResponse = await addIdentityMapping(meidTokenExchangedViaOBO, acsUserId);
       return res.status(201).json(identityMappingResponse);
     }
 
@@ -42,11 +42,11 @@ export const createACSUser = async (req: Request, res: Response, next: NextFunct
 export const getACSUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Get aad token via the request
-    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    const meidTokenViaRequest = getMEIDTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
-    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    const meidTokenExchangedViaOBO = await exchangeMEIDTokenViaOBO(meidTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
-    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+    const acsUserId = await getACSUserId(meidTokenExchangedViaOBO);
 
     return acsUserId === undefined
       ? res.status(404).json(createErrorResponse(404, NO_IDENTITY_MAPPING_INFO_ERROR))
@@ -69,14 +69,14 @@ export const getACSUser = async (req: Request, res: Response, next: NextFunction
 export const deleteACSUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Get aad token via the request
-    const aadTokenViaRequest = getAADTokenViaRequest(req);
+    const meidTokenViaRequest = getMEIDTokenViaRequest(req);
     // Retrieve the AAD token via OBO flow
-    const aadTokenExchangedViaOBO = await exchangeAADTokenViaOBO(aadTokenViaRequest);
+    const meidTokenExchangedViaOBO = await exchangeMEIDTokenViaOBO(meidTokenViaRequest);
     // Get an ACS user id from Microsoft Graph
-    const acsUserId = await getACSUserId(aadTokenExchangedViaOBO);
+    const acsUserId = await getACSUserId(meidTokenExchangedViaOBO);
 
     // Delete the identity mapping from the user's roaming profile information using Microsoft Graph Open Extension
-    await deleteIdentityMapping(aadTokenExchangedViaOBO);
+    await deleteIdentityMapping(meidTokenExchangedViaOBO);
     // Delete the ACS user identity which revokes all active access tokens
     // and prevents users from issuing access tokens for the identity.
     // It also removes all the persisted content associated with the identity.
