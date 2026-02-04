@@ -6,13 +6,13 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../../node_modules/@types/jest/index.d.ts" />
 
-import { mockAcsUserId, mockAadToken, mockAuthorization, mockResponse, mockRequest } from '../../utils/mockData';
+import { mockAcsUserId, mockMeidToken, mockAuthorization, mockResponse, mockRequest } from '../../utils/mockData';
 import { deleteACSUser } from '../../../src/controllers/userController';
 import * as acsService from '../../../src/services/acsService';
-import * as aadService from '../../../src/services/aadService';
+import * as meidService from '../../../src/services/aadService';
 import * as graphService from '../../../src/services/graphService';
 
-let exchangeAADTokenViaOBOSpy: jest.SpyInstance;
+let exchangeMEIDTokenViaOBOSpy: jest.SpyInstance;
 let getACSUserIdSpy: jest.SpyInstance;
 let deleteIdentityMappingSpy: jest.SpyInstance;
 let deleteACSUserIdentitySpy: jest.SpyInstance;
@@ -29,28 +29,28 @@ describe('User Controller - Delete ACS User: ', () => {
     expect(res.status).toHaveBeenCalledWith(500);
   });
 
-  test('when AAD token via OBO flow fails to be retrieved, it should return an error.', async () => {
+  test('when Microsoft Entra token via OBO flow fails to be retrieved, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
+    exchangeMEIDTokenViaOBOSpy = jest
+      .spyOn(meidService, 'exchangeMEIDTokenViaOBO')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
 
     await deleteACSUser(req, res, () => {
       return res.status(500);
     });
 
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
+    expect(exchangeMEIDTokenViaOBOSpy).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
-    exchangeAADTokenViaOBOSpy.mockClear();
+    exchangeMEIDTokenViaOBOSpy.mockClear();
   });
 
   test('when ACS user ID fails to be retrieved from Graph, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
+    exchangeMEIDTokenViaOBOSpy = jest
+      .spyOn(meidService, 'exchangeMEIDTokenViaOBO')
+      .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest
       .spyOn(graphService, 'getACSUserId')
       .mockImplementation(async () => new Promise((resolve, reject) => reject(undefined)));
@@ -59,19 +59,19 @@ describe('User Controller - Delete ACS User: ', () => {
       return res.status(500);
     });
 
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
+    expect(exchangeMEIDTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
-    exchangeAADTokenViaOBOSpy.mockClear();
+    exchangeMEIDTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
   });
 
   test('when Graph identity mapping fails to be deleted, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
+    exchangeMEIDTokenViaOBOSpy = jest
+      .spyOn(meidService, 'exchangeMEIDTokenViaOBO')
+      .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')
@@ -81,11 +81,11 @@ describe('User Controller - Delete ACS User: ', () => {
       return res.status(500);
     });
 
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
+    expect(exchangeMEIDTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(deleteIdentityMappingSpy).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
-    exchangeAADTokenViaOBOSpy.mockClear();
+    exchangeMEIDTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
     deleteIdentityMappingSpy.mockClear();
   });
@@ -93,9 +93,9 @@ describe('User Controller - Delete ACS User: ', () => {
   test('when ACS user identity fails to be deleted, it should return an error.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
+    exchangeMEIDTokenViaOBOSpy = jest
+      .spyOn(meidService, 'exchangeMEIDTokenViaOBO')
+      .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')
@@ -108,12 +108,12 @@ describe('User Controller - Delete ACS User: ', () => {
       return res.status(500);
     });
 
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
+    expect(exchangeMEIDTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(deleteIdentityMappingSpy).toHaveBeenCalled();
     expect(deleteACSUserIdentitySpy).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(500);
-    exchangeAADTokenViaOBOSpy.mockClear();
+    exchangeMEIDTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
     deleteIdentityMappingSpy.mockClear();
     deleteACSUserIdentitySpy.mockClear();
@@ -122,9 +122,9 @@ describe('User Controller - Delete ACS User: ', () => {
   test('when all succeeds, itshould return a response with status 204.', async () => {
     const req = mockRequest(mockAuthorization);
     const res = mockResponse();
-    exchangeAADTokenViaOBOSpy = jest
-      .spyOn(aadService, 'exchangeAADTokenViaOBO')
-      .mockImplementation(async () => mockAadToken);
+    exchangeMEIDTokenViaOBOSpy = jest
+      .spyOn(meidService, 'exchangeMEIDTokenViaOBO')
+      .mockImplementation(async () => mockMeidToken);
     getACSUserIdSpy = jest.spyOn(graphService, 'getACSUserId').mockImplementation(async () => mockAcsUserId);
     deleteIdentityMappingSpy = jest
       .spyOn(graphService, 'deleteIdentityMapping')
@@ -137,12 +137,12 @@ describe('User Controller - Delete ACS User: ', () => {
       return res.status(500);
     });
 
-    expect(exchangeAADTokenViaOBOSpy).toHaveBeenCalled();
+    expect(exchangeMEIDTokenViaOBOSpy).toHaveBeenCalled();
     expect(getACSUserIdSpy).toHaveBeenCalled();
     expect(deleteIdentityMappingSpy).toHaveBeenCalled();
     expect(deleteACSUserIdentitySpy).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(204);
-    exchangeAADTokenViaOBOSpy.mockClear();
+    exchangeMEIDTokenViaOBOSpy.mockClear();
     getACSUserIdSpy.mockClear();
     deleteIdentityMappingSpy.mockClear();
     deleteACSUserIdentitySpy.mockClear();
