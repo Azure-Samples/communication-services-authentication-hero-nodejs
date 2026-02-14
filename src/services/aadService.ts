@@ -11,7 +11,7 @@ const EXCHANGE_AAD_TOKEN_VIA_OBO_ERROR =
   'An error occurred when exchanging the incoming access token for another access token to call downstream APIs through On-Behalf-Of flow';
 
 /**
- * Create a client for communication with Azure Active Directory
+ * Create a client for communication with Microsoft Entra ID
  *
  * @private
  */

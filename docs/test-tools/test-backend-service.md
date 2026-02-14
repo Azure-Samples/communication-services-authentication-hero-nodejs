@@ -1,8 +1,8 @@
 # Test deployed service
 
-1. Testing Backend APIs directly with an Azure Active Directory Token
+1. Testing Backend APIs directly with an Microsoft Entra Token
 
-    - [Generate Azure Active Directory token (Refer to steps 1 - 5)](../../MinimalClient/README.md) to call secure Apis of Azure Communication Services Authentication Hero sample.
+    - [Generate Microsoft Entra token (Refer to steps 1 - 5)](../../MinimalClient/README.md) to call secure Apis of Azure Communication Services Authentication Hero sample.
 
         - [You can also generate a token without a client if you prefer.](../test-tools/generate-aad-token-manually.md) *Note that this process can have some complexities setting it up the first time.
 

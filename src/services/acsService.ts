@@ -30,7 +30,7 @@ export const createAuthenticatedClient = (): CommunicationIdentityClient => {
 };
 
 /**
- * Create a Communication Services identity using the client authenticated with Azure AD
+ * Create a Communication Services identity using the client authenticated with Microsoft Entra ID
  */
 export const createACSUserIdentity = async (): Promise<string> => {
   const identityClient = createAuthenticatedClient();
@@ -64,9 +64,9 @@ export const createACSToken = async (acsUserId: string): Promise<CommunicationAc
 };
 
 /**
- * Exchange an AAD access token of a Teams user for a new Communication Services AccessToken with a matching expiration time.
- * @param teamsUserAadToken - The Azure AD token of the Teams user
- * @param userObjectId - Object ID of an Azure AD user (Teams User) to be verified against the OID claim in the Azure AD access token.
+ * Exchange an Microsoft Entra access token of a Teams user for a new Communication Services AccessToken with a matching expiration time.
+ * @param teamsUserAadToken - The Microsoft Entra token of the Teams user
+ * @param userObjectId - Object ID of an Microsoft Entra user (Teams User) to be verified against the OID claim in the Microsoft Entra access token.
  */
 export const getACSTokenForTeamsUser = async (
   teamsUserAadToken: string,

@@ -12,8 +12,8 @@ import { TestCallTeamsUserContent } from './components/TestCallTeamsUserContent'
 import { useSessionStorage } from './reactExtensions';
 
 /**
- * If a user is authenticated as a regular Azure AD user, the TestCallContent component is rendered.
- * If a user is authenticated as a Azure AD user with a valid teams license, the TestCallTeamsUserContent component is rendered.
+ * If a user is authenticated as a regular Microsoft Entra user, the TestCallContent component is rendered.
+ * If a user is authenticated as a Microsoft Entra user with a valid teams license, the TestCallTeamsUserContent component is rendered.
  * Otherwise a message indicating a user is not authenticated is rendered.
  */
 const MainContent = (props) => {

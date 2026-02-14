@@ -9,8 +9,8 @@
    ```PowerShell
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
    ```
-3. Make sure to [install Azure Active Directory PowerShell Modules](#install-azuread-powershell-modules)
-4. Run the script to create your Azure Active Directory application and configure the code of the sample application accordingly. (Other ways of running the scripts are described below). Please refer to the **sample.json** file to get an overview of changes.
+3. Make sure to [install Microsoft Entra PowerShell Modules](#install-azuread-powershell-modules)
+4. Run the script to create your Microsoft Entra application and configure the code of the sample application accordingly. (Other ways of running the scripts are described below). Please refer to the **sample.json** file to get an overview of changes.
    ```PowerShell
    cd .\AppCreationScripts\
    .\Configure.ps1
@@ -23,7 +23,7 @@ If you prefer, you can directly go to the following paragraphs:
 
 - [Present the scripts](#presentation-of-the-scripts) and explain their [usage patterns](#usage-pattern-for-tests-and-devops-scenarios) for test and DevOps scenarios.
 - Explain the [pre-requisites](#pre-requisites)
-- [Install Azure Active Directory PowerShell modules](#install-azuread-powershell-modules)
+- [Install Microsoft Entra PowerShell modules](#install-azuread-powershell-modules)
 - Explain [four ways of running the scripts](#four-ways-to-run-the-script):
   - [Interactively](#option-1-interactive) to create the app in your home tenant
   - [Passing credentials](#option-2-non-interactive) to create the app in your home tenant
@@ -35,23 +35,23 @@ If you prefer, you can directly go to the following paragraphs:
 
 ### Presentation of the scripts
 
-This sample comes with two PowerShell scripts, which automate the creation of the Azure Active Directory applications, and the configuration of the code for this sample. Once you run them, you will only need to build the solution and you are good to test.
+This sample comes with two PowerShell scripts, which automate the creation of the Microsoft Entra applications, and the configuration of the code for this sample. Once you run them, you will only need to build the solution and you are good to test.
 
 These scripts are:
 
 - `Configure.ps1` which:
-  - creates Azure Active Directory applications and their related objects (permissions, dependencies, secrets),
+  - creates Microsoft Entra applications and their related objects (permissions, dependencies, secrets),
   - changes the configuration files in the Node.js WebApi and Test MinimalClient JavaScript projects.
-  - creates a summary file named `createdApps.html` in the folder from which you ran the script, and containing, for each Azure Active Directory application it created:
+  - creates a summary file named `createdApps.html` in the folder from which you ran the script, and containing, for each Microsoft Entra application it created:
     - the identifier of the application
     - the AppId of the application
     - the url of its registration in the [Azure portal](https://portal.azure.com).
 
-- `Cleanup.ps1` which cleans-up the Azure Active Directory objects created by `Configure.ps1`. Note that this script does not revert the changes done in the configuration files, though. You will need to undo the change from source control (from Visual Studio, or from the command line using, for instance, git reset).
+- `Cleanup.ps1` which cleans-up the Microsoft Entra objects created by `Configure.ps1`. Note that this script does not revert the changes done in the configuration files, though. You will need to undo the change from source control (from Visual Studio, or from the command line using, for instance, git reset).
 
 ### Usage pattern for tests and DevOps scenarios
 
-The `Configure.ps1` will stop if it tries to create an Azure Active Directory application which already exists in the tenant. For this, if you are using the script to try/test the sample, or in DevOps scenarios, you might want to run `Cleanup.ps1` just before `Configure.ps1`. This is what is shown in the steps below.
+The `Configure.ps1` will stop if it tries to create an Microsoft Entra application which already exists in the tenant. For this, if you are using the script to try/test the sample, or in DevOps scenarios, you might want to run `Cleanup.ps1` just before `Configure.ps1`. This is what is shown in the steps below.
 
 ## How to use the app creation scripts
 
@@ -64,10 +64,10 @@ The `Configure.ps1` will stop if it tries to create an Azure Active Directory ap
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
     ```
 
-### Install AzureAD PowerShell modules
-The scripts install the required PowerShell module (Azure Active Directory) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
+### Install Microsoft Entra PowerShell modules
+The scripts install the required PowerShell module (Microsoft Entra) for the current user if needed. However, if you want to install it for all users on the machine, you can follow the following steps:
 
-4. If you have never done it already, in the PowerShell window, install the AzureAD PowerShell modules following these steps::
+4. If you have never done it already, in the PowerShell window, install the Microsoft Entra PowerShell modules following these steps::
 
    1. Open PowerShell as admin (On Windows, search **Powershell** in the Search bar, right click on it and select **Run as administrator**).
    2. Type:
@@ -139,7 +139,7 @@ Of course, in real life, you might already get the password as a `SecureString`.
 
 If you want to create the apps in a particular tenant, you can use the following option:
 - open the [Azure portal](https://portal.azure.com)
-- Select the Azure Active Directory you are interested in (in the combo-box below your name on the top right of the browser window)
+- Select the Microsoft Entra ID you are interested in (in the combo-box below your name on the top right of the browser window)
 - Find the "Active Directory" object in this tenant
 - Go to **Properties** and copy the content of the **Directory Id** property
 - Then use the full syntax to run the scripts:
